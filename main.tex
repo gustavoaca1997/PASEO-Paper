@@ -1,0 +1,160 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[
+backend=biber,
+style=apa,
+citestyle=apa
+]{biblatex}
+
+\addbibresource{bibliography.bib} %Imports bibliography file
+
+\title{User-centric and Context-aware  Recommender System for e-Tourism}
+\author{Gustavo Castellanos and Yudith Cardinale and Philippe Roose }
+\date{November 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Usually, people depend on places' reviews to decide where to spend their vacations, their free time or even their lunch or just their afternoon, but this requires prior knowledge of the existence of the places. Furthermore, sometimes people know about a place but do not know if it is a good fit for their necessities and ignores it, taking the risk of missing a good experience. This is why a recommender system is useful for tourism, a system able to predict user's preferences based on previous activity, however this kind of systems do not usually consider user's context, such as weather (\textit{is it raining?}) or time (\textit{is it night?}). This motivates us to build a recommender system for tourism aware of user's context, able to recommend a set of places of interest that will meet his preferences, based on his previous activity.
+
+\section{Related Work}
+\subsection{Recommender Systems}
+\subsection{E-Tourism}
+\subsection{Spreading Activation}
+\cite{bahramian_abbaspour_claramunt_2017} integrate the concepts of recommender systems with semantic web at building a context-aware tourism recommender system based on the \textit{spreading activation} algorithm. In their own words: "\textit{In spreading activation method, a given concept is represented by a node and has an activation value. A relation among different concepts is represented by a link between nodes and has a weight value. To initialize the algorithm, one or several nodes of a network are activated and these activations spread to the relevant nodes. This process is iterated until a stopping condition (e.g., number of node processed) is reached}". The activation value of the node \(v_i\) is computed as follows:
+\begin{equation} \label{eq:og_activation}
+a_{v_i} = \sum_{v_j \in neighbors(v_i)} w_{v_i, v_j} a_{v_j} 
+\end{equation}
+where $a_{v_i}$ is the activation value of node $v_i$, $neighbors(v_i)$ is the set of $v_i$'s neighbor nodes and $w_{v_i, v_j}$ is the weight of the link between $v_i$ and $v_j$.
+
+\subsubsection{Semantic Network}
+\cite{bahramian_abbaspour_claramunt_2017} extend the information available for a tourism ontology so it can be used with spreading activation algorithm. A \textit{preference} and a \textit{confidence} values are associated to each ontology class. Each link has a weight that represents the degree of relationship between two classes or concepts. An ontology of different context scenarios or \textit{context factors} is linked to the tourism ontology, where the context factors are related to distance to POIs, time and weather information. The activation values of the nodes of the context ontology represent the level of fulfillment based on some measurement. The extended ontology is called \textbf{semantic network}.
+
+\subsubsection{Learning Phase}
+\cite{bahramian_abbaspour_claramunt_2017} defined the \textit{preference} and the \textit{confidence} for an ontology class $c$ during learning phase as follows:
+
+\begin{equation} \label{eq:preference}
+    pref_c = \frac{\displaystyle \sum_{p \in ancestors(c)}{conf_p pref_p}}
+                    {\displaystyle  \sum_{p \in ancestors(c)} {conf_p}}
+\end{equation}
+
+\begin{equation} \label{eq:confidence}
+    conf_c = \frac{\displaystyle \sum_{p \in ancestors(c)} {conf_p}}{|ancestors(c)|} - \alpha
+\end{equation}
+where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_c$ is the preference of the class $c$, $conf_c$ is the confidence of the class $c$ and $\alpha$ is the \textit{decrease rate} that will tell how much should decrease the \textit{confidence} at each level. These formulas are applied to each node traversing from the root or sources.
+
+\subsubsection{Recommendation Phase}
+To contextualize the recommendation, "\textit{the context factors are used as initial nodes in the spreading activation and transmit the activation flow}" in the work of \cite{bahramian_abbaspour_claramunt_2017}.
+
+\subsection{Ontologies for e-tourism algorithm}
+
+\section{Our Proposal}
+
+\subsection{Preliminaries}
+These definitions, abstractions and techniques are used:
+\begin{itemize}
+\item \textbf{Semantic Network}: Consists of the tourism ontology extended with user's preferences and context factors. There is a semantic network for each user.
+\item \textbf{Spreading Activation}: It is an algorithm able to take advantage of the hierarchical shape of the ontology (a Directed Acyclic Graph or DAG is formed) to propagate information related to the preferences over the different \textit{classes} of the semantic network.
+\item \textbf{Aging}: To increment recommendation \textit{serendipity} (\cite{kotkov2016survey}), each Point of Interest or POI will age for a user each time it is recommended to them.
+\end{itemize}
+The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.75]{ontology.png}
+\caption{Subset of the modified version of the ontology DATATourisme (http://info.datatourisme.gouv.fr/ontology/core/2.0/)}
+\label{fig:ontology}
+\end{figure}
+
+\subsection{Semantic Network} \label{section:semantic_network}
+
+Based on the work of \cite{bahramian_abbaspour_claramunt_2017}, the proposed system extends the nodes of an ontology with the following properties:
+\begin{itemize}
+    \item \textbf{Preference}: Real value in $[0, 1]$ that corresponds to the user rating for the node's ontology class.
+    \item \textbf{Confidence}: Real value in $[0, 1]$ that defines how sure is the system about the user preference computed for the node. If the user explicitly specifies the preference of a node, the node's confidence should be $1$.
+    \item \textbf{Activation}: Taking into account the user's context, this value determines how feasible it is to go to the kind of places that belong to the node's ontology class.
+\end{itemize}{}
+Both \textit{preference} and \textit{confidence} are \textbf{persistent} node attributes, while \textit{activation} is a \textbf{transient} node attribute. As told before, the extended ontology is called \textit{semantic network}, and there is one instance for each system user.
+
+A subset of a modified version of the ontology DATATourisme (figure \ref{fig:ontology}) is used. The modification consists of specializing the original ontology class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to that category. The subset consists of the \textit{Point of interest} class but only its \textit{Place} subclass, considering only the following \textit{Place}'s subclasses: \textit{Cultural Site, Food establishment, Leisure Place, Natural Heritage, Sports} and \textit{Store}. 
+
+\subsubsection{Context factors} \label{section:context_factors}
+As told before, \textit{context factors} are entities that describe the characteristics of the user's context that could affect their decision to go to a specific place. These factors are: 
+\begin{itemize}
+    \item \textit{Weather} (sunny/cloudless, rainy or snowy)
+    \item \textit{Time} (early morning, morning, afternoon or night)
+    \item \textit{Day} (weekday or weekend)
+\end{itemize}
+Following the ideas from \cite{bahramian_abbaspour_claramunt_2017} work, these context factors are linked to a subset of "high level" ontology classes, that generalize enough our domain. These classes that are directly linked to the context factors are:
+\begin{itemize}
+    \item \textit{Museum}
+    \item \textit{Interpretation Center}
+    \item \textit{Library}
+    \item \textit{Park and Garden}
+    \item \textit{Archaeological Site}
+    \item \textit{Religious Site}
+    \item \textit{Remarkable Building}
+    \item \textit{City Heritage}
+    \item \textit{Defense Site}
+    \item \textit{Remembrance Site}
+    \item \textit{Technical Heritage}
+    \item \textit{Food Establishment}
+    \item \textit{Natural Heritage}
+    \item \textit{Sports}
+    \item \textit{Leisure Place}
+    \item \textit{Store}
+\end{itemize}
+ 
+\subsection{Preferences propagation}
+Based on \cite{bahramian_abbaspour_claramunt_2017} work, the steps for the preferences propagation are as follow:
+\begin{enumerate}
+    \item User gives a set of initial preferences for the classes that are mentioned on page \pageref{section:context_factors}.
+    
+    \item Propagate preferences to the subclasses using formulas \ref{eq:preference} and \ref{eq:confidence}.
+    
+    \item Go back to step (1) if user wants to update preferences and start preferences propagation again from a specific node as source.
+\end{enumerate}
+
+\subsection{Context-awareness}
+Remembering the new definition of \textit{activation} on page \pageref{section:semantic_network}, the formula \ref{eq:og_activation} is updated as follows:
+
+\begin{equation} \label{eq:activation}
+    a_{c} = \frac{\displaystyle \sum_{c' \in ancestors(c)} a_{c'}}{|ancestors(c)|}
+\end{equation}
+where $a_c$ is the activation for node $c$ and $ancestors(c)$ is the set of direct ancestors of node $c$. It could be seen as an averaged version of formula \ref{eq:og_activation} always using $w$ as $1$.
+
+Let's define $f_x$ the \textit{fulfillment} of a context factor $x$ that has the value $1$ if $x$ fulfills or $0$ otherwise. Let's also define $r_{c,x}$ as the \textit{relevance} of context factor $x$ for node $c$, which is a real value in $[0, 2]$ that specifies how much the context factor can affect the decision to go to a POI that belongs to the node's ontology class; a value of $1$ means indifference; a value near $2$ means the fulfillment increases the wish to go to the POI; a value near $0$ means the fulfillment decreases the wish to go the POI. 
+
+Now we define the activation for a node whose class $c$ is directly linked to the context factors (see page \pageref{section:context_factors}):
+
+\begin{equation} \label{eq:high_activation}
+    a_c = \sum_{x \in contextFactors} r_{c,x} f_x
+\end{equation}
+
+The steps for activation propagation are as follow:
+\begin{enumerate}
+    \item The system receives information about the fulfillment of the context factors. For example, it receives the vector \textit{(sunny, early morning, weekend)}, stating that it is a sunny day, in the early morning on a weekend.
+    
+    \item Compute activation for classes that are directly linked to the context factors using formula \ref{eq:high_activation}.
+    
+    \item Propagate activation to subclasses using formula \ref{eq:activation}.
+\end{enumerate}
+
+\subsection{Recommender algorithm}
+
+Expliar el algoritmo de recomendación, con lo de aging y todo lo demás en detalle.
+
+\section{Study case: experiments and evaluation}
+Aquí veremos si podemos hacer las pruebas en el contexto de PASEO
+
+\section{Conclusions and future work}
+
+\medskip
+ 
+\printbibliography
+
+\end{document}
