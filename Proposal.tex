@@ -81,7 +81,7 @@ Now we define the activation for a node whose class $c$ is directly linked to th
     a_c = \sum_{x \in contextFactors} r_{c,x} f_x
 \end{equation}
 
-The steps for activation propagation are as follow:
+Now we can define the steps for activation propagation as follow:
 \begin{enumerate}
     \item The system receives information about the fulfillment of the context factors. For example, it receives the vector \textit{(sunny, early morning, weekend)}, stating that it is a sunny day, in the early morning on a weekend.
     
@@ -92,4 +92,24 @@ The steps for activation propagation are as follow:
 
 \subsection{Recommender algorithm}
 
-Expliar el algoritmo de recomendación, con lo de aging y todo lo demás en detalle.
+We will first give two necessary definitions to compute the final score of an item and then we give the formula for computing the final score.
+
+\subsubsection{Aging}
+
+Let's define $\eta_p$ as the POI $p$'s aging, initialized on $\eta_p = 1$. Let's define $H$ as the \textit{aging rate}. Each time a POI $p$ is recommended to the user, $\eta_p$ decreases by $H$. When $\eta_p < 0.1$, its aging value is reset to $1$. 
+
+\subsubsection{Great-Circle distance}
+Since the euclidean distance between two points on Earth would cross through the surface, we should use a more convenient measurement of distance: the \textit{great-circle distance} or \textit{orthodromic distance}. It is the shortest distance, along the surface of a sphere, between two points on the surface of the sphere. It is measured with circles on the sphere whose centers coincide with the center of the sphere. Those circles are called \textit{great-circles}. If we assume Earth is a perfect sphere and hence use Great-Circle distance, we get distances with errors no more than $0.5\%$ according to \cite{1997admiralty}. 
+
+The distance between two points $i$ and $j$ on a sphere of radius $R$ is computed with the following formula:
+
+\begin{equation} \label{eq:gc-dist}
+    dist_{i,j} = arccos( sin(lat_i) \cdot sin(lat_j) + cos(lat_i) \cdot cos(lat_j) \cdot cos(lon_i - lon_j) ) \cdot R
+\end{equation}
+
+\subsubsection{Score}
+Let each $k_i$ be a parameter to the system, $dist_{u,p}$ be the great-circle distance between user $u$ and POI $p$ and $c$ be the node whose class is the one to which $p$ belongs. We define the \textit{score} of $p$ as a function that receives the maximum great-circle distance that a $p$ should be from $u$ as follows:
+
+\begin{equation} \label{eq:score}
+    score_p(maxdist) = k_1 \cdot pref_c + k_2 \cdot act_c + k_3 \cdot \eta_p + k_4 \cdot \frac{dist_{u,p}}{maxdist}
+\end{equation}
