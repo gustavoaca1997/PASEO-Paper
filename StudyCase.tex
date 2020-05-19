@@ -1,2 +1,40 @@
 \section{Study case: experiments and evaluation}
-Aquí veremos si podemos hacer las pruebas en el contexto de PASEO
+To evaluate our system we need some initial data to define the \textit{relevances} (see page \pageref{section:context-awareness}) and some (real or simulated) users to test with.
+
+\subsection{Relevances}
+To define each $r_{c,x}$ for each node $c$ and context factor $x$, it was decided to gather real values provided by real people on a form and then average them. The form consisted of the question "Answer how much a 'context factor' influences your decision to go to a place/event of the specified type (these types are not exclusive)". Then, for each of the ontology classes specified on section \textbf{Context factors} (see page \pageref{section:context_factors}) they had to answer a real value between $0$ and $10$, where:
+
+\begin{itemize}
+    \item $0$ means that if the context factor is met, you would not go to the place / event.
+    \item 5 means you don't care if the context is met or not.
+    \item 10 means that if the context is met, you would go to the place / event.
+\end{itemize}
+
+Then the following formula is applied to each feature or column, hence average them and transforming them to be on range $[0,2]$:
+
+$$AVG(column)/5$$
+
+The form had a total of 34 answers. Something worth to mention was that the answers were concentrated between the options $0$, $5$ and $10$, maybe because it is easier to think something between the thoughts "I would not", "I don't care" and "I would", than to think something that is in the middle of two of those thoughts.
+
+\subsection{Users data}
+As explained before (see page \pageref{section:preferences-propagation}), a user of the system have to give initial preferences to some ontology classes. It was decided to make a form where people could answer their preferences of the higher level ontology classes mentioned before (see page \pageref{section:context_factors}). The form had a total of 63 answers. The genre, country, profession, age and (optional) social networks were also asked to have more information for further work. The answer should be integers on range $[1, 10]$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.25]{histograma.png}
+    \caption{Histogram of the preferences form answers}
+    \label{fig:histograma}
+\end{figure}
+
+On figure \ref{fig:histograma} we can see a histogram of the answers. Again, answers are more concentrated on the middle and highest options, but there are few low answers.
+
+\subsubsection{Simulated scenarios}
+To evaluate the system, it was decided to test it with simulated scenarios (simulated context and simulated user). A set of clusters were chosen as the set of simulated users. The \textit{K-Means} algorithm was used to get the clusters and the \textit{Elbow Method} (see figure \ref{fig:elbow}) was used to chose $6$ as the number of clusters.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.45]{elbow.png}
+    \caption{Distortions of the different number of clusters}
+    \label{fig:elbow}
+\end{figure}
