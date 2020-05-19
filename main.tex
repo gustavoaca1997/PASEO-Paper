@@ -1,22 +1,83 @@
-\documentclass{article}
+%\documentclass{article}
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{textcomp}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
-\usepackage[
-backend=biber,
-style=apa,
-citestyle=apa
-]{biblatex}
+\usepackage{xcolor}
+%\usepackage[
+%backend=biber,
+%style=apa,
+%citestyle=apa
+%]{biblatex}
 
-\addbibresource{bibliography.bib} %Imports bibliography file
-
-\title{User-centric and Context-aware  Recommender System for e-Tourism}
-\author{Gustavo Castellanos and Yudith Cardinale and Philippe Roose }
-\date{November 2019}
-
+%\addbibresource{bibliography.bib} %Imports bibliography file
 \begin{document}
 
+\title{User-centric and Context-aware  Recommender System for e-Tourism}
+
+\author{\IEEEauthorblockN{Gustavo Castellanos}
+\IEEEauthorblockA{\textit{Computer Science Department} \\
+\textit{Universidad Simón Bolívar}\\
+Caracas, Venezuela \\
+ycardinale@usb.ve}
+\and
+\IEEEauthorblockN{Yudith Cardinale}
+\IEEEauthorblockA{\textit{Computer Science Department} \\
+\textit{Universidad Simón Bolívar}\\
+Caracas, Venezuela \\
+ycardinale@usb.ve}
+\and
+\IEEEauthorblockN{Philippe Roose}
+\IEEEauthorblockA{\textit{Université de Pau et des Pays de l’Adour} \\
+\textit{LIUPPA -- T2I64600}\\
+Anglet, France \\
+philippe.roose@iutbayonne.univ-pau.fr}
+%\and
+%\IEEEauthorblockN{Yudith Cardinale}
+%\IEEEauthorblockA{\textit{Computer Science Department} \\
+%\textit{Universidad Simón Bolívar}\\
+%Caracas, Venezuela \\
+%ycardinale@usb.ve}
+%\and
+%\IEEEauthorblockN{Marc Dalmau}
+%\IEEEauthorblockA{\textit{Université de Pau et des Pays de l’Adour} \\
+%\textit{LIUPPA -- T2I64600}\\
+%Anglet, France \\
+%dalmau@iutbayonne.univ-pau.fr}
+%\and
+%\IEEEauthorblockN{Nadine Couture}
+%\IEEEauthorblockA{\textit{ESTIA Technopole Izarbel} \\
+%\textit{64210}\\
+%Bidart, France \\
+%n.couture@estia.fr}
+%\and
+%\IEEEauthorblockN{Dominique Masson}
+%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+%\textit{name of organization (of Aff.)}\\
+%City, Country \\
+%email address or ORCID}
+}
+
+
+%\author{Gustavo Castellanos and Yudith Cardinale and Philippe Roose }
+%\date{November 2019}
+
+
 \maketitle
+
+\begin{abstract}
+blablablabalbal
+\end{abstract}
+\begin{IEEEkeywords}
+XXXXXX, XXXXX, XXXXXX
+\end{IEEEkeywords}
+
 
 \input{Introduction}
 \input{Related}
@@ -25,8 +86,10 @@ citestyle=apa
 \input{Conclu}
 
 
-\medskip
+%\medskip
  
-\printbibliography
+ \bibliographystyle{unsrt}
+\bibliography{bibliography}
+%\printbibliography
 
 \end{document}
