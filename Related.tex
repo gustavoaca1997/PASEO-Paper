@@ -2,17 +2,17 @@
 \subsection{Recommender Systems}
 \subsection{E-Tourism}
 \subsection{Spreading Activation}
-\cite{bahramian_abbaspour_claramunt_2017} integrate the concepts of recommender systems with semantic web at building a context-aware tourism recommender system based on the \textit{spreading activation} algorithm. In their own words: "\textit{In spreading activation method, a given concept is represented by a node and has an activation value. A relation among different concepts is represented by a link between nodes and has a weight value. To initialize the algorithm, one or several nodes of a network are activated and these activations spread to the relevant nodes. This process is iterated until a stopping condition (e.g., number of node processed) is reached}". The activation value of the node \(v_i\) is computed as follows:
+Previous work \cite{bahramian_abbaspour_claramunt_2017} integrates the concepts of recommender systems with semantic web at building a context-aware tourism recommender system based on the \textit{spreading activation} algorithm. In its authors' own words: "\textit{In spreading activation method, a given concept is represented by a node and has an activation value. A relation among different concepts is represented by a link between nodes and has a weight value. To initialize the algorithm, one or several nodes of a network are activated and these activations spread to the relevant nodes. This process is iterated until a stopping condition (e.g., number of node processed) is reached}". The activation value of the node \(v_i\) is computed as follows:
 \begin{equation} \label{eq:og_activation}
 a_{v_i} = \sum_{v_j \in neighbors(v_i)} w_{v_i, v_j} a_{v_j} 
 \end{equation}
 where $a_{v_i}$ is the activation value of node $v_i$, $neighbors(v_i)$ is the set of $v_i$'s neighbor nodes and $w_{v_i, v_j}$ is the weight of the link between $v_i$ and $v_j$.
 
 \subsubsection{Semantic Network}
-\cite{bahramian_abbaspour_claramunt_2017} extend the information available for a tourism ontology so it can be used with spreading activation algorithm. A \textit{preference} and a \textit{confidence} values are associated to each ontology class. Each link has a weight that represents the degree of relationship between two classes or concepts. An ontology of different context scenarios or \textit{context factors} is linked to the tourism ontology, where the context factors are related to distance to POIs, time and weather information. The activation values of the nodes of the context ontology represent the level of fulfillment based on some measurement. The extended ontology is called \textbf{semantic network}.
+Behmarian et al. \cite{bahramian_abbaspour_claramunt_2017} extend the information available for a tourism ontology so it can be used with spreading activation algorithm. A \textit{preference} and a \textit{confidence} values are associated to each ontology class. Each link has a weight that represents the degree of relationship between two classes or concepts. An ontology of different context scenarios or \textit{context factors} is linked to the tourism ontology, where the context factors are related to distance to POIs, time and weather information. The activation values of the nodes of the context ontology represent the level of fulfillment based on some measurement. The extended ontology is called \textbf{semantic network}.
 
 \subsubsection{Learning Phase}
-\cite{bahramian_abbaspour_claramunt_2017} defined the \textit{preference} and the \textit{confidence} for an ontology class $c$ during learning phase as follows:
+Bahmarian et al. \cite{bahramian_abbaspour_claramunt_2017} defined the \textit{preference} and the \textit{confidence} for an ontology class $c$ during learning phase as follows:
 
 \begin{equation} \label{eq:preference}
     pref_c = \frac{\displaystyle \sum_{p \in ancestors(c)}{conf_p pref_p}}
@@ -25,6 +25,17 @@ where $a_{v_i}$ is the activation value of node $v_i$, $neighbors(v_i)$ is the s
 where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_c$ is the preference of the class $c$, $conf_c$ is the confidence of the class $c$ and $\alpha$ is the \textit{decrease rate} that will tell how much should decrease the \textit{confidence} at each level. These formulas are applied to each node traversing from the root or sources.
 
 \subsubsection{Recommendation Phase}
-To contextualize the recommendation, "\textit{the context factors are used as initial nodes in the spreading activation and transmit the activation flow}" in the work of \cite{bahramian_abbaspour_claramunt_2017}.
+To contextualize the recommendation, "\textit{the context factors are used as initial nodes in the spreading activation and transmit the activation flow}" \cite{bahramian_abbaspour_claramunt_2017}.
+
+\subsection{Serendipity} \label{section:serendipity}
+An useful goal for a recommender system is to be serendipitous, which accordingly to Kotkov et al. \cite{kotkov2016survey} means that the recommended items must be relevant, novel and unexpected. A relevant item is an item that the user likes, consumes or is interested in; a novel item is an item that the user has never seen or heard about in their life; an unexpected item is an item that significantly differ from the profile of the user. The same work explains the differences between novelty and unexpectedness: "\textit{First, a user may find an item unexpected even if she/he is familiar with the item. Second, to surprise a user, unexpected items have to differ from the user profile more than novel items.}".
+
+Kotkov et al. \cite{kotkov2016survey} define many ways to measure how serendipitous a recommender system is, through measuring first relevance, novelty and unexpectedness of its recommendations. Since a recommender system will probably predict the preference a user has for a specific item, hence predict the relevance of the item, we are mainly focused on novelty and unexpectedness.
+
+There is a metric proposed by Nakatsuji et al. (as cited in \cite{kotkov2016survey}) for novelty that uses the taxonomy classes to which each recommended item belongs and their distance between them, being the minimum distance of a new recommended item $i$ to each already recommended item $j$ the novelty of the item $i$:
+\begin{equation}
+    nov_{na}(i, u) = \underaccent{q \in I_u}{min}(dis(cls_j, cls_i))
+\end{equation}
+where $cls_k$ is a class of item $k$ in the taxonomy and $dis(cls_j, cls_i)$ is the distance between classes $cls_j$ and $cls_i$ in the taxonomy. Since our work is focused on the use of an ontology on tourism field, this metric is very helpful.
 
 \subsection{Ontologies for e-tourism algorithm}
