@@ -99,10 +99,10 @@ Let's define $\eta_p$ as the POI $p$'s aging, initialized on $\eta_p = 1$. Let's
 \subsubsection{Great-Circle distance}
 Since the euclidean distance between two points on Earth would cross through the surface, we should use a more convenient measurement of distance: the \textit{great-circle distance} or \textit{orthodromic distance}. It is the shortest distance, along the surface of a sphere, between two points on the surface of the sphere. It is measured with circles on the sphere whose centers coincide with the center of the sphere. Those circles are called \textit{great-circles}. If we assume Earth is a perfect sphere and hence use Great-Circle distance, we get distances with errors no more than $0.5\%$ according to \cite{1997admiralty}. 
 
-The distance between two points $i$ and $j$ on a sphere of radius $R$ is computed with the following formula:
+The distance between two points $i$ and $j$ on a sphere of radius $r$ is computed with the following formula:
 \begin{equation} \label{eq:gc-dist}
     \begin{split}
-        \scriptstyle{dist_{i,j} \ = \ R \cdot arccos (} & \scriptstyle{cos(lat_i) \cdot cos(lat_j) \cdot cos(lon_i - lon_j)} \\
+        \scriptstyle{dist_{i,j} \ = \ r \cdot arccos (} & \scriptstyle{cos(lat_i) \cdot cos(lat_j) \cdot cos(lon_i - lon_j)} \\
                                         & \scriptstyle{+ \ sin(lat_i) \cdot sin(lat_j) )}
     \end{split}
 \end{equation}
