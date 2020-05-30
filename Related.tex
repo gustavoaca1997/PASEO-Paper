@@ -62,7 +62,7 @@ Kotkov et al. \cite{kotkov2016survey} define many ways to measure how serendipit
 
 There is a metric proposed by Nakatsuji et al. (as cited in \cite{kotkov2016survey}) for novelty that uses the taxonomy classes to which each recommended item belongs and their distance between them, being the minimum distance of a new recommended item $i$ to each already recommended item $j$ the novelty of the item $i$:
 \begin{equation}
-    nov_{na}(i, u) = \underaccent{q \in I_u}{min}(dis(cls_j, cls_i))
+    nov_{na}(i, u) = \underaccent{j \in I_u}{min}(dis(cls_j, cls_i))
 \end{equation}
 where $cls_k$ is a class of item $k$ in the taxonomy and $dis(cls_j, cls_i)$ is the distance between classes $cls_j$ and $cls_i$ in the taxonomy. Since our work is focused on the use of an ontology on tourism field, this metric is very helpful.
 
