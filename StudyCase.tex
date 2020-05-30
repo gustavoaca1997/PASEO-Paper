@@ -1,7 +1,7 @@
 \section{Study case: experiments and evaluation}
 To evaluate our system we need some initial data to define the \textit{relevances} (see section \ref{section:context-awareness}) and some (real or simulated) users to test with.
 
-\subsection{Relevances}
+\subsection{Relevances} \label{section:relevances-survey}
 To define each $r_{c,x}$ for each node $c$ and context factor $x$, it was decided to gather real data provided by real people through a survey and then average them. The survey consisted of the question "Answer how much a 'context factor' influences your decision to go to a place/event of the specified type (these types are not exclusive)". Then, for each of the ontology classes specified on section \ref{section:context_factors} people had to answer a real value between $0$ and $10$, where:
 \begin{itemize}
     \item $0$ means that if the context factor is met, you would not go to the place / event.
@@ -26,7 +26,7 @@ To evaluate the system, it was decided to test it with simulated scenarios (simu
     \label{fig:elbow}
 \end{figure}
 
-The centroids of the found clusters can be seen on table \ref{table:centroids}. Tourist $T_1$ seems to love food establishments, natural heritage, sport places and leisure places, but does not like too much remembrance sites, religious sites and technical heritage. $T_1$ also likes very much parks and gardens and likes museums, city heritage and stores.
+The centroids of the found clusters can be seen on table \ref{table:centroids}. On figure \ref{fig:tourist_hist} we can see how are initial preferences distributed for each tourist.
 \begin{table}[h!]
 \centering
 \begin{tabular}{ |c|c|c|c|c| } 
@@ -73,12 +73,41 @@ The centroids of the found clusters can be seen on table \ref{table:centroids}. 
 \label{table:centroids}
 \end{table}
 
-\subsection{Metrics}
-For each centroid of the clusters mentioned previously, we simulate two visits to Niza, Lyon and Paris for each possible context using each possible value for each context factor. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit. For each recommended set the system collects the average preference, average activation, average aging, average novelty \cite{kotkov2016survey} and average \textit{distance}. To compute novelty we use the metric mentioned on section \ref{section:serendipity}, which is adapted as follow:
-\begin{equation} \label{eq:novelty}
-    nov(p, u) = \  \underaccent{q \in rec(u)}{min} \  ( dist( c_p, c_q ) )
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.25]{tourist_histogram.png}
+    \caption{Distributions of initial preferences of $T_1$, $T_2$, $T_3$ and $T_4$}
+    \label{fig:tourist_hist} 
+\end{figure}
+
+\subsection{Metrics} \label{section:metrics}
+For each centroid of the clusters mentioned previously, we simulate two visits to Niza, Lyon and Paris for each possible context using each possible value for each context factor. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit, this set is going to be called the \textit{recommendation}. Let $R$ be a recommendation for a specific user on a specific location and a specific context, we define the following recommendation metrics:
+\begin{equation}
+    pref_{R} = \frac{ \displaystyle \sum_{p \in R}{pref_p} }{|\lbrace p \ | \ p \in R \rbrace|}
 \end{equation}
-where $p$ is a recommended place, $u$ the user to which $p$ was recommended, $rec(u)$ is the set of already recommended places to $u$, $c_p$ is the ontology class to which $p$ belongs and $dist$ computes the distance in the ontology (using \textit{Breadth First Search}) of two ontology classes. Finally, the system returns the average of each average.
+
+\begin{equation}
+    act_{R} = \frac{ \displaystyle \sum_{p \in R}{act_p} }{|\lbrace p \ | \ p \in R \rbrace|}
+\end{equation}
+
+\begin{equation}
+    \eta_{R} = \frac{ \displaystyle \sum_{p \in R}{\eta_p} }{|\lbrace p \ | \ p \in R \rbrace|}
+\end{equation}
+
+\begin{equation}
+    dist_{u, R} = \frac{ \displaystyle \sum_{p \in R}{dist_{u, p}} }{|\lbrace p \ | \ p \in R \rbrace|}
+\end{equation}
+
+To compute novelty \cite{kotkov2016survey} we use the metric mentioned on section \ref{section:serendipity}, which is adapted as follows:
+\begin{equation} \label{eq:novelty}
+    nov_{u, p} = \  \underaccent{q \in rec(u)}{min} \  ( dist( c_p, c_q ) )
+\end{equation}
+where $p$ is a recommended place, $u$ the user to which $p$ was recommended, $rec(u)$ is the set of already recommended places to $u$, $c_p$ is the ontology class to which $p$ belongs and $dist$ computes the distance in the ontology (using \textit{Breadth First Search}) of two ontology classes. Finally, the system returns the average of each recommendation metric.
+
+Now we can define the novelty of a recommendation as follows:
+\begin{equation}
+    nov_{u, R} = \frac{ \displaystyle \sum_{p \in R}{nov_{u, p}} }{|\lbrace p \ | \ p \in R \rbrace|}
+\end{equation}
 
 \subsection{Experiments}
 We use different coefficients for the score (see section \ref{section:score}), and since we said $maxdist$ is $8$ for these experiments, we are ignoring it as argument. 
@@ -175,7 +204,6 @@ While the system recommends same places to $T_1$ and $T_2$ for their first visit
 \end{table}
 
 After many visits, again at a rainy workday at afternoon, the system recommends a completely different set of places to $T_2$ when visiting Lyon again. It recommends a theater, an art gallery, a craftsman shop and two other art galleries, in that order (see table \ref{table:t2-2}). The system aging is responsible for this variety of recommendations.
-
 \begin{table}[h!]
     \centering
     \begin{tabular}{ |c|c|c|c|c|c| } 
@@ -194,16 +222,68 @@ After many visits, again at a rainy workday at afternoon, the system recommends 
     \label{table:t2-2}
 \end{table}
 
+However, there are cases where $k_3$ is not high enough to make more diverse the recommendations, as in the two visits of $T_2$ to Paris on sunny workdays at early morning (see tables \ref{table:t2-3} and \ref{table:t2-4}), where the second visit is made after many visits. Both visits involve Garnier Opera (from class \textit{Palace}), Conciergerie (from class \textit{Palace}) and Le Manoir de Paris (from class \textit{InterpretationCentre}), as $p_2$, $p_3$ and $p_4$ for the first visit and $p_1$, $p_5$ and $p_2$ for the second visit, respectively.
+
 \begin{table}[h!]
     \centering
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
-        Tourist   & pref & act & age & nov & dist \\
+        Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
         \hline
-        \hline
-	    $T_1$ & 0.8555 & 4.286 & 0.7058 & 0.0923 & 4.876 \\
+        $pref_c$    &  0.829 & 0.843 & 0.843 & 0.659 & 0.659 \\
+        $act_c$     & 4.171 & 4.4 & 4.4 & 4.571 & 4.571 \\
+        $\eta_p$    & 0.8 & 0.4 & 0.4 & 0.4 & 0.4 \\
+        $dist_{u,p}$ & 7.51 & 4.25 & 5.06 & 5.9 & 6.3 \\
+        $score_p$    & 1.97916 & 1.97869 & 1.97590 & 1.96803 & 1.96665 \\
+        
         \hline
     \end{tabular}
-    \caption{Averages of the averages of each metric of each recommended set}
+    \caption{First visit of $T_2$ to Paris with first configuration on a sunny workday at early morning}
+    \label{table:t2-3}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c|c| } 
+        \hline
+        Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
+        \hline
+        $pref_c$    &  0.843 & 0.843 & 0.659 & 0.659 & 0.659 \\
+        $act_c$     & 4.40 & 4.40 & 4.57 & 4.57 & 4.57  \\
+        $\eta_p$    & 0.4 & 0.4 & 0.4 & 0.4 & 0.4 \\
+        $dist_{u,p}$ & 4.25 & 5.06 & 3.79 & 4.55 & 5.9 \\
+        $score_p$    & 1.97869 & 1.97590 & 1.97535 & 1.97273 & 1.96803 \\
+        
+        \hline
+    \end{tabular}
+    \caption{Second visit of $T_2$ to Paris with first configuration on a sunny workday at early morning}
+    \label{table:t2-4}
+\end{table}
+
+Table \ref{table:config-1} shows the average of the recommendation metrics for each tourist. Averages of $pref_R$ of $T_1$'s and $T_2$'s visits are the highest ones, being greater than $0.8$ and hence closer to $1.0$, the maximum possible value. Next is $T_4$'s, being greater than $0.7$, which is still a good average preference. $T_3$'s average $pref_R$ is lower, but we can blame the amount of low initial preferences of $T_3$, as we can see on figure \ref{fig:tourist_hist}.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c| } 
+        \hline
+        avg & $T_1$ & $T_2$ & $T_3$ & $T_4$ \\
+        \hline
+        \hline
+        $avg(pref_R)$ & 0.8555 & 0.8213 & 0.4183 & 0.7269\\
+        $avg(act_R)$ & 4.286 & 4.3092 & 4.314 & 4.3319 \\
+        $avg(\eta_R)$ & 0.7058 & 0.7111 & 0.6906 & 0.6914 \\
+        $avg(nov_{u,R})$ & 0.0923 & 0.1231 & 0.1329 & 0.1147 \\
+        $avg(dist_{u,R})$ & 4.876 & 4.8993 & 4.9101 & 4.9861 \\
+       
+        \hline
+    \end{tabular}
+    \caption{Averages of recommendations metrics}
     \label{table:config-1}
 \end{table}
+
+The average $act_R$ of each tourist is greater than $4.0$. Theoretically, the maximum possible value is $6.0$, but since the relevance values obtained by the survey (see section \ref{section:relevances-survey}) do not reach their maximum possible value, which is $2.0$, it is impossible for these experiments.
+
+Average $\eta_R$ is very near $0.7$, hence the amount of "young" recommended places is high. Theoretically, the maximum possible value is $1.0$, but that would be possible if each recommendation involves POIs never recommended before.
+
+Despite of recommending places with distance from user near $8.0$ km, the average $dist_{u,R}$ for each tourist is acceptable: greater than $4.0$ km and less than $5.0$ km.
+
+The novelties measured as we proposed on section \ref{section:metrics} have bad performance. When a place belonging to the ontology class $c$ is recommended, next recommendations with places from $c$ will have lower novelty. The equation \ref{eq:novelty} was proposed with the hypotheses of that if a user already knows places from class $c$, then it is probably he already knows other places from class $c$. With that hypotheses, our system gives poor novelty.
