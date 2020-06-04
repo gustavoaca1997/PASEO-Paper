@@ -113,7 +113,7 @@ Now we can define the novelty of a recommendation as follows:
 We use different coefficients for the score (see section \ref{section:score}), and since we said $maxdist$ is $8$ for these experiments, we are ignoring it as argument. 
 
 \subsubsection{First configuration}
-First we consider $k_1 = 13/36$ for preference, $k_2 = 13/36$ for activation, $k_3 = 1/4$ for aging and $k_4 = 1/36$ for distance from user, resulting on equation \ref{eq:score-1} and giving more priority to preference and activation and very little priority to distance from user. With these parameters we start simulating each user and their visits.
+First we consider $k_1 = \frac{1}{4} + \frac{1}{9}$ for preference, $k_2 = \frac{1}{4} + \frac{1}{9}$ for activation, $k_3 = \frac{1}{4}$ for aging and $k_4 = \frac{1}{4} - \frac{2}{9}$ for distance from user, resulting on equation \ref{eq:score-1} and giving more priority to preference and activation and very little priority to distance from user. With these parameters we start simulating each user and their visits.
 \begin{equation} \label{eq:score-1}
     \begin{split}
         score_p = \ &\frac{13}{36} \cdot pref_c + \frac{13}{36} \cdot act_c \\
@@ -284,6 +284,15 @@ The average $act_R$ of each tourist is greater than $4.0$. Theoretically, the ma
 
 Average $\eta_R$ is very near $0.7$, hence the amount of "young" recommended places is high. Theoretically, the maximum possible value is $1.0$, but that would be possible if each recommendation involves POIs never recommended before.
 
-Despite of recommending places with distance from user near $8.0$ km, the average $dist_{u,R}$ for each tourist is acceptable: greater than $4.0$ km and less than $5.0$ km.
+Despite of recommending places with distance from user near $8.0$ km, the average $dist_{u,R}$ for each tourist is acceptable: greater than $4.0$ km and less than $5.0$ km. 
 
-The novelties measured as we proposed on section \ref{section:metrics} have bad performance. When a place belonging to the ontology class $c$ is recommended, next recommendations with places from $c$ will have lower novelty. The equation \ref{eq:novelty} was proposed with the hypotheses of that if a user already knows places from class $c$, then it is probably he already knows other places from class $c$. With that hypotheses, our system gives poor novelty.
+The novelties measured as we proposed on section \ref{section:metrics} have bad performance on four tourists.
+
+\subsubsection{Second configuration}
+Now we consider $k_1 = \frac{1}{4}$ for preference, $k_2 = \frac{1}{4}$ for activation, $k_3 = \frac{1}{4} + \frac{2}{9}$ for aging and $k_4 = \frac{1}{4} - \frac{2}{9}$ for distance from user, resulting on equation \ref{eq:score-2} and giving now more priority to aging.
+\begin{equation} \label{eq:score-2}
+    \begin{split}
+        score_p = \ &\frac{1}{4} \cdot pref_c + \frac{1}{4} \cdot act_c \\
+                                        &+ \frac{17}{36} \cdot \eta_p - \frac{1}{36} \cdot \frac{dist_{u,p}}{8}
+    \end{split}
+\end{equation}
