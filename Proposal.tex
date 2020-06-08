@@ -1,4 +1,11 @@
 \section{Our Proposal}
+\label{sec:proposal}
+
+\textcolor{red}{In this section we describe the architecture and functioning of our proposed user-driven and context-aware Recommendation System. Figure XX shows its components: (XX HACER UNA figura con la arquitectura, si es posible en función de los tres módulo de un SR...y en cada módulo pones lo que corresponda, la red semántica, spreding, aging, la ontología, etc.) } 
+
+\textcolor{red}{Luego vas explicando cada componente. Lo de user-driven debe quedar claro que toma en cuenta las preferencias y que estas preferencias pueden obtenerse de manera explícita o extrayendo de las redes sociales . Luego en la sección de implementación diremos que para la primera versión solo consideremos XXXX. Lo mismo con el contexto, se debe decir que el contexto se puede extraer también de manera implícita o explícita, accediendo al weather, tomando la hora del dispositivo móvil, etc. }
+
+\textcolor{red}{Ya todo lo tienes redactado, sólo hay que organizarlo mejor. Que la redacción sea más fluida}
 
 \subsection{Preliminaries}
 These definitions, abstractions and techniques are used:
@@ -7,7 +14,8 @@ These definitions, abstractions and techniques are used:
 \item \textbf{Spreading Activation}: It is an algorithm able to take advantage of the hierarchical shape of the ontology (a Directed Acyclic Graph or DAG is formed) to propagate information related to the preferences over the different \textit{classes} of the semantic network.
 \item \textbf{Aging}: To increment recommendation \textit{serendipity} \cite{kotkov2016survey}, each Point of Interest or POI will age for a user each time it is recommended to them.
 \end{itemize}
-The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items.
+
+The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items. \textcolor{red}{Esta parte va para los experimentos. Allí diremos que para probar el SR propuesto se implemntó una primera versión ..... En esta sección se describe de manera general el SR, su arquitectura, su funcionamiento, sus bases. También es bueno agregar dibujos que ilustren las ideas, por ejemplo un ejempllo pequeño de una red semántica de un usuario, etc.}
 
 \begin{figure}[h]
 \centering
