@@ -1,8 +1,41 @@
 \section{Study case: experiments and evaluation}
 To evaluate our system we need some initial data to define the \textit{relevances} (see section \ref{section:context-awareness}) and some (real or simulated) users to test with.
 
+The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items. \textcolor{red}{Esta parte va para los experimentos. Allí diremos que para probar el SR propuesto se implemntó una primera versión ..... En esta sección se describe de manera general el SR, su arquitectura, su funcionamiento, sus bases. También es bueno agregar dibujos que ilustren las ideas, por ejemplo un ejempllo pequeño de una red semántica de un usuario, etc.}
+
+\subsection{Ontology Classes}
+A subset of a modified version of the ontology DATATourisme (figure \ref{fig:ontology}) is used. The modification consists of specializing the original ontology class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to that category. The subset consists of the \textit{Point of interest} class but only its \textit{Place} subclass, considering only the following \textit{Place}'s subclasses: \textit{Cultural Site, Food establishment, Leisure Place, Natural Heritage, Sports} and \textit{Store}. 
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{ontology.png}
+\caption{Subset of the modified version of the ontology DATATourisme (http://info.datatourisme.gouv.fr/ontology/core/2.0/)}
+\label{fig:ontology}
+\end{figure}
+
+The high level classes that are directly linked to the context factors are:
+\begin{itemize}
+    \item \textit{Museum}
+    \item \textit{Interpretation Center}
+    \item \textit{Library}
+    \item \textit{Park and Garden}
+    \item \textit{Archaeological Site}
+    \item \textit{Religious Site}
+    \item \textit{Remarkable Building}
+    \item \textit{City Heritage}
+    \item \textit{Defense Site}
+    \item \textit{Remembrance Site}
+    \item \textit{Technical Heritage}
+    \item \textit{Food Establishment}
+    \item \textit{Natural Heritage}
+    \item \textit{Sports}
+    \item \textit{Leisure Place}
+    \item \textit{Store}
+\end{itemize}
+
 \subsection{Relevances} \label{section:relevances-survey}
-To define each $r_{c,x}$ for each node $c$ and context factor $x$, it was decided to gather real data provided by real people through a survey and then average them. The survey consisted of the question "Answer how much a 'context factor' influences your decision to go to a place/event of the specified type (these types are not exclusive)". Then, for each of the ontology classes specified on section \ref{section:context_factors} people had to answer a real value between $0$ and $10$, where:
+To define each $r_{c,x}$ for each node $c$ and context factor $x$, it was decided to gather real data provided by real people through a survey and then average them. The survey consisted of the question "Answer how much a 'context factor' influences your decision to go to a place/event of the specified type (these types are not exclusive)". Then, for each of the high level classes, people had to answer a real value between $0$ and $10$, where:
 \begin{itemize}
     \item $0$ means that if the context factor is met, you would not go to the place / event.
     \item 5 means you don't care if the context is met or not.
@@ -15,7 +48,7 @@ $$AVG(column)/5$$
 The form had a total of 34 answers. Something worth to mention was that the answers were concentrated between the options $0$, $5$ and $10$, maybe because it is easier to think something between the thoughts "I would not", "I don't care" and "I would", than to think something that is in the middle of two of those thoughts.
 
 \subsection{Users data}
-As explained before (see section \ref{section:preferences-propagation}), a user of the system have to give initial preferences to some ontology classes. It was decided to make a form where people could answer their preferences of the higher level ontology classes mentioned before (see section \ref{section:context_factors}). The form had a total of 63 answers. The genre, country, profession, age and (optional) social networks were also asked to have more information for further work. The answer should be integers on range $[1, 10]$. Again, answers were more concentrated on the middle and highest options, but there were few low answers.
+As explained before (see section \ref{section:preferences-propagation}), a user of the system have to give initial preferences to some ontology classes. It was decided to make a form where people could answer their preferences of the high level ontology classes mentioned before. The form had a total of 63 answers. The genre, country, profession, age and (optional) social networks were also asked to have more information for further work. The answer should be integers on range $[1, 10]$. Again, answers were more concentrated on the middle and highest options, but there were few low answers.
 
 \subsubsection{Simulated scenarios}
 To evaluate the system, it was decided to test it with simulated scenarios (simulated contexts and simulated users). A set of centroids of a set of clusters were chosen as the set of simulated users. The \textit{K-Means} algorithm was used to get the clusters and the \textit{Elbow Method} (see figure \ref{fig:elbow}) was used to choose $4$ as the number of clusters.
@@ -83,19 +116,19 @@ The centroids of the found clusters can be seen on table \ref{table:centroids}. 
 \subsection{Metrics} \label{section:metrics}
 For each centroid of the clusters mentioned previously, we simulate two visits to Niza, Lyon and Paris for each possible context using each possible value for each context factor. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit, this set is going to be called the \textit{recommendation}. Let $R$ be a recommendation for a specific user on a specific location and a specific context, we define the following recommendation metrics:
 \begin{equation}
-    pref_{R} = \frac{ \displaystyle \sum_{p \in R}{pref_p} }{|\lbrace p \ | \ p \in R \rbrace|}
+    pref_{R} = \frac{ \displaystyle \sum_{p \in R}{pref_p} }{| R |}
 \end{equation}
 
 \begin{equation}
-    act_{R} = \frac{ \displaystyle \sum_{p \in R}{act_p} }{|\lbrace p \ | \ p \in R \rbrace|}
+    act_{R} = \frac{ \displaystyle \sum_{p \in R}{act_p} }{| R |}
 \end{equation}
 
 \begin{equation}
-    \eta_{R} = \frac{ \displaystyle \sum_{p \in R}{\eta_p} }{|\lbrace p \ | \ p \in R \rbrace|}
+    \eta_{R} = \frac{ \displaystyle \sum_{p \in R}{\eta_p} }{| R |}
 \end{equation}
 
 \begin{equation}
-    dist_{u, R} = \frac{ \displaystyle \sum_{p \in R}{dist_{u, p}} }{|\lbrace p \ | \ p \in R \rbrace|}
+    dist_{u, R} = \frac{ \displaystyle \sum_{p \in R}{dist_{u, p}} }{| R |}
 \end{equation}
 
 To compute novelty \cite{kotkov2016survey} we use the metric mentioned on section \ref{section:serendipity}, which is adapted as follows:
