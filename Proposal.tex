@@ -3,9 +3,10 @@
 
 In this section we describe the architecture and functioning of our proposed user-driven and context-aware Recommendation System. Figure \ref{fig:arquitecture} shows its components:
 \begin{itemize}
-    \item \textbf{Data Gathering Module}: User preferences are received by the system.
+    \item \textbf{Data Gathering Module}: User preferences are received by the system, explicitly (direct interaction) or implicitly (data mining, social network analysis, etc.).
     \item \textbf{User Interest Module}: The preferences are propagated from higher classes to lower classes.
     \item \textbf{Context Module}: The system receives information about the context of the user.
+    \item \textbf{Recommendation Module}: The system recommends a set of places.
 \end{itemize}
 
 \begin{figure}[h]
@@ -22,7 +23,7 @@ In this section we describe the architecture and functioning of our proposed use
 \subsection{Preliminaries}
 These definitions, abstractions and techniques are used:
 \begin{itemize}
-\item \textbf{Semantic Network}: Consists of the tourism ontology extended with user's preferences and context factors. There is a semantic network for each user.
+\item \textbf{Semantic Network}: Consists of the tourism ontology extended with user's preferences and context factors' relationships. There is a semantic network for each user.
 \item \textbf{Spreading Activation}: It is an algorithm able to take advantage of the hierarchical shape of the ontology (a Directed Acyclic Graph or DAG is formed) to propagate information related to the preferences over the different \textit{classes} of the semantic network.
 \item \textbf{Aging}: To increment recommendation \textit{serendipity} \cite{kotkov2016survey}, each Point of Interest or POI will age for a user each time it is recommended to them.
 \end{itemize}
@@ -36,22 +37,13 @@ Based on \cite{bahramian_abbaspour_claramunt_2017}, the proposed system extends 
     \item \textbf{Activation}: Taking into account the user's context, this value determines how feasible it is to go to the kind of places that belong to the node's ontology class.
 \end{itemize}{}
 Both \textit{preference} and \textit{confidence} are \textbf{persistent} node attributes, while \textit{activation} is a \textbf{transient} node attribute. As told before, the extended ontology is called \textit{semantic network}, and there is one instance for each system user.
-
-\subsubsection{Context factors} \label{section:context_factors}
-As told before, \textit{context factors} are entities that describe the characteristics of the user's context that could affect their decision to go to a specific place. These factors are: 
-\begin{itemize}
-    \item \textit{Weather} (sunny/cloudless, rainy or snowy)
-    \item \textit{Time} (early morning, morning, afternoon or night)
-    \item \textit{Day} (weekday or weekend)
-\end{itemize}
-Following the ideas from \cite{bahramian_abbaspour_claramunt_2017}, these context factors are linked to a subset of "high level" ontology classes, that generalize enough our domain. 
  
 \subsection{Preferences propagation} \label{section:preferences-propagation}
 Based on \cite{bahramian_abbaspour_claramunt_2017}, the steps for the preferences propagation are as follow:
 \begin{enumerate}
     \item User gives a set of initial preferences for the high level classes (see figure \ref{fig:initial_pref}).
     
-    \item Propagate preferences to the subclasses using formulas \ref{eq:preference} and \ref{eq:confidence}.
+    \item Propagate preferences to the subclasses using formulas \ref{eq:preference} and \ref{eq:confidence} (see figure \ref{fig:pref_prop}).
     
     \item Go back to step (1) if user wants to update preferences and start preferences propagation again from a specific node as source.
 \end{enumerate}
@@ -59,9 +51,25 @@ Based on \cite{bahramian_abbaspour_claramunt_2017}, the steps for the preference
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{draws/initial_pref.jpg}
-\caption{Data gathering}
+\caption{Initial preferences example}
 \label{fig:initial_pref}
 \end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{draws/pref_spred.jpg}
+\caption{Preference propagation example, with propagation rate equals to 0.1}
+\label{fig:pref_prop}
+\end{figure}
+
+\subsection{Context factors} \label{section:context_factors}
+As told before, \textit{context factors} are entities that describe the characteristics of the user's context that could affect their decision to go to a specific place. Our system's factors are: 
+\begin{itemize}
+    \item \textit{Weather} (sunny/cloudless, rainy or snowy)
+    \item \textit{Time} (early morning, morning, afternoon or night)
+    \item \textit{Day} (weekday or weekend)
+\end{itemize}
+Following the ideas from \cite{bahramian_abbaspour_claramunt_2017}, these context factors are linked to a subset of "high level" ontology classes, that generalize enough our domain. 
 
 \subsection{Context-awareness} \label{section:context-awareness}
 Remembering the new definition of \textit{activation} on section \ref{section:semantic_network}, the formula \ref{eq:og_activation} is updated as follows:
