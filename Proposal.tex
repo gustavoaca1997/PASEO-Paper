@@ -5,8 +5,8 @@ In this section we describe the architecture and functioning of our proposed use
 \begin{itemize}
     \item \textbf{Data Gathering Module}: User preferences are received by the system, explicitly (direct interaction) or implicitly (data mining, social network analysis, etc.).
     \item \textbf{User Interest Module}: The preferences are propagated from higher classes to lower classes.
-    \item \textbf{Context Module}: The system receives information about the context of the user.
-    \item \textbf{Recommendation Module}: The system recommends a set of places.
+    \item \textbf{Context Module}: The system receives information about the context of the user, explicitly or implicitly (retrieved from an API, mobile information, etc.).
+    \item \textbf{Recommendation Module}: The system recommends a set of places to the user.
 \end{itemize}
 
 \begin{figure}[h]
@@ -87,12 +87,33 @@ Now we define the activation for a node whose class $c$ is directly linked to th
 
 Now we can define the steps for activation propagation as follow:
 \begin{enumerate}
-    \item The system receives information about the fulfillment of the context factors. For example, it receives the vector \textit{(sunny, early morning, weekend)}, stating that it is a sunny day, in the early morning on a weekend.
+    \item The system receives information about the fulfillment of the context factors (see figure \ref{fig:init_act}). For example, it receives the vector \textit{(sunny, night, weekend)}, stating that it is a sunny day, in the early morning on a weekend.
     
-    \item Compute activation for classes that are directly linked to the context factors using formula \ref{eq:high_activation}.
+    \item Compute activation for classes that are directly linked to the context factors using formula \ref{eq:high_activation} (see figure \ref{fig:high_act}).
     
-    \item Propagate activation to subclasses using formula \ref{eq:activation}.
+    \item Propagate activation to subclasses using formula \ref{eq:activation} (see figure \ref{fig:spread_act}).
 \end{enumerate}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.45]{draws/initial_act.jpg}
+\caption{System receives user context}
+\label{fig:init_act}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.45]{draws/high_act.jpg}
+\caption{Compute activation oh high classes}
+\label{fig:high_act}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.45]{draws/spread_act.jpg}
+\caption{Spread activation to lower classes}
+\label{fig:spread_act}
+\end{figure}
 
 \subsection{Recommender algorithm}
 
