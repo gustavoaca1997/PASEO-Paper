@@ -1,7 +1,7 @@
 \section{Study case: experiments and evaluation}
 To evaluate our system we need some initial data to define the \textit{relevances} (see section \ref{section:context-awareness}) and some (real or simulated) users to test with.
 
-The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items. \textcolor{red}{Esta parte va para los experimentos. Allí diremos que para probar el SR propuesto se implemntó una primera versión ..... En esta sección se describe de manera general el SR, su arquitectura, su funcionamiento, sus bases. También es bueno agregar dibujos que ilustren las ideas, por ejemplo un ejempllo pequeño de una red semántica de un usuario, etc.}
+The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items.
 
 \subsection{Ontology Classes}
 A subset of a modified version of the ontology DATATourisme (figure \ref{fig:ontology}) is used. The modification consists of specializing the original ontology class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to that category. The subset consists of the \textit{Point of interest} class but only its \textit{Place} subclass, considering only the following \textit{Place}'s subclasses: \textit{Cultural Site, Food establishment, Leisure Place, Natural Heritage, Sports} and \textit{Store}. 
@@ -139,7 +139,7 @@ where $p$ is a recommended place, $u$ the user to which $p$ was recommended, $re
 
 Now we can define the novelty of a recommendation as follows:
 \begin{equation}
-    nov_{u, R} = \frac{ \displaystyle \sum_{p \in R}{nov_{u, p}} }{|\lbrace p \ | \ p \in R \rbrace|}
+    nov_{u, R} = \frac{ \displaystyle \sum_{p \in R}{nov_{u, p}} }{| R |}
 \end{equation}
 
 \subsection{Experiments}
