@@ -1,4 +1,4 @@
-\section{Related Work}
+\section{Related Work} \label{section:related-work}
 
 \textcolor{red}{Clasificar los sistemas de recomedación de acuerdo a: User-centric (manual, automatic); context-aware; ontology-based; used methods (ML, DL, heurísticas, modelos, etc.)\\
 INCLUIR (y otros):\\
@@ -24,7 +24,7 @@ check-in data. IEEE Access, 5:26703–26721, 2017\\
 Knowledge and Information Systems, pp.: 1-29, 2018.
 }
 
-\subsection{Recommender Systems and E-Tourism}
+\subsection{Recommender Systems and E-Tourism} \label{section:recommender-systems}
 Recommender systems are "a class of information retrieval systems, designed as a set of information resources to filter out just those instances of data that best meet the interests of a particular user" \cite{artemenko2017tourism}. They are usually classified into two categories: memory-based and model-based. \textbf{Memory-based} recommender systems use data of the users or the items and the similarities between them, hence recommending similar items to the ones the user likes (\textit{content-based recommendation}) or recommending items liked by users that are similar to the user (\textit{collaborative filtering}) \cite{ebrahim_2012}. \textbf{Model-based} recommender systems try to guess how much a user will like an item that they did not consume before, usually through statistical techniques and machine-learning models \cite{ebrahim_2012}. 
 
 Some recommender systems for e-tourism incorporate the collaborative filtering using social relationships \cite{christensen2016social} \cite{kesorn2017personalized} or previous activities of other users \cite{rajaonarivo2019recommendation}. Some others just rely on model-based approaches \cite{sun2019building}. However, there are many proposed recommender systems for e-tourism that utilize both memory-based and model-based techniques, and are called \textit{hybrid recommender systems} \cite{logesh2019exploring}\cite{logesh2019efficient}. 
@@ -44,7 +44,7 @@ According to Adomavicius et al. (as cite on \cite{pagano2016contextual}), contex
 
 Among the algorithms used for context-aware recommender systems are Decision Trees \cite{pagano2016contextual}, General Factorization Framework \cite{hidasi2016general}, Factorization Machines \cite{rendle2011fast}, Recurrent Neural Networks \cite{pagano2016contextual} and Spreading Activation \cite{bahramian_abbaspour_claramunt_2017}, where the last is explained on the next section and is the algorithm used on our proposal.
 
-\subsection{Usage of ontologies: Spreading Activation}
+\subsection{Usage of ontologies: Spreading Activation} \label{section:usage-spreading-activation}
 Previous work \cite{bahramian_abbaspour_claramunt_2017} integrates the concepts of recommender systems with ontologies at building a context-aware tourism recommender system based on the \textit{spreading activation} algorithm. In its authors' own words: "In spreading activation method, a given concept is represented by a node and has an activation value. A relation among different concepts is represented by a link between nodes and has a weight value. To initialize the algorithm, one or several nodes of a network are activated and these activations spread to the relevant nodes. This process is iterated until a stopping condition (e.g., number of node processed) is reached". The activation value of the node \(v_i\) is computed as follows:
 \begin{equation} \label{eq:og_activation}
 a_{v_i} = \sum_{v_j \in neighbors(v_i)} w_{v_i, v_j} a_{v_j} 
