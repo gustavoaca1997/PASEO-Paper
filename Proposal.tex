@@ -21,7 +21,7 @@ These definitions, abstractions and techniques are used:
 \begin{itemize}
 \item \textbf{Semantic Network}: Consists of the tourism ontology extended with user's preferences and context factors' relationships. There is a semantic network for each user.
 \item \textbf{Spreading Activation}: It is an algorithm able to take advantage of the hierarchical shape of the ontology (a Directed Acyclic Graph or DAG is formed) to propagate information related to the preferences over the different \textit{classes} of the semantic network.
-\item \textbf{Aging}: To increment recommendation \textit{serendipity} \cite{kotkov2016survey}, each Point of Interest or POI will age for a user each time it is recommended to them.
+\item \textbf{Aging}: To increment recommendation \textit{serendipity} \cite{kotkov2016survey} and move further away from the immutable preference paradigm \cite{pagano2016contextual}, each Point of Interest or POI will age for a user each time it is recommended to them.
 \end{itemize}
 
 \subsection{Semantic Network} \label{section:semantic_network}
@@ -35,7 +35,7 @@ Based on \cite{bahramian_abbaspour_claramunt_2017}, the proposed system extends 
 Both \textit{preference} and \textit{confidence} are \textbf{persistent} node attributes, while \textit{activation} is a \textbf{transient} node attribute. As told before, the extended ontology is called \textit{semantic network}, and there is one instance for each system user.
  
 \subsection{Preferences propagation} \label{section:preferences-propagation}
-Based on \cite{bahramian_abbaspour_claramunt_2017}, the steps for the preferences propagation are as follow:
+Based on \cite{bahramian_abbaspour_claramunt_2017}, the steps for the preferences propagation are as follows:
 \begin{enumerate}
     \item User gives a set of initial preferences for the high level classes (see figure \ref{fig:initial_pref}).
     
@@ -81,7 +81,7 @@ Now we define the activation for a node whose class $c$ is directly linked to th
     act_c = \sum_{x \in contextFactors} r_{c,x} f_x
 \end{equation}
 
-Now we can define the steps for activation propagation as follow:
+Now we can define the steps for activation propagation as follows:
 \begin{enumerate}
     \item The system receives information about the fulfillment of the context factors (see figure \ref{fig:init_act}). For example, it receives the vector \textit{(sunny, night, weekend)}, stating that it is a sunny day, in the early morning on a weekend.
     
