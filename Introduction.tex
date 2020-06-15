@@ -1,12 +1,12 @@
 \section{Introduction}
-\textcolor{red}{XXXLa intro y el abstract deben tener la siguiente estructura: hablar del contexto general: Turismo y e-tourismo dado los avances tecnológicos; lo que se usa y sus limitaciones (que es el párrafo que tienes ahora); luego lo que se propone (la contribución del paper, la conclusión general de los resultados y finalmente la organización del paperXXXX}
+%\textcolor{red}{XXXLa intro y el abstract deben tener la siguiente estructura: hablar del contexto general: Turismo y e-tourismo dado los avances tecnológicos; lo que se usa y sus limitaciones (que es el párrafo que tienes ahora); luego lo que se propone (la contribución del paper, la conclusión general de los resultados y finalmente la organización del paperXXXX}
 
-\textcolor{red}{XXX Pondré en rojo XXXXMis comentariosXXXXXXXX y los párrafos que redacte/cambie. Así los ubicas más fácilmente}
+%\textcolor{red}{XXX Pondré en rojo XXXXMis comentariosXXXXXXXX y los párrafos que redacte/cambie. Así los ubicas más fácilmente}
 
 
 Tourism is one of the most promising areas for diverse applications and is becoming an extremely
 important market \cite{buhalis2011tourism,murphy2013tourism,fermoso2015open,ku2015cultivating,alghamdi2016tourism,artemenko2017tourism,kazandzhieva2019tourism}. 
-When travellers are going or planning to go to a destination, they try to collect information about their new destination “as best they can” (e.g., by going to the tourist office or by obtaining information about their destination and its surroundings on the Internet). Usually, tourists depend on places' reviews to decide where to spend their vacations, their free time, or even their lunch or just their afternoon, but this requires prior knowledge of the existence of the places. Furthermore, sometimes people know about a place but do not know if it is a good fit for their necessities and ignores it, taking the risk of missing a good experience. Nevertheless, this requires a considerable amount of effort on the part of the tourist.
+When travellers are going or planning to go to a destination, they try to collect information about their new destination “as best they can” (e.g., by going to the tourist office or by obtaining information about their destination and its surroundings on the Internet). Usually, tourists depend on places' reviews to decide where to spend their vacations, their free time, or even their lunch or just their afternoon, but this requires prior knowledge of the existence of the places. Furthermore, sometimes people know about a place but do not know if it is a good fit for their necessities and ignores it, taking the risk of missing a good experience. Nevertheless, this requires a considerable amount of effort on the part of the tourists.
 
 
 %\textcolor{red}{Based on the observation that tourism activity is strongly correlated with travellers’ preferences and interests,
@@ -36,18 +36,23 @@ consideration of the users' context, such as their locations, weather (\textit{i
 
 Recommender Systems are now at the heart of
 much research and offer real benefits to users, organizations, and the business community in
-general~\cite{borras2014intelligent,del2016pull,leskovec2020mining}. In the context of tourism, most recommender systems are able to predict user's preferences based on previous activity, but research on Context-Aware Recommender Systems
+general~\cite{borras2014intelligent,del2016pull,leskovec2020mining}. In the context of tourism, most recommender systems are able to predict user's preferences based on previous activities, but research on Context-Aware Recommender Systems
 (CARS) are still to
-be further developed~\cite{adomavicius2011context,nejma2015service,haruna2017context,raza2019progress}. There is a real need for research and design of innovative solutions in this field.
+be further developed~\cite{adomavicius2011context,nejma2015service,haruna2017context,raza2019progress}. \textcolor{red}{Additionally, most recommender systems do not consider to vary the recommendations -- i.e., they become predictable  for same users, under the same situations. Thus, there is still} a real need for research and design of innovative solutions in this field.
 
 
 
 %This is why a recommender system is useful for tourism, a system able to predict user's preferences based on previous activity, however this kind of systems do not usually consider user's context, such as weather (\textit{is it raining?}) or time (\textit{is it night?}). This motivates us to build a recommender system for tourism aware of user's context, able to recommend a set of places of interest that will meet his preferences, based on his previous activity.
 
 
+\textcolor{red}{In this context, in this work we propose a user-centric hybrid recommender system, using an ontology-based algorithm for content-based and context-aware recommendations. To decrease the predictability, users have the possibility of choosing  a recommendation level to have a greater probabilities of making happy discoveries in order to sharpen their curiosity. Also according to the users’ wishes, the serendipity of recommendations may increase (e.g., surprise events, unrepeated recommendations)~\cite{kotkov2016survey}. All this based on an {\it aging}-like algorithm, which XXX EXPLICAR XXX.  It is also desirable that the user knows why something is recommended (i.e., that the recommendations are explainable). We describe the architecture and algorithms of our recommender system. To demonstrate its suitability and performance, we test it in several scenarios XXX COMPLETAR XXX}
 
-In this context, in this work we propose a user-centric hybrid recommender system with an aging system able to increase the number of unrepeated recommendations, using an ontology-based algorithm for content-based and context-aware recommendations. In this sense, the envisaged recommendation system will have to allow the user to choose a recommendation level to have a greater probability of making happy discoveries in order to sharpen their curiosity. Also according to the users’ wishes, the serendipity of recommendations may increase (e.g., surprise events, unrepeated recommendations)~\cite{kotkov2016survey}. It is also desirable that the user knows why something is recommended (i.e., that the recommendations are explainable).
+%In this context, in this work we propose a user-centric hybrid recommender system with an aging system able to increase the number of unrepeated recommendations, using an ontology-based algorithm for content-based and context-aware recommendations. In this sense, the envisaged recommendation system will have to allow the user to choose a recommendation level to have a greater probability of making happy discoveries in order to sharpen their curiosity. Also according to the users’ wishes, the serendipity of recommendations may increase (e.g., surprise events, unrepeated recommendations)~\cite{kotkov2016survey}. It is also desirable that the user knows why something is recommended (i.e., that the recommendations are explainable).
 
-We organize the rest of this paper as follows: Section \ref{section:related-work} introduces relevant work and concepts for understanding our system; Section \ref{sec:proposal} describes the architecture and functioning of our proposed system; Section \ref{section:study-case} describes results obtained during the experiments; and finally Section \ref{section:conclu} explains our final thoughts.
+We organize the rest of this paper as follows. In Section \ref{section:related-work}, we survey 
+%introduces 
+relevant studies related to our work.
+%and concepts for understanding our system. 
+Section \ref{sec:proposal} describes the architecture and functioning of our proposed system, Section \ref{section:study-case} describes results obtained during the experiments. Finally, Section \ref{section:conclu} explains our final thoughts.
 
 
