@@ -1,98 +1,146 @@
 \section{Related Work} \label{section:related-work}
 
-\textcolor{red}{Clasificar los sistemas de recomedación de acuerdo a: User-centric (manual, automatic); context-aware; ontology-based; used methods (ML, DL, heurísticas, modelos, etc.)\\
-INCLUIR (y otros):\\
-- E-tourism recommender systems: a survey and development perspectives, 2017, \cite{artemenko2017tourism}\\
--Exploring hybrid recommender systems for personalized travel applications, 2019, \cite{logesh2019exploring}\\
-- Interactive and Context-Aware Systems in Tourism, 2020
-- Context-aware recommender system: A review of recent developmental process and future research direction, 2017,\\ 
-- A personalised travel recommender system utilising social network profile and accurate GPS data, 2018\\
-- Efficient user profiling based intelligent travel recommender system for individual and group of users, 2019\\
-- E-tourism recommender systems: a survey and development perspectives,\\
-- The contextual turn: From context-aware to context-driven recommender systems, 2016\\
-- \cite{adomavicius2011context,rajaonarivo2019recommendation},\\
-- Using POI functionality and accessibility levels for delivering personalized tourism recommendations\\
-- Building a model-based personalised recommendation approach
-for tourist attractions from geotagged social media data.\\
-- Ingrid Christensen, Silvia Schiaffino, and Marcelo Armentano.
-Social group recommendation in the tourism domain. Journal
-of intelligent information systems, 47(2):209–231, 2016\\
-- Kraisak Kesorn, W Juraphanthong, and A Salaiwarakul. Perso-
-nalized attraction recommendation system for tourists through
-check-in data. IEEE Access, 5:26703–26721, 2017\\
-- Lim, Kwan Hui, et al. "Tour recommendation and trip planning using location-based social media: a survey."
-Knowledge and Information Systems, pp.: 1-29, 2018.\\
-- L Rizaldy Hafid Arigi, Z K Abdurahman Baizal, and Anisa Her-
-diani. Context-aware recommender system based on ontology
-for recommending tourist destinations at bandung. Journal of
-Physics: Conference Series, 971:012024, mar 2018.
-}
+% \textcolor{red}{Clasificar los sistemas de recomedación de acuerdo a: User-centric (manual, automatic); context-aware; ontology-based; used methods (ML, DL, heurísticas, modelos, etc.)\\
+% INCLUIR (y otros):\\
+% - E-tourism recommender systems: a survey and development perspectives, 2017, \cite{artemenko2017tourism}\\
+% -Exploring hybrid recommender systems for personalized travel applications, 2019, \cite{logesh2019exploring}\\
+% - Interactive and Context-Aware Systems in Tourism, 2020
+% - Context-aware recommender system: A review of recent developmental process and future research direction, 2017,\\ 
+% - A personalised travel recommender system utilising social network profile and accurate GPS data, 2018\\
+% - Efficient user profiling based intelligent travel recommender system for individual and group of users, 2019\\
+% - E-tourism recommender systems: a survey and development perspectives,\\
+% - The contextual turn: From context-aware to context-driven recommender systems, 2016\\
+% - \cite{adomavicius2011context,rajaonarivo2019rec},\\
+% - Using POI functionality and accessibility levels for delivering personalized tourism recommendations\\
+% - Building a model-based personalised recommendation approach
+% for tourist attractions from geotagged social media data.\\
+% - Ingrid Christensen, Silvia Schiaffino, and Marcelo Armentano.
+% Social group recommendation in the tourism domain. Journal
+% of intelligent information systems, 47(2):209–231, 2016\\
+% - Kraisak Kesorn, W Juraphanthong, and A Salaiwarakul. Perso-
+% nalized attraction recommendation system for tourists through
+% check-in data. IEEE Access, 5:26703–26721, 2017\\
+% - Lim, Kwan Hui, et al. "Tour recommendation and trip planning using location-based social media: a survey."
+% Knowledge and Information Systems, pp.: 1-29, 2018.\\
+% - L Rizaldy Hafid Arigi, Z K Abdurahman Baizal, and Anisa Her-
+% diani. Context-aware recommender system based on ontology
+% for recommending tourist destinations at bandung. Journal of
+% Physics: Conference Series, 971:012024, mar 2018.
+% }
+
+\subsection{Recommender Systems} \label{section:recommender-systems}
 
 The unleashed proliferation  of recommender systems for tourism domain, due to the current development of mobile Internet technology, has fostered a wide categorization of them. 
-Depending on the technique used to resolve recommendations, these systems are usually classified into two categories: memory-based and model-based~\cite{bobadilla2013recommender,sun2019building}. \textbf{Memory-based} recommender systems support their  suggestions on similarities among users and their shared items, hence recommending similar items to the ones the user likes (i.e., \textit{content-based recommendation}) or recommending items liked by users that are similar to the user (i.e., \textit{collaborative filtering}) \cite{ebrahim_2012}. \textbf{Model-based} recommender systems try to guess how much a user will like an item that they did not consume before, usually through statistical techniques and machine-learning models \cite{ebrahim_2012}. 
+Depending on the technique used to resolve recommendations, these systems are usually classified into two categories: memory-based and model-based~\cite{bobadilla2013recommender,sun2019building}. \textbf{Memory-based} recommender systems support their  suggestions on similarities among users and their shared items, hence recommending similar items to the ones the user likes (i.e., \textit{content-based recommendation}) or recommending items liked by users that are similar to the user (i.e., \textit{collaborative filtering}) \cite{ebrahim_2012}. \textbf{Model-based} recommender systems try to guess how much a user will like an item that they did not consume before, usually through statistical techniques and machine-learning models \cite{ebrahim_2012}. The recommender systems that use both memory-based and model-based approaches are called \textbf{hybrid} recommender systems.
 
-In this section, we survey some relevant and recent studies in the tourism domain, classifying them according these two categories and considering aspects related to  how they manage users' preferences and interests, the context awareness, the use of ontologies, and the variability of recommendations. We compare the related work in terms of these criteria and highlight the difference with our proposal.    
+In this section, we survey some relevant and recent studies in the tourism domain, classifying them according these three categories and considering aspects related to  how they manage users' preferences and interests, the context awareness, the use of ontologies, and the variability of recommendations. We compare the related work in terms of these criteria and highlight the difference with our proposal.    
 
-\textcolor{red}{La idea es describir los trabajos en función de estos criterios, creo que ya lo tienes organizado más o menos así. Sólo habría que ajustar los títulos de las subsecciones (o no poner subsecciones) y quizás mover algunos párrafos. Si no es estrictamente necesario, es mejor no poner fórmulas aquí. Lo que normalmente hago es ponerlas (las que uso) en la sección de la propuesta (con la debida referencia). Aquí es describir de manera general los trabajos y sobre todo enfatiar en sus limitaciones. Cosas como: None of these works consider the context... None of these works represent the knowledge in a formal way such as ontologies.... Variability/serendipity  is neglected ... es decir hacer notar lo que nosotros si hacemos en conjunto. Al final de esta sección sería genial un tablita comparativa de acuerdo a esos criterios por trabajo o grupo de trabajos}
+\subsubsection{Context-awareness}
 
-\subsection{Recommender Systems and E-Tourism} \label{section:recommender-systems}
+Rajaonarivo et al.\cite{rajaonarivo2019rec} use a
+context-modeling approach that considers means of transportation, travel time and location; Kesorn et al. \cite{kesorn2017personalized} use the time of the day for achieving more suitable recommendations; Sun et al. \cite{sun2019building} use the context of geotagged pictures taken by the user for building the user model; Logest et al. \cite{logesh2019exploring} \cite{logesh2018personalised} also consider user context like user location; Santos et al. \cite{santos2019using} consider physical and psychological limitations; Bahmarian et al. \cite{bahramian_abbaspour_claramunt_2017} consider weather, time and day; Hidasi et al. \cite{hidasi2016general} propose a General Factorization Framework for context-aware recommender systems.
 
-%Recommender systems are "a class of information retrieval systems, designed as a set of information resources to filter out just those instances of data that best meet the interests of a particular user" \cite{artemenko2017tourism}. They are usually classified into two categories: memory-based and model-based. \textbf{Memory-based} recommender systems use data of the users or the items and the similarities between them, hence recommending similar items to the ones the user likes (\textit{content-based recommendation}) or recommending items liked by users that are similar to the user (\textit{collaborative filtering}) \cite{ebrahim_2012}. \textbf{Model-based} recommender systems try to guess how much a user will like an item that they did not consume before, usually through statistical techniques and machine-learning models \cite{ebrahim_2012}. 
+\subsubsection{Serendipity}
+Rajaonarivo et al. \cite{rajaonarivo2019rec} model considers previous activity of other users to recommend tours of POIs, thus reducing overspecialization and increasing serendipity, however experiments with this feature were not made.
 
-Some recommender systems for e-tourism incorporate the collaborative filtering using social relationships \cite{christensen2016social} \cite{kesorn2017personalized} or previous activities of other users \cite{rajaonarivo2019recommendation}. Some others just rely on model-based approaches \cite{sun2019building}. However, there are many proposed recommender systems for e-tourism that utilize both memory-based and model-based techniques, and are called \textit{hybrid recommender systems}~\cite{logesh2019exploring}\cite{logesh2019efficient}. 
+\subsubsection{Use of ontologies}
+Rajaonarivo et al. \cite{rajaonarivo2019rec} export the data used to well known open data platforms before using it; Bahmarian et al. \cite{bahramian_abbaspour_claramunt_2017} based their proposal on spreading activation algorithms on the nodes of an e-tourism ontology.
 
-Several research works have been made in the field of context-aware recommender systems in e-tourism. In traditional recommender systems the item score usually is a function of the user and the item:
-\begin{equation}
-    score: User \times Item \rightarrow \mathbb{R}
-\end{equation}
-but in context-aware recommender systems the function is as follow \cite{artemenko2017tourism}:
-\begin{equation}
-    score: User  \times Item \times Context \rightarrow \mathbb{R}
-\end{equation}
+Table \ref{table:related-work} shows a summary of the survey. Rajaonarivo et al. \cite{rajaonarivo2019rec} is the only work that proposes a context-aware system using ontologies and approaching serendipity, however they did not experiment the serendipitous feature.
 
-These systems sometimes take into consideration user location \cite{logesh2018personalised},  physical or psychological limitations \cite{santos2019using}, or just weather, time and day \cite{bahramian_abbaspour_claramunt_2017}. Either way, giving more priority to user context can be seen as a turn away from \textit{Immutable Preference} paradigm \cite{pagano2016contextual}, which assumes that user goals, needs, and tastes do not develop.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |m{3cm}|m{1cm}|m{2.7cm}| } 
+        \hline
+        Works & Type & Approaches \\
+        \hline
+        \hline
 
-According to Adomavicius et al. (as cite on \cite{pagano2016contextual}), context-aware recommender systems are classified into three types: \textit{contextual pre-filtering}, where context drives data collection; \textit{contextual post-filtering}, where context is used to filter recommendations after they have been computed; and \textit{contextual modeling}, where context is integrated directly into the model.
+        \begin{itemize}
+            \item Rajaonarivo et al. \cite{rajaonarivo2019rec}
+        \end{itemize} &
+        
+            Hybrid filtering &
 
-Among the algorithms used for context-aware recommender systems are Decision Trees \cite{pagano2016contextual}, General Factorization Framework \cite{hidasi2016general}, Factorization Machines \cite{rendle2011fast}, Recurrent Neural Networks \cite{pagano2016contextual} and Spreading Activation \cite{bahramian_abbaspour_claramunt_2017}, where the last is explained on the next section and is the algorithm used on our proposal.
+            \begin{itemize}
+                \item Context-awareness
+                \item Use of ontologies
+                \item Serendipity
+            \end{itemize}
+        
+        \\ \hline
 
-\subsection{Usage of ontologies: Spreading Activation} \label{section:usage-spreading-activation}
-Previous work \cite{bahramian_abbaspour_claramunt_2017} integrates the concepts of recommender systems with ontologies at building a context-aware tourism recommender system based on the \textit{spreading activation} algorithm. In its authors' own words: "In spreading activation method, a given concept is represented by a node and has an activation value. A relation among different concepts is represented by a link between nodes and has a weight value. To initialize the algorithm, one or several nodes of a network are activated and these activations spread to the relevant nodes. This process is iterated until a stopping condition (e.g., number of node processed) is reached". The activation value of the node \(v_i\) is computed as follows:
-\begin{equation} \label{eq:og_activation}
-a_{v_i} = \sum_{v_j \in neighbors(v_i)} w_{v_i, v_j} a_{v_j} 
-\end{equation}
-where $a_{v_i}$ is the activation value of node $v_i$, $neighbors(v_i)$ is the set of $v_i$'s neighbor nodes and $w_{v_i, v_j}$ is the weight of the link between $v_i$ and $v_j$. This concept will be useful in further sections. 
+        \begin{itemize}
+            \item Kesorn et al. \cite{kesorn2017personalized}
+            \item Logest et al. \cite{logesh2019exploring}
+            \item Logest et al. \cite{logesh2018personalised}
+        \end{itemize} &
 
-\subsubsection{Semantic Network}
-Behmarian et al. \cite{bahramian_abbaspour_claramunt_2017} extend the information available for a tourism ontology so it can be used with spreading activation algorithm. A \textit{preference} and a \textit{confidence} values are associated to each ontology class. Each link has a weight that represents the degree of relationship between two classes or concepts. An ontology of different context scenarios or \textit{context factors} is linked to the tourism ontology, where the context factors are related to distance to POIs, time and weather information. The activation values of the nodes of the context ontology represent the level of fulfillment based on some measurement. The extended ontology is called \textbf{semantic network}.
+            Hybrid filtering &
 
-\subsubsection{Learning Phase}
-Bahmarian et al. \cite{bahramian_abbaspour_claramunt_2017} defined the \textit{preference} and the \textit{confidence} for an ontology class $c$ during learning phase as follows:
+            \begin{itemize}
+                \item Context-awareness
+            \end{itemize}
 
-\begin{equation} \label{eq:preference}
-    pref_c = \frac{\displaystyle \sum_{p \in ancestors(c)}{conf_p pref_p}}
-                    {\displaystyle  \sum_{p \in ancestors(c)} {conf_p}}
-\end{equation}
+        \\ \hline
 
-\begin{equation} \label{eq:confidence}
-    conf_c = \frac{\displaystyle \sum_{p \in ancestors(c)} {conf_p}}{|ancestors(c)|} - \alpha
-\end{equation}
-where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_c$ is the preference of the class $c$, $conf_c$ is the confidence of the class $c$ and $\alpha$ is the \textit{decrease rate} that will tell how much should decrease the \textit{confidence} at each level. These formulas are applied to each node traversing from the root or sources.
+        \begin{itemize}
+            \item Sun et al. \cite{sun2019building}
+            \item Santos et al. \cite{santos2019using}
+            \item Hidasi et al. \cite{hidasi2016general}
+        \end{itemize} &
+            
+            Model based &
+        
+            \begin{itemize}
+                \item Context-awareness
+            \end{itemize}
 
-\subsubsection{Recommendation Phase}
-To contextualize the recommendation, "\textit{the context factors are used as initial nodes in the spreading activation and transmit the activation flow}" \cite{bahramian_abbaspour_claramunt_2017}, then the activated nodes are recommended. 
+        \\
 
-The feature of using sets of similar items without using statistical models such as clustering but using ontology classes, and also predicting the user preferences, makes this kind of systems to be hybrid recommender systems.
+        \hline
+    \end{tabular}
+    \caption{Related work on recommender systems for e-tourism}
+    \label{table:related-work}
+    \end{table}
 
-\subsection{Serendipity} \label{section:serendipity}
-An useful goal for a recommender system is to be serendipitous, which accordingly to Kotkov et al. \cite{kotkov2016survey} means that the recommended items must be relevant, novel and unexpected. A relevant item is an item that the user likes, consumes or is interested in; a novel item is an item that the user has never seen or heard about in their life; an unexpected item is an item that significantly differ from the profile of the user. The same work explains the differences between novelty and unexpectedness: "First, a user may find an item unexpected even if she/he is familiar with the item. Second, to surprise a user, unexpected items have to differ from the user profile more than novel items.".
+% \subsection{Usage of ontologies: Spreading Activation} \label{section:usage-spreading-activation}
+% Previous work \cite{bahramian_abbaspour_claramunt_2017} integrates the concepts of recommender systems with ontologies at building a context-aware tourism recommender system based on the \textit{spreading activation} algorithm. In its authors' own words: "In spreading activation method, a given concept is represented by a node and has an activation value. A relation among different concepts is represented by a link between nodes and has a weight value. To initialize the algorithm, one or several nodes of a network are activated and these activations spread to the relevant nodes. This process is iterated until a stopping condition (e.g., number of node processed) is reached". The activation value of the node \(v_i\) is computed as follows:
+% \begin{equation} \label{eq:og_activation}
+% a_{v_i} = \sum_{v_j \in neighbors(v_i)} w_{v_i, v_j} a_{v_j} 
+% \end{equation}
+% where $a_{v_i}$ is the activation value of node $v_i$, $neighbors(v_i)$ is the set of $v_i$'s neighbor nodes and $w_{v_i, v_j}$ is the weight of the link between $v_i$ and $v_j$. This concept will be useful in further sections. 
 
-Kotkov et al. \cite{kotkov2016survey} define many ways to measure how serendipitous a recommender system is, through measuring first relevance, novelty and unexpectedness of its recommendations. Since a recommender system will probably predict the preference a user has for a specific item, hence predict the relevance of the item, we are mainly focused on novelty and unexpectedness.
+% \subsubsection{Semantic Network}
+% Behmarian et al. \cite{bahramian_abbaspour_claramunt_2017} extend the information available for a tourism ontology so it can be used with spreading activation algorithm. A \textit{preference} and a \textit{confidence} values are associated to each ontology class. Each link has a weight that represents the degree of relationship between two classes or concepts. An ontology of different context scenarios or \textit{context factors} is linked to the tourism ontology, where the context factors are related to distance to POIs, time and weather information. The activation values of the nodes of the context ontology represent the level of fulfillment based on some measurement. The extended ontology is called \textbf{semantic network}.
 
-There is a metric proposed by Nakatsuji et al. (as cited in \cite{kotkov2016survey}) for novelty that uses the taxonomy classes to which each recommended item belongs and their distance between them, being the minimum distance of a new recommended item $i$ to each already recommended item $j$ the novelty of the item $i$:
-\begin{equation}
-    nov_{na}(i, u) = \underaccent{j \in I_u}{min}(dis(cls_j, cls_i))
-\end{equation}
-where $cls_k$ is a class of item $k$ in the taxonomy and $dis(cls_j, cls_i)$ is the distance between classes $cls_j$ and $cls_i$ in the taxonomy. Since our work is focused on the use of an ontology on tourism field, this metric is very helpful.
+% \subsubsection{Learning Phase}
+% Bahmarian et al. \cite{bahramian_abbaspour_claramunt_2017} defined the \textit{preference} and the \textit{confidence} for an ontology class $c$ during learning phase as follows:
 
-% \subsection{Ontologies for e-tourism algorithm}
+% \begin{equation} \label{eq:preference}
+%     pref_c = \frac{\displaystyle \sum_{p \in ancestors(c)}{conf_p pref_p}}
+%                     {\displaystyle  \sum_{p \in ancestors(c)} {conf_p}}
+% \end{equation}
+
+% \begin{equation} \label{eq:confidence}
+%     conf_c = \frac{\displaystyle \sum_{p \in ancestors(c)} {conf_p}}{|ancestors(c)|} - \alpha
+% \end{equation}
+% where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_c$ is the preference of the class $c$, $conf_c$ is the confidence of the class $c$ and $\alpha$ is the \textit{decrease rate} that will tell how much should decrease the \textit{confidence} at each level. These formulas are applied to each node traversing from the root or sources.
+
+% \subsubsection{Recommendation Phase}
+% To contextualize the recommendation, "\textit{the context factors are used as initial nodes in the spreading activation and transmit the activation flow}" \cite{bahramian_abbaspour_claramunt_2017}, then the activated nodes are recommended. 
+
+% The feature of using sets of similar items without using statistical models such as clustering but using ontology classes, and also predicting the user preferences, makes this kind of systems to be hybrid recommender systems.
+
+% \subsection{Serendipity} \label{section:serendipity}
+% An useful goal for a recommender system is to be serendipitous, which accordingly to Kotkov et al. \cite{kotkov2016survey} means that the recommended items must be relevant, novel and unexpected. A relevant item is an item that the user likes, consumes or is interested in; a novel item is an item that the user has never seen or heard about in their life; an unexpected item is an item that significantly differ from the profile of the user. The same work explains the differences between novelty and unexpectedness: "First, a user may find an item unexpected even if she/he is familiar with the item. Second, to surprise a user, unexpected items have to differ from the user profile more than novel items.".
+
+% Kotkov et al. \cite{kotkov2016survey} define many ways to measure how serendipitous a recommender system is, through measuring first relevance, novelty and unexpectedness of its recommendations. Since a recommender system will probably predict the preference a user has for a specific item, hence predict the relevance of the item, we are mainly focused on novelty and unexpectedness.
+
+% There is a metric proposed by Nakatsuji et al. (as cited in \cite{kotkov2016survey}) for novelty that uses the taxonomy classes to which each recommended item belongs and their distance between them, being the minimum distance of a new recommended item $i$ to each already recommended item $j$ the novelty of the item $i$:
+% \begin{equation}
+%     nov_{na}(i, u) = \underaccent{j \in I_u}{min}(dis(cls_j, cls_i))
+% \end{equation}
+% where $cls_k$ is a class of item $k$ in the taxonomy and $dis(cls_j, cls_i)$ is the distance between classes $cls_j$ and $cls_i$ in the taxonomy. Since our work is focused on the use of an ontology on tourism field, this metric is very helpful.
+
+% % \subsection{Ontologies for e-tourism algorithm}
