@@ -9,9 +9,7 @@ In this section we describe the architecture and functioning of our proposed Use
     \item \textbf{Recommendation Module}: The system recommends a set of places to the user.
 \end{itemize}
 
-\textcolor{red}{In the following sections, we describe in detail each module.}
-
-\textcolor{red}{En la Fig. 1, poner los módulos más resaltados quizás en cajas de colores con doble línea... Luego, distinguir lo que son acciones o algoritmos de las entradas y salidas a cada módulo con figuras diferentes y dibujar la ontología en donde corresponda (un arbolito con bolitas) ... De esa manera se muestra la arquitectura y además el flujo de operación del sistema. }
+In the following sections, we describe in detail each module.
 
 \begin{figure}[h]
 \centering
@@ -57,14 +55,14 @@ Based on \cite{bahramian_abbaspour_claramunt_2017}, the steps for the preference
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{draws/initial_pref.jpg}
-\caption{Initial preferences example}
+\caption{Initial preferences for "Cultural", "Store" and "Sport" classes}
 \label{fig:initial_pref}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{draws/pref_spred.jpg}
-\caption{Preference propagation example, with propagation rate equals to 0.1}
+\caption{Preference propagation for "Museum", "Art Gallery", "Souvenirs", "Stadium" and "Golf" classes, with propagation rate equal to 0.1}
 \label{fig:pref_prop}
 \end{figure}
 
@@ -103,21 +101,21 @@ Now we can define the steps for activation propagation as follows:
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.45]{draws/initial_act.jpg}
-\caption{System receives user context}
+\caption{System receives (sunny, night, weekend) as user context}
 \label{fig:init_act}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.45]{draws/high_act.jpg}
-\caption{Compute activation oh high classes}
+\caption{Compute activation for "Cultural", "Store" and "Sport" classes}
 \label{fig:high_act}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.45]{draws/spread_act.jpg}
-\caption{Spread activation to lower classes}
+\caption{Spread activation to "Museum", "Art Gallery", "Souvenirs", "Stadium" and "Golf" classes}
 \label{fig:spread_act}
 \end{figure}
 
