@@ -1,5 +1,5 @@
 \section{Study case: experiments and evaluation} \label{section:study-case}
-To evaluate our system we need some initial data to define the \textit{relevances} (see section \ref{section:context-awareness}) and some (real or simulated) users to test with.
+To evaluate our system we need some initial data to define the \textit{relevances} and some (real or simulated) users to test with.
 
 The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items.
 
@@ -48,7 +48,7 @@ $$AVG(column)/5$$
 The form had a total of 34 answers. Something worth to mention was that the answers were concentrated between the options $0$, $5$ and $10$, maybe because it is easier to think something between the thoughts "I would not", "I don't care" and "I would", than to think something that is in the middle of two of those thoughts.
 
 \subsection{Users data}
-As explained before (see section \ref{section:preferences-propagation}), a user of the system have to give initial preferences to some ontology classes. It was decided to make a form where people could answer their preferences of the high level ontology classes mentioned before. The form had a total of 63 answers. The genre, country, profession, age and (optional) social networks were also asked to have more information for further work. The answer should be integers on range $[1, 10]$. Again, answers were more concentrated on the middle and highest options, but there were few low answers.
+As explained before, a user of the system have to give initial preferences to some ontology classes. It was decided to make a form where people could answer their preferences of the high level ontology classes mentioned before. The form had a total of 63 answers. The genre, country, profession, age and (optional) social networks were also asked to have more information for further work. The answer should be integers on range $[1, 10]$. Again, answers were more concentrated on the middle and highest options, but there were few low answers.
 
 \subsubsection{Simulated scenarios}
 To evaluate the system, it was decided to test it with simulated scenarios (simulated contexts and simulated users). A set of centroids of a set of clusters were chosen as the set of simulated users. The \textit{K-Means} algorithm was used to get the clusters and the \textit{Elbow Method} (see figure \ref{fig:elbow}) was used to choose $4$ as the number of clusters.
@@ -131,7 +131,7 @@ For each centroid of the clusters mentioned previously, we simulate two visits t
     dist_{u, R} = \frac{ \displaystyle \sum_{p \in R}{dist_{u, p}} }{| R |}
 \end{equation}
 
-To compute novelty \cite{kotkov2016survey} we use the metric mentioned on section \ref{section:serendipity}, which is adapted as follows:
+To compute novelty \cite{kotkov2016survey} we use the following metric:
 \begin{equation} \label{eq:novelty}
     nov_{u, p} = \  \underaccent{q \in rec(u)}{min} \  ( dist( c_p, c_q ) )
 \end{equation}
