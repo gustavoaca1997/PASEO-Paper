@@ -18,39 +18,21 @@ In the following sections, we describe in detail each module.
 \label{fig:arquitecture}
 \end{figure}
 
+\subsection{Data Gathering Module}
+Initially, the system should receive initial \textbf{preferences}, as real values between $0$ and $1$, for the higher classes. To obtain these values, the user could explicitly set them by interacting with the system or they could be implicitly determined using data mining, social network analysis, geo-data, etc. During the lifetime of the system, the user can feed new updated preferences to the system.
 
-\textcolor{red}{A partir de aquí las subsecciones tienen como título cada módulo. Dentro de cada módulo vas explicando el flujo...Este módulo extrae las preferencias de los usuarios (implícita o explícitamente) .... y los algoritmos y estructuras de datos que usa.\\ 
-La idea es proponer una arquitectura general sin decir cómo se implementó, más bien decir eso, que las características de los usuarios se pueden extrer e manera implícita o explícit usando técnicas como NLP, etc. etc. Luego es la sección de experimentos si explica que el prototitpo desarrollo consider tal o cual cosa o se simula tal o cual cosa...\\
-Por ejemplo, falta algo como extracting/determining context dentro del módulo del contexto, que se encarga de identificar el contexto, sea implícitamente o explícitamente...\\
-Así vas explicando por módulo los algortimos, las estructuras usadas, las fórmulas, etc. y vas siguiendo el flujo del sistema.}
+\subsection{User Interest Model Module}
+Inspired on the work of Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we introduce the concept of \textbf{semantic network}: a tourism ontology extended with the user's preferences (see figure \ref{fig:initial_pref}) and context factor links, a concept we explain later (see figure \ref{fig:init_act}). Just like Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we take advantage of the hierarchical shape of the semantic network for propagating the preference of superclasses to subclasses. Alongside preferences, each node of the semantic network has a \textbf{confidence} related to the user, a real value between $0$ and $1$ that defines how sure is the system that the computed preference is the real one. For computing the preference and the confidence we use formula \ref{eq:preference} and formula \ref{eq:confidence}, respectively:
+\begin{equation} \label{eq:preference}
+    pref_c = \frac{\displaystyle \sum_{p \in ancestors(c)}{conf_p pref_p}}
+    {\displaystyle  \sum_{p \in ancestors(c)} {conf_p}}
+\end{equation}
+\begin{equation} \label{eq:confidence}
+    conf_c = \frac{\displaystyle \sum_{p \in ancestors(c)} {conf_p}}{|ancestors(c)|} - \alpha
+\end{equation}
+where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_c$ is the preference of the class $c$, $conf_c$ is the confidence of the class $c$ and $\alpha$ is the \textit{decrease rate} that will tell how much should decrease the \textit{confidence} at each level. 
 
-\subsection{Preliminaries}
-These definitions, abstractions and techniques are used:
-\begin{itemize}
-\item \textbf{Semantic Network}: Consists of the tourism ontology extended with user's preferences and context factors' relationships. There is a semantic network for each user.
-\item \textbf{Spreading Activation}: It is an algorithm able to take advantage of the hierarchical shape of the ontology (a Directed Acyclic Graph or DAG is formed) to propagate information related to the preferences over the different \textit{classes} of the semantic network.
-\item \textbf{Aging}: To increment recommendation \textit{serendipity} \cite{kotkov2016survey} and move further away from the immutable preference paradigm \cite{pagano2016contextual}, each Point of Interest or POI will age for a user each time it is recommended to them.
-\end{itemize}
-
-\subsection{Semantic Network} \label{section:semantic_network}
-
-Based on \cite{bahramian_abbaspour_claramunt_2017}, the proposed system extends the nodes of an ontology with the following properties:
-\begin{itemize}
-    \item \textbf{Preference}: Real value in $[0, 1]$ that corresponds to the user rating for the node's ontology class.
-    \item \textbf{Confidence}: Real value in $[0, 1]$ that defines how sure is the system about the user preference computed for the node. If the user explicitly specifies the preference of a node, the node's confidence should be $1$.
-    \item \textbf{Activation}: Taking into account the user's context, this value determines how feasible it is to go to the kind of places that belong to the node's ontology class.
-\end{itemize}{}
-Both \textit{preference} and \textit{confidence} are \textbf{persistent} node attributes, while \textit{activation} is a \textbf{transient} node attribute. As told before, the extended ontology is called \textit{semantic network}, and there is one instance for each system user.
- 
-\subsection{Preferences propagation} \label{section:preferences-propagation}
-Based on \cite{bahramian_abbaspour_claramunt_2017}, the steps for the preferences propagation are as follows:
-\begin{enumerate}
-    \item User gives a set of initial preferences for the high level classes (see figure \ref{fig:initial_pref}).
-    
-    \item Propagate preferences to the subclasses using formulas \ref{eq:preference} and \ref{eq:confidence} (see figure \ref{fig:pref_prop}).
-    
-    \item Go back to step (1) if user wants to update preferences and start preferences propagation again from a specific node as source.
-\end{enumerate}
+These formulas are applied to each node traversing from the higher classes, whose preferences are obtained from the Data Gathering Module, to the leaves. This process is called \textbf{preference propagation} and figures \ref{fig:initial_pref} and \ref{fig:pref_prop} show an example.
 
 \begin{figure}[h]
 \centering
@@ -62,41 +44,22 @@ Based on \cite{bahramian_abbaspour_claramunt_2017}, the steps for the preference
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{draws/pref_spred.jpg}
-\caption{Preference propagation for "Museum", "Art Gallery", "Souvenirs", "Stadium" and "Golf" classes, with propagation rate equal to 0.1}
+\caption{Preference propagation for "Museum", "Art Gallery", "Souvenirs", "Stadium" and "Golf" classes, with decrease rate equal to 0.1}
 \label{fig:pref_prop}
 \end{figure}
 
-\subsection{Context factors} \label{section:context_factors}
-As told before, \textit{context factors} are entities that describe the characteristics of the user's context that could affect their decision to go to a specific place. Our system's factors are: 
-\begin{itemize}
-    \item \textit{Weather} (sunny/cloudless, rainy or snowy)
-    \item \textit{Time} (early morning, morning, afternoon or night)
-    \item \textit{Day} (weekday or weekend)
-\end{itemize}
-Following the ideas from \cite{bahramian_abbaspour_claramunt_2017}, these context factors are linked to a subset of "high level" ontology classes, that generalize enough our domain. 
+\subsection{Context Module}
+We define the \textbf{activation} of a node as the value that determines how feasible it is to go to a place that belongs to the node's ontology class in the current user's context. The user's context is determined by the \textbf{context factors}, entities that describe the characteristics of the user’s context that could affect their decision to go to a specific place. The context factors could be time, day and weather, as proposed by Bahramian \cite{bahramian_abbaspour_claramunt_2017}, but many others could be used, like transportation\cite{rajaonarivo2019rec} and mood. These entities are linked to the higher classes.
 
-\subsection{Context-awareness} \label{section:context-awareness}
-Remembering the new definition of \textit{activation} on section \ref{section:semantic_network}, the formula \ref{eq:og_activation} is updated as follows:
-\begin{equation} \label{eq:activation}
-    act_c = \frac{\displaystyle \sum_{c' \in ancestors(c)} a_{c'}}{|ancestors(c)|}
-\end{equation}
-where $act_c$ is the activation for node $c$ and $ancestors(c)$ is the set of direct ancestors of node $c$. It could be seen as an averaged version of formula \ref{eq:og_activation} always using $w$ as $1$.
-
-Let's define $f_x$ the \textit{fulfillment} of a context factor $x$ that has the value $1$ if $x$ fulfills or $0$ otherwise. Let's also define $r_{c,x}$ as the \textit{relevance} of context factor $x$ for node $c$, which is a real value in $[0, 2]$ that specifies how much the context factor can affect the decision to go to a POI that belongs to the node's ontology class; a value of $1$ means indifference; a value near $2$ means the fulfillment increases the wish to go to the POI; a value near $0$ means the fulfillment decreases the wish to go the POI. 
-
-Now we define the activation for a node whose class $c$ is directly linked to the context factors (see section \ref{section:context_factors}):
+Let's define $f_x$ the \textit{fulfillment} of a context factor $x$ that has the value $1$ if $x$ fulfills or $0$ otherwise. Let's also define $r_{c,x}$ as the \textit{relevance} of context factor $x$ for node $c$, which is a real value in $[0, 2]$ that specifies how much the context factor can affect the decision to go to a POI that belongs to the node's ontology class; a value of $1$ means indifference; a value near $2$ means the fulfillment increases the wish to go to the POI; a value near $0$ means the fulfillment decreases the wish to go the POI. Hence, we define the activation for a node whose class $c$ is directly linked to the context factors:
 \begin{equation} \label{eq:high_activation}
     act_c = \sum_{x \in contextFactors} r_{c,x} f_x
 \end{equation}
-
-Now we can define the steps for activation propagation as follows:
-\begin{enumerate}
-    \item The system receives information about the fulfillment of the context factors (see figure \ref{fig:init_act}). For example, it receives the vector \textit{(sunny, night, weekend)}, stating that it is a sunny day, in the early morning on a weekend.
-    
-    \item Compute activation for classes that are directly linked to the context factors using formula \ref{eq:high_activation} (see figure \ref{fig:high_act}).
-    
-    \item Propagate activation to subclasses using formula \ref{eq:activation} (see figure \ref{fig:spread_act}).
-\end{enumerate}
+and the activation for the internal nodes is defined as follows:
+\begin{equation} \label{eq:activation}
+    act_c = \frac{\displaystyle \sum_{c' \in ancestors(c)} act_{c'}}{|ancestors(c)|}
+\end{equation}.
+These formulas are used for an \textbf{activation propagation} from the higher classes. Figures \ref{fig:init_act}, \ref{fig:high_act} and \ref{fig:spread_act} show an example.
 
 \begin{figure}[h]
 \centering
@@ -119,13 +82,15 @@ Now we can define the steps for activation propagation as follows:
 \label{fig:spread_act}
 \end{figure}
 
-\subsection{Recommender algorithm}
+Furthermore, this module receives the user's \textbf{location}, which will be used for querying near POIs.
 
-We will first give two necessary definitions to compute the final score of an item and then we give the formula for computing the final score.
+\subsection{Recommendation Module}
 
-\subsubsection{Aging}
+We will first give two necessary definitions to compute the final score of an item and then we give the formula.
 
-Let's define $\eta_p$ as the POI $p$'s aging, initialized on $\eta_p = 1$. Let's define $H$ as the \textit{aging rate}. Each time a POI $p$ is recommended to the user, $\eta_p$ decreases by $H$. When $\eta_p < 0.1$, its aging value is reset to $1$. 
+\subsubsection{Aging System}
+
+Let's define $\eta_p$ as the POI $p$'s aging, initialized on $\eta_p = 1$. Let's define $H$ as the \textit{aging rate}. Each time a POI $p$ is recommended to the user, $\eta_p$ decreases by $H$. When $\eta_p < 0.1$, $\eta_p$ is reset to $1$. 
 
 \subsubsection{Great-Circle distance}
 Since the euclidean distance between two points on Earth would cross through the surface, we should use a more convenient measurement of distance: the \textit{great-circle distance} or \textit{orthodromic distance}. It is the shortest distance, along the surface of a sphere, between two points on the surface of the sphere. It is measured with circles on the sphere whose centers coincide with the center of the sphere. Those circles are called \textit{great-circles}. If we assume Earth is a perfect sphere and hence use Great-Circle distance, we get distances with errors no more than $0.5\%$ according to \cite{1997admiralty}. 
