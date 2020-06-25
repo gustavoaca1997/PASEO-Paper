@@ -2,54 +2,111 @@
 
 % \textcolor{red}{Clasificar los sistemas de recomedación de acuerdo a: User-centric (manual, automatic); context-aware; ontology-based; used methods (ML, DL, heurísticas, modelos, etc.)\\
 % INCLUIR (y otros):\\
-% - E-tourism recommender systems: a survey and development perspectives, 2017, \cite{artemenko2017tourism}\\
-% -Exploring hybrid recommender systems for personalized travel applications, 2019, \cite{logesh2019exploring}\\
-% - Interactive and Context-Aware Systems in Tourism, 2020
-% - Context-aware recommender system: A review of recent developmental process and future research direction, 2017,\\ 
-% - A personalised travel recommender system utilising social network profile and accurate GPS data, 2018\\
-% - Efficient user profiling based intelligent travel recommender system for individual and group of users, 2019\\
-% - E-tourism recommender systems: a survey and development perspectives,\\
-% - The contextual turn: From context-aware to context-driven recommender systems, 2016\\
-% - \cite{adomavicius2011context,rajaonarivo2019rec},\\
-% - Using POI functionality and accessibility levels for delivering personalized tourism recommendations\\
-% - Building a model-based personalised recommendation approach
-% for tourist attractions from geotagged social media data.\\
-% - Ingrid Christensen, Silvia Schiaffino, and Marcelo Armentano.
-% Social group recommendation in the tourism domain. Journal
-% of intelligent information systems, 47(2):209–231, 2016\\
-% - Kraisak Kesorn, W Juraphanthong, and A Salaiwarakul. Perso-
-% nalized attraction recommendation system for tourists through
-% check-in data. IEEE Access, 5:26703–26721, 2017\\
-% - Lim, Kwan Hui, et al. "Tour recommendation and trip planning using location-based social media: a survey."
-% Knowledge and Information Systems, pp.: 1-29, 2018.\\
-% - L Rizaldy Hafid Arigi, Z K Abdurahman Baizal, and Anisa Her-
-% diani. Context-aware recommender system based on ontology
-% for recommending tourist destinations at bandung. Journal of
-% Physics: Conference Series, 971:012024, mar 2018.
-% }
 
-\subsection{Recommender Systems} \label{section:recommender-systems}
+% - Efficient user profiling based intelligent travel recommender system for individual and group of users, 2019 NO PDF\\
+% - Ingrid Christensen, Silvia Schiaffino, and Marcelo Armentano.Social group recommendation in the tourism domain. Journal of intelligent information systems, 47(2):209–231, 2016\\ NO PDF
+% - L Rizaldy Hafid Arigi, Z K Abdurahman Baizal, and Anisa Herdiani. Context-aware recommender system based on ontology for recommending tourist destinations at bandung. Journal ofPhysics: Conference Series, 971:012024, mar 2018. } NO PDF
+
+%\subsection{Recommender Systems} %\label{section:recommender-systems}
 
 The unleashed proliferation  of recommender systems for tourism domain, due to the current development of mobile Internet technology, has fostered a wide categorization of them. 
-Depending on the technique used to resolve recommendations, these systems are usually classified into two categories: memory-based and model-based~\cite{bobadilla2013recommender,sun2019building}. \textbf{Memory-based} recommender systems support their  suggestions on similarities among users and their shared items, hence recommending similar items to the ones the user likes (i.e., \textit{content-based recommendation}) or recommending items liked by users that are similar to the user (i.e., \textit{collaborative filtering}) \cite{ebrahim_2012}. \textbf{Model-based} recommender systems try to guess how much a user will like an item that they did not consume before, usually through statistical techniques and machine-learning models \cite{ebrahim_2012}. The recommender systems that use both memory-based and model-based approaches are called \textbf{hybrid} recommender systems.
+Depending on the technique used to resolve recommendations, these systems are usually classified into two categories: memory-based and model-based~\cite{bobadilla2013recommender,sun2019building}. \textbf{Memory-based} recommender systems support their  suggestions on similarities among users and their shared items, hence recommending similar items to the ones the user likes (i.e., \textit{content-based recommendation}) or recommending items liked by users that are similar to the user (i.e., \textit{collaborative filtering}) \cite{ebrahim_2012}. \textbf{Model-based} recommender systems try to guess how much a user will like an item that they did not consume before, usually through statistical techniques and machine-learning models \cite{ebrahim_2012}. The recommender systems that use both memory-based and model-based approaches are called \textbf{Hybrid} recommender systems.
 
 In this section, we survey some relevant and recent studies in the tourism domain, classifying them according these three categories and considering aspects related to  how they manage users' preferences and interests, the context awareness, the use of ontologies, and the variability of recommendations. We compare the related work in terms of these criteria and highlight the difference with our proposal.    
 
-\subsubsection{Context-awareness}
+\subsection{User information}
+Obviously, all recommender systems take into account some information related to the user, such as identification aspects (sex, age, profession, etc.), interest and preferences, or social relations. This information can be obtained from explicit (e.g., questionnaires)~\cite{jannach2020interactive} or implicit (e.g., by analyzing user's social networks) media~\cite{lin2018hybrid}. 
+
+Rajaonarivo et al.\cite{rajaonarivo2019rec} model the users' information considering their gender, age category (e.g., kid, adult, or elderly), and preferences, classified as thematic preferences (e.g., museum, theater) and historical preferences (e.g., 12th century).  ==> explicit 
+
+\cite{kesorn2017personalized} implicit Facebook basic (e.g., name, age) and  check-in data (e.g., visited places)  to identify users' interests and preferences.  
+
+\cite{logesh2019exploring,logesh2018personalised} opinion mining ==> users' preferences
+
+\cite{santos2019using} ==> health conditions,  physical and psychological collected through forms filled by users.
+
+
+\cite{bahramian_abbaspour_claramunt_2017} users' preferences and feedback assigned directly by the user.
+
+\cite{hidasi2016general} users' preferences ==> implicit/explicit feedback in social networks
+
+\textcolor{red}{Acomodar la redacción}
+
+======NUEVOS ======
+
+\cite{arigi2018context} context-aware, ontology based
+==> user  preferences  of  the  categories  of  tourism  and contextual information such as user locations, weather around tourist destinations and close time of   destination ; ontology as a representation of knowledge on the domain of tourism  category, the  user explicitly  states  an interest in a category of travel destination. There are four levels of user interest, those are not interested, less interested, interested enough and not interested
+
+Arigiet al. \cite{arigi2018context} proposed a context recom-mender based on the ontology system to represent knowledgein the tourism domain. The system recommended touristdestinations by using user preferences of the categories oftourism and contextual information, such as user locations,the weather of tourist destinations, and destination’s closingtime.
+
+
+\cite{alonso2012ontology}  The  system  is  capable  to offer personalized  suggestions to  citizens  and tourist including thosewith  special  needs. he  adaptation  is  concerned  with  several  issues typically  encountered  in  the  representation  of  user  profiles,such   as   cold-start   problem,   context-dependent   preferences representation,   content   filtering   and   user   feedback.   The approach   includes   a   Profile   Manager   for   predicting   user unknown   features   (or   preferences),   reducing   the   need   of querying the  user and expanding the  adaptation possibilities; a Preference Reasoner for handling context-dependent preferences; a Content Manager for creating flexible queries for retrieving and   integrating   the   content   of   heterogeneous information  sources,anda  Feedback  Manager  for interpreting user   feedback   to   refine   the   user   profile   to   progressively enhance the suggestions provided. Context: weather, day, transport, special needs. From explicit way takes only user preferences, it does not keep id information by stereotypes. Feedback implicit or explicit.
+Ontology for user preferences and context.
+
+
+SPETA ==> which uses knowledge of the user’s current location, preferences,as well as a history of past locations, in order to provide the type of recommender servicesthat tourists expect from a real tour guide. SPETA is a tool created for exploiting the information exposed by user preferences, based on similarities with a currentuser’s social network profile, as well as the contextual information extracted from the user’s location, determined by theuser’s mobile. Therefore, exploiting the processing provided by a pervasive terminal.
+
+
+
+
+\subsection{Context-awareness}
+In order to improve suggestions, the trend is to consider context aspects that describe a specif situation in a determined moment for a user, including transportation media, weather, time, or even health conditions. 
 
 Rajaonarivo et al.\cite{rajaonarivo2019rec} use a
-context-modeling approach that considers means of transportation, travel time and location; Kesorn et al. \cite{kesorn2017personalized} use the time of the day for achieving more suitable recommendations; Sun et al. \cite{sun2019building} use the context of geotagged pictures taken by the user for building the user model; Logest et al. \cite{logesh2019exploring} \cite{logesh2018personalised} also consider user context like user location; Santos et al. \cite{santos2019using} consider physical and psychological limitations; Bahmarian et al. \cite{bahramian_abbaspour_claramunt_2017} consider weather, time and day; Hidasi et al. \cite{hidasi2016general} propose a General Factorization Framework for context-aware recommender systems.
+context-modeling approach that considers means of transportation, travel time, and location. Kesorn et al. \cite{kesorn2017personalized} use the time of the day for achieving more suitable recommendations. Sun et al. \cite{sun2019building} use the context of geotagged pictures taken by the user for building the user model. Logest et al. \cite{logesh2019exploring} \cite{logesh2018personalised} also consider user context like user location. Santos et al. \cite{santos2019using} consider physical and psychological limitations of users. Bahmarian et al. \cite{bahramian_abbaspour_claramunt_2017} consider weather, time, and day. Hidasi et al. \cite{hidasi2016general} propose a General Factorization Framework for context-aware recommender systems.
 
-\subsubsection{Serendipity}
+\subsection{Serendipity}
+
+\textcolor{red}{Agregar por qué serendipia es buena en SR}
+
 Rajaonarivo et al. \cite{rajaonarivo2019rec} model considers previous activity of other users to recommend tours of POIs, thus reducing overspecialization and increasing serendipity, however experiments with this feature were not made.
 
-\subsubsection{Use of ontologies}
+\subsection{Use of ontologies}
+
+======
+
+Ontology-based  recommender  system  is  an  emerging  trend  in recommender   system~\cite{borras2014intelligent,yochum2020linked}.   Ontology represents   the   concepts   of   a certaindomain   and   their interrelations. In   an   ontology-based   recommender   system, preferences  are  richer  and  more  detailed  than  the  standard keywords-based ones. Moreover, ontology interprets terms with other  terms  according  to  their  semantic  relations.  Also,  its hierarchical  structure  allows  for  an  analysis  of  preferences  at different abstraction levels. Ontology is used to store and exploit the personal preferences of a user and has powerful modeling and reasoning  capabilities.  In  addition,  it  permits  a  high  degree  of knowledge sharing and reuse.
+
+
+======
+
+
+\textcolor{red}{Agregar por qué ontología es buena en SR}
+
+
 Rajaonarivo et al. \cite{rajaonarivo2019rec} export the data used to well known open data platforms before using it; Bahmarian et al. \cite{bahramian_abbaspour_claramunt_2017} based their proposal on spreading activation algorithms on the nodes of an e-tourism ontology.
+
+==============================
+
+RESUMIR DE \cite{bahramian_abbaspour_claramunt_2017}
+
+
+On  the other hand,  so  far  several  ontology-based  recommender systems  have  been  introduced (García-Crespo  et  al.,  2009;  Gutiérrez,  2008; Mínguez  et  al.,  2009;  Nogués,  2015;  Parundekar  and  Oguchi, 2012;  Ruotsalo  et  al.,  2013).However,  these  researches  do  not take  into  account  contextual  situation  in the recommendation process. Moreover, they do not update the contextualized user’s profile based on his feedbacks.
+
+====================================
+
 
 Table \ref{table:related-work} shows a summary of the survey. Rajaonarivo et al. \cite{rajaonarivo2019rec} is the only work that proposes a context-aware system using ontologies and approaching serendipity, however they did not experiment the serendipitous feature.
 
-\begin{table}[h!]
+
+\begin{table*}[h!]
     \centering
+    \caption{Related work on recommender systems for e-tourism}
+    \label{table:related-work}
+    \begin{tabular}{|c|c|c|c|c|c|} 
+        \hline
+        \textbf{Work} & \textbf{Category} & \textbf{Users' information} & \textbf{Context}&\textbf{Ontology}&\textbf{Serendepity} \\\hline \hline 
+        & Model-based  & Basic& Heath & User/Tourism & Aging\\    \hline
+                &Hybrid &Basic/Preferences & Transportation& Tourism & Spoil \\    \hline
+    \end{tabular}
+    
+    \end{table*}
+
+
+\begin{table*}[h!]
+    \centering
+    \caption{Related work on recommender systems for e-tourism}
+    \label{table:related-work}
     \begin{tabular}{ |>{\centering\arraybackslash}m{3cm}|>{\centering\arraybackslash}m{1cm}|>{\centering\arraybackslash}m{2.7cm}| } 
         \hline
         \textbf{Works} & \textbf{Type} & \textbf{Approaches} \\
@@ -101,7 +158,7 @@ Table \ref{table:related-work} shows a summary of the survey. Rajaonarivo et al.
     \end{tabular}
     \caption{Related work on recommender systems for e-tourism}
     \label{table:related-work}
-    \end{table}
+    \end{table*}
 
 % \subsection{Usage of ontologies: Spreading Activation} \label{section:usage-spreading-activation}
 % Previous work \cite{bahramian_abbaspour_claramunt_2017} integrates the concepts of recommender systems with ontologies at building a context-aware tourism recommender system based on the \textit{spreading activation} algorithm. In its authors' own words: "In spreading activation method, a given concept is represented by a node and has an activation value. A relation among different concepts is represented by a link between nodes and has a weight value. To initialize the algorithm, one or several nodes of a network are activated and these activations spread to the relevant nodes. This process is iterated until a stopping condition (e.g., number of node processed) is reached". The activation value of the node \(v_i\) is computed as follows:
