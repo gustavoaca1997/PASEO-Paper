@@ -34,8 +34,6 @@ In order to improve suggestions, the trend is to consider context aspects that d
 
 Many works use context-modeling approaches that mainly consider means of transportation, travel time,  location, or weather~\cite{rajaonarivo2019rec}\cite{bahramian_abbaspour_claramunt_2017}\cite{arigi2018context}\cite{kesorn2017personalized}\cite{logesh2019exploring} \cite{logesh2018personalised}.
 
-Santos et al. \cite{santos2019using} consider physical and psychological limitations of users. \textcolor{red}{Esto es contexto o es información del usuario? Ya está como inf. del usuario en la sección anterior. Considera algo de contexto?}
-
 
 SMARTMUSEUM~\cite{ruotsalo2013smartmuseum} only considers users' location as contextual information captured by the built-in sensors of mobile devices, such as GPS, accelerometers, and RFID readers. SPETA~\cite{garcia2009speta} also considers users' location extracted from users' mobile devices, but it takes into account current and the history of past locations. It also gathers from  mobile devices other contextual information, such as weather forecast and time.
 
@@ -56,7 +54,7 @@ Hidasi et al. \cite{hidasi2016general} propose a General Factorization Framework
 The system proposed in~\cite{alonso2012ontology}, is the only one among the referenced works that considers context-dependent   preferences, as our proposal,  related to weather, day, transport, and special needs.
 
 
-Sun et al. \cite{sun2019building} use the context of geotagged pictures taken by the user for building the user model. \textcolor{red}{Qué usa de contexto? Además falta referenciarla en la sección de user information}
+Sun et al. \cite{sun2019building} combine contextual information like weather, transportation, or textual information, with geotagged pictures taken by the user for building the user model.
 
 %Logest et al. \cite{logesh2019exploring} \cite{logesh2018personalised} also consider user context like user location.  LISRO
 
@@ -66,7 +64,8 @@ Sun et al. \cite{sun2019building} use the context of geotagged pictures taken by
 
 \subsection{Serendipity}
 
-\textcolor{red}{Agregar por qué serendipia es buena en SR}
+An useful goal for a recommender system is to be serendipitous, which accordingly to Kotkov et al. \cite{kotkov2016survey} means that the recommended items must be relevant, novel and unexpected. A relevant item is an item that the user likes, consumes or is interested in; a novel item is an item that the user has never seen or heard about in their life; an unexpected item is an item that significantly differ from the profile of the user. The same work explains the differences between novelty and unexpectedness: "First, a user may find an item unexpected even if she/he is familiar with the item. Second, to surprise a user, unexpected items have to differ from the user profile more than novel items".
+
 
 Rajaonarivo et al. \cite{rajaonarivo2019rec} model considers previous activity of other users to recommend tours of POIs, thus reducing overspecialization and increasing serendipity, however experiments with this feature were not made.
 
