@@ -142,10 +142,10 @@ Now we can define the novelty of a recommendation as follows:
     nov_{u, R} = \frac{ \displaystyle \sum_{p \in R}{nov_{u, p}} }{| R |}
 \end{equation}
 
-\subsection{Experiments}
+\subsection{Experiments} \label{section:experiments}
 We use different coefficients for the score (see section \ref{section:score}), and since we said $maxdist$ is $8$ for these experiments, we are ignoring it as argument. 
 
-\subsubsection{First configuration}
+\subsubsection{First configuration} \label{section:experiment-1}
 First we consider $k_1 = \frac{1}{4} + \frac{1}{9}$ for preference, $k_2 = \frac{1}{4} + \frac{1}{9}$ for activation, $k_3 = \frac{1}{4}$ for aging and $k_4 = \frac{1}{4} - \frac{2}{9}$ for distance from user, resulting on equation \ref{eq:score-1} and giving more priority to preference and activation and very little priority to distance from user. With these parameters we start simulating each user and their visits.
 \begin{equation} \label{eq:score-1}
     \begin{split}
@@ -194,7 +194,7 @@ At the second visit to Lyon (see table \ref{table:t1-3}), on a rainy workday in 
     \label{table:t1-3}
 \end{table}
 
-At the fourth visit to Niza, on a rainy workday in the early morning, the system recommends table \ref{table:t1-2} to $T_1$, where $p_1$ is Cinéma de Plein Air (from class \textit{Cinema}), $p_2$ is Ferronnerie d'art JC Rodriguez (from class \textit{CraftsmanShop}), $p_3$ is Atelier Hesperida (from class \textit{CraftsmanShop}), $p_4$ is Horlogerie Foltête	(from class \textit{CraftsmanShop}) and $p_5$ is Galerie Bizet (from class \textit{CraftsmanShop}).
+At the fourth visit to Niza, on a rainy workday in the early morning, the system recommends table \ref{table:t1-2} to $T_1$, where $p_1$ is Cinéma de Plein Air (from class \textit{Cinema}), $p_2$ is Ferronnerie d'art JC Rodriguez (from class \textit{CraftsmanShop}), $p_3$ is Atelier Hesperida (from class \textit{CraftsmanShop}), $p_4$ is Horlogerie Foltête	(from class \textit{CraftsmanShop}) and $p_5$ is Galerie Bizet (from class \textit{CraftsmanShop}). Since $T_1$ loves leisure places more than stores, the predicted preference for Cinéma de Plein Air is greater than the other ones on this visit. However, we can see that $\eta_{p_1}$ lowers down $score_{p_1}$ to a value not so different from $score_{p_2}$. Cinéma de Plein Air does not appear again before a snowy workday afternoon, due to its aging and the $T_1$'s context.
 
 \begin{table}[h!]
     \centering
@@ -214,9 +214,7 @@ At the fourth visit to Niza, on a rainy workday in the early morning, the system
     \label{table:t1-2}
 \end{table}
 
-Since $T_1$ loves leisure places more than stores, the predicted preference for Cinéma de Plein Air is greater than the other ones on this visit. However, we can see that $\eta_{p_1}$ lowers down $score_{p_1}$ to a value not so different from $score_{p_2}$. Cinéma de Plein Air does not appear again before a snowy workday afternoon, due to its aging and the $T_1$'s context.
-
-While the system recommends same places to $T_1$ and $T_2$ for their first visits to Niza, Lyon and Paris, at rainy workdays at afternoon, starting second visits the sets start to diverge. The system recommends to $T_1$ a set of leisure places and one interpretation center for the second visit to Lyon, but recommends a set with two archeological sites, one interpretation center and two remarkable buildings to $T_2$, in that order (see table \ref{table:t2-1}). The more diverse initial preferences of $T_2$ and the aging system are responsible for this.
+While the system recommends same places to $T_1$ and $T_2$ for their first visits to Niza, Lyon and Paris, at rainy workdays at afternoon, the sets start to diverge after the second visits. The system recommends to $T_1$ a set of leisure places and one interpretation center for the second visit to Lyon, but recommends a set with two archeological sites, one interpretation center and two remarkable buildings to $T_2$, in that order (see table \ref{table:t2-1}). The more diverse initial preferences of $T_2$ and the aging system are responsible for this.
 
 \begin{table}[h!]
     \centering
@@ -255,7 +253,7 @@ After many visits, again at a rainy workday at afternoon, the system recommends 
     \label{table:t2-2}
 \end{table}
 
-However, there are cases where $k_3$ is not high enough to make more diverse the recommendations, as in the two visits of $T_2$ to Paris on sunny workdays at early morning (see tables \ref{table:t2-3} and \ref{table:t2-4}), where the second visit is made after many visits. Both visits involve Garnier Opera (from class \textit{Palace}), Conciergerie (from class \textit{Palace}) and Le Manoir de Paris (from class \textit{InterpretationCentre}), as $p_2$, $p_3$ and $p_4$ for the first visit and $p_1$, $p_5$ and $p_2$ for the second visit, respectively.
+However, there are cases where $k_3$ is not high enough to make more diverse the recommendations, as in the two visits of $T_2$ to Paris on sunny workdays at early morning (see tables \ref{table:t2-3} and \ref{table:t2-4}), where the second one is made after many visits. Both visits involve Garnier Opera (from class \textit{Palace}), Conciergerie (from class \textit{Palace}) and Le Manoir de Paris (from class \textit{InterpretationCentre}), as $p_2$, $p_3$ and $p_4$ for the first visit and $p_1$, $p_5$ and $p_2$ for the second visit, respectively.
 
 \begin{table}[h!]
     \centering
@@ -293,7 +291,7 @@ However, there are cases where $k_3$ is not high enough to make more diverse the
     \label{table:t2-4}
 \end{table}
 
-Table \ref{table:config-1} shows the average of the recommendation metrics for each tourist. Averages of $pref_R$ of $T_1$'s and $T_2$'s visits are the highest ones, being greater than $0.8$ and hence closer to $1.0$, the maximum possible value. Next is $T_4$'s, being greater than $0.7$, which is still a good average preference. $T_3$'s average $pref_R$ is lower, but we can blame the amount of low initial preferences of $T_3$, as we can see on figure \ref{fig:tourist_hist}.
+Table \ref{table:config-1} shows the average of the recommendation metrics for each tourist using first configuration. Averages of $pref_R$ of $T_1$'s and $T_2$'s visits are the highest ones, being greater than $0.8$ and hence closer to $1.0$, the maximum possible value. Next is $T_4$'s, being greater than $0.7$, which is still a good average preference. $T_3$'s average $pref_R$ is lower, but we can blame the amount of low initial preferences of $T_3$, as we can see on figure \ref{fig:tourist_hist}.
 \begin{table}[h!]
     \centering
     \begin{tabular}{ |c|c|c|c|c| } 
@@ -309,19 +307,17 @@ Table \ref{table:config-1} shows the average of the recommendation metrics for e
        
         \hline
     \end{tabular}
-    \caption{Averages of recommendations metrics}
+    \caption{Averages of recommendations metrics with first configuration}
     \label{table:config-1}
 \end{table}
 
 The average $act_R$ of each tourist is greater than $4.0$. Theoretically, the maximum possible value is $6.0$, but since the relevance values obtained by the survey (see section \ref{section:relevances-survey}) do not reach their maximum possible value, which is $2.0$, it is impossible for these experiments.
 
-Average $\eta_R$ is very near $0.7$, hence the amount of "young" recommended places is high. Theoretically, the maximum possible value is $1.0$, but that would be possible if each recommendation involves POIs never recommended before.
+Average $\eta_R$ is very near $0.7$, hence the amount of "young" recommended places is high. Theoretically, the maximum possible value is $1.0$, but that would be possible if each recommendation involves POIs never recommended before. 
 
-Despite of recommending places with distance from user near $8.0$ km, the average $dist_{u,R}$ for each tourist is acceptable: greater than $4.0$ km and less than $5.0$ km. 
+Despite of recommending places with distance from user near $8.0$ km, the average $dist_{u,R}$ for each tourist is acceptable: greater than $4.0$ km and less than $5.0$ km. The novelties measured as we proposed on section \ref{section:metrics} have bad performance on four tourists.
 
-The novelties measured as we proposed on section \ref{section:metrics} have bad performance on four tourists.
-
-\subsubsection{Second configuration}
+\subsubsection{Second configuration} \label{section:experiment-2}
 Now we consider $k_1 = \frac{1}{4}$ for preference, $k_2 = \frac{1}{4}$ for activation, $k_3 = \frac{1}{4} + \frac{2}{9}$ for aging and $k_4 = \frac{1}{4} - \frac{2}{9}$ for distance from user, resulting on equation \ref{eq:score-2} and giving now more priority to aging.
 \begin{equation} \label{eq:score-2}
     \begin{split}
@@ -329,3 +325,101 @@ Now we consider $k_1 = \frac{1}{4}$ for preference, $k_2 = \frac{1}{4}$ for acti
                                         &+ \frac{17}{36} \cdot \eta_p - \frac{1}{36} \cdot \frac{dist_{u,p}}{8}
     \end{split}
 \end{equation}
+
+For the first visit of $T_1$ to Niza in a sunny workday at afternoon, the $\eta_R$ is $0.84$ using the second configuration (see table \ref{table:2nd-t1-niza-1}), while it is $0.80$ using the first configuration (see table \ref{table:1st-t1-niza-1}). Even the $pref_R$ improve, from $0.765$ to $0.799$, but the $act_R$ goes from $4.44$ to $4.33$.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c|c| } 
+        \hline
+        Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
+        \hline
+        $pref_c$    &  0.76 & 0.76 & 0.76 & 0.76 & 0.76 \\
+        $act_c$     & 4.44 & 4.44 & 4.44 & 4.44 & 4.44  \\
+        $\eta_p$    & 0.8 & 0.8 & 0.8 & 0.8 & 0.8 \\
+        $dist_{u,p}$ & 5.25 & 5.72 & 5.74 & 5.78 & 5.79 \\
+        $score_p$    & 2.06166 & 2.06004 & 2.05998 & 2.05983 & 2.05981 \\
+        
+        \hline
+    \end{tabular}
+    \caption{First visit of $T_1$ to Niza with first configuration on a sunny workday at afternoon}
+    \label{table:1st-t1-niza-1}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c|c| } 
+        \hline
+        Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
+        \hline
+        $pref_c$    &  0.76 & 0.76 & 0.935 & 0.76 & 0.76 \\
+        $act_c$     & 4.44 & 4.44 & 3.89 & 4.44 & 4.44  \\
+        $\eta_p$    & 0.8 & 0.8 & 1.0 & 0.8 & 0.8 \\
+        $dist_{u,p}$ & 5.20 & 5.25 & 5.30 & 5.72 & 5.73 \\
+        $score_p$    & 1.6612 & 1.6610 & 1.6597 & 1.6594 & 1.6593 \\
+        
+        \hline
+    \end{tabular}
+    \caption{First visit of $T_1$ to Niza with second configuration on a sunny workday at afternoon}
+    \label{table:2nd-t1-niza-1}
+\end{table}
+
+For the second visit of $T_4$ to Paris on a snowy weekend at early morning, the $\eta_R$ is $0.774$ using second configuration (see table \ref{table:1st-t4-Paris-2}), while it is $0.691$ using first configuration (see table \ref{table:2nd-t4-Paris-2}). The $pref_R$ and the $act_R$ decrease from $0.727$ to $0.699$ and from $4.332$ to $4.041$, respectively.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c|c| } 
+        \hline
+        Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
+        \hline
+        $pref_c$    &  0.866 & 0.866 & 0.790 & 0.866 & 0.866 \\
+        $act_c$     & 4.288 & 4.288 & 4.265 & 4.288 & 4.288  \\
+        $\eta_p$    & 0.4 & 0.4 & 0.4 & 0.2 & 0.2 \\
+        $dist_{u,p}$ & 5.899 & 6.297 & 4.253 & 3.791 & 4.546 \\
+        $score_p$    & 1.941 & 1.939 & 1.911 & 1.898 & 1.895 \\
+        
+        \hline
+    \end{tabular}
+    \caption{Second visit of $T_4$ to Paris with first configuration on a snowy weekend at early morning}
+    \label{table:1st-t4-Paris-2}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c|c| } 
+        \hline
+        Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
+        \hline
+        $pref_c$    &  0.866 & 0.866 & 0.738 & 0.866 & 0.866 \\
+        $act_c$     & 4.288 & 4.288 & 3.81 & 4.288 & 4.288  \\
+        $\eta_p$    & 1.0 & 1.0 & 0.6 & 0.2 & 0.2 \\
+        $dist_{u,p}$ & 3.791 & 4.546 & 5.333 & 5.899 & 6.297 \\
+        $score_p$    & 1.748 & 1.745 & 1.402 & 1.363 & 1.361 \\
+        
+        \hline
+    \end{tabular}
+    \caption{Second visit of $T_4$ to Paris with second configuration on a snowy weekend at early morning}
+    \label{table:2nd-t4-Paris-2}
+\end{table}
+
+Table \ref{table:config-2} shows the average of the recommendation metrics for each tourist using second configuration. Again, $T_1$'s and $T_2$'s $avg(pref_R)$ are the highest ones, followed by $T_4$'s, while $T_3$'s is the lowest. We can notice that only $T_1$'s and $T_2$'s $avg(pref_R)$ increase a little from the ones with first configuration, but the other two decrease. Again, all $avg(act_R)$ are above $4.0$, but each one decreases from the first configuration version. As expected, all $avg(\eta_R)$ increase because the second configuration gives more weight to aging.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c| } 
+        \hline
+        avg & $T_1$ & $T_2$ & $T_3$ & $T_4$ \\
+        \hline
+        \hline
+        $avg(pref_R)$ & 0.8658 & 0.8272 & 0.3912 & 0.6987 \\
+        $avg(act_R)$ & 4.0738 & 4.0818 & 4.0031 & 4.0415 \\
+        $avg(\eta_R)$ & 0.7592 & 0.7619 & 0.7850 & 0.7739 \\
+        $avg(nov_{u,R})$ & 0.172 & 0.1860 & 0.1986 & 0.1580 \\
+        $avg(dist_{u,R})$ & 4.842 & 5.0215 & 4.8999 & 4.9615 \\
+       
+        \hline
+    \end{tabular}
+    \caption{Averages of recommendations metrics with second configuration}
+    \label{table:config-2}
+\end{table}
+
