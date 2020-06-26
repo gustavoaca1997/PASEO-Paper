@@ -14,20 +14,23 @@ Depending on the technique used to resolve recommendations, these systems are us
 
 In this section, we survey some relevant and recent studies in the tourism domain, classifying them according these three categories and considering aspects related to  how they manage users' preferences and interests, the context awareness, the use of ontologies, and the variability of recommendations. We compare the related work in terms of these criteria and highlight the difference with our proposal.    
 
+\textcolor{red}{Agregar párrafo que clasifique todos los trabajos según el método}
+
 \subsection{User information}
 Obviously, all recommender systems take into account some information related to the user, such as identification aspects (sex, age, profession, etc.), interest and preferences, or social relations. This information can be obtained from explicit (e.g., questionnaires)~\cite{jannach2020interactive} or implicit (e.g., by analyzing feedbacks in user's social networks) media~\cite{lin2018hybrid}.  
 
-Some proposals are supported on users' interaction to obtain their data. In  %Rajaonarivo et al.
+Some proposals are supported on users' interaction to obtain their data (i.e., following a PULL paradigm). In  %Rajaonarivo et al.
 ~\cite{rajaonarivo2019rec}, authors model the users' information considering their gender, age category (e.g., kid, adult, or elderly), and preferences, classified as thematic preferences (e.g., museum, theater) and historical preferences (e.g., 12th century), that have to be provided by them through a user interface.  In~\cite{santos2019using}, only health,  physical, and psychological conditions are required  with forms filled by users. 
-Users' preferences and feedback are directly assigned by the users in the proposal presented in~\cite{bahramian_abbaspour_claramunt_2017}. As in ~\cite{arigi2018context}, users' interest (i.e., not interested, less interested, interested enough, and not interested) on tourism categories are asked to users. SMARTMUSEUM~\cite{ruotsalo2013smartmuseum}, asks users about the desired duration of a visit to a particular location, the motivation for a visit, and ability to consume the content offered by the system.
+Users' preferences and feedback are directly assigned by the users in the proposal presented in~\cite{bahramian_abbaspour_claramunt_2017}. As in ~\cite{arigi2018context}, users' interest (i.e., not interested, less interested, interested enough, and not interested) on tourism categories are asked to them. SMARTMUSEUM~\cite{ruotsalo2013smartmuseum}, asks users about the desired duration of a visit to a particular location, the motivation for a visit, and ability to consume the content offered by the system. The system proposed in~\cite{shen2016attraction} requires photos uploaded by users, from which it extracts their travel history; it also asks users to rank  POI (their favorite and non-favorite attractions).
  
 
 Other recommender systems extract users' information, mainly their preferences and interests, from available sources,
-without asking for explicit interaction.  The work presented in~\cite{kesorn2017personalized}, takes from Facebook basic information (e.g., name, age) and  check-in data (e.g., visited places)  to identify users' interests and preferences.  In~\cite{logesh2019exploring,logesh2018personalised}, 
-Users' preferences are deduced from social networks based on opinion mining techniques in~\cite{logesh2019exploring,logesh2018personalised} and on analyzing implicit/explicit feedback~\cite{hidasi2016general}. 
+without asking for explicit interaction.  The work presented in~\cite{kesorn2017personalized}, takes from Facebook basic information (e.g., name, age) and  check-in data (e.g., visited places)  to identify users' interests and preferences. 
+To automatically deduce users' preferences from their social networks, many techniques are used, such as  opinion mining~\cite{logesh2019exploring,logesh2018personalised}, analysis of implicit/explicit feedback~\cite{hidasi2016general}, and analyzing geotagged pictures~\cite{sun2019building}. 
+Curumim~\cite{menk2017curumim} takes from users' social networks their travel history and level of education, and predicts their degree of curiosity. Most of these works follow the PULL approach.
 
 
-Many other proposals combine both explicit and implicit users' information gathering. SPETA~\cite{garcia2009speta},  supports  its recommendation on the interest and rating  of tourism places that users explicitly provide, and on preferences deduced by analyzing their behavior on social networks. The system presented in~\cite{alonso2012ontology}, takes into account special needs and  context-dependent preferences on tourism sites, directly  provided by users, as well as explicit/implicit feedback on their social networks. 
+Many other proposals combine both explicit and implicit users' information gathering, also under the PULL paradigm. SPETA~\cite{garcia2009speta},  supports  its recommendation on the interest and rating  of tourism places that users explicitly provide, and on preferences deduced by analyzing their behavior on social networks. The system presented in~\cite{alonso2012ontology}, takes into account special needs and  context-dependent preferences on tourism sites, directly  provided by users, as well as explicit/implicit feedback on their social networks. 
 
 \subsection{Context-awareness}
 In order to improve suggestions, the trend is to consider context aspects that describe a specif situation in a determined moment for a user, including transportation media, weather, time, or even health conditions. 
@@ -35,13 +38,10 @@ In order to improve suggestions, the trend is to consider context aspects that d
 Many works use context-modeling approaches that mainly consider means of transportation, travel time,  location, or weather~\cite{rajaonarivo2019rec}\cite{bahramian_abbaspour_claramunt_2017}\cite{arigi2018context}\cite{kesorn2017personalized}\cite{logesh2019exploring} \cite{logesh2018personalised}.
 
 
-SMARTMUSEUM~\cite{ruotsalo2013smartmuseum} only considers users' location as contextual information captured by the built-in sensors of mobile devices, such as GPS, accelerometers, and RFID readers. SPETA~\cite{garcia2009speta} also considers users' location extracted from users' mobile devices, but it takes into account current and the history of past locations. It also gathers from  mobile devices other contextual information, such as weather forecast and time.
+SMARTMUSEUM~\cite{ruotsalo2013smartmuseum} only considers users' location as contextual information captured by the built-in sensors of mobile devices, such as GPS, accelerometers, and RFID readers. The system proposed in~\cite{shen2016attraction} collects automatically the users' current location (city, latitude, and longitude) and current time, thus recommendations are influenced by the geo-distance to POI. SPETA~\cite{garcia2009speta} also considers users' location extracted from users' mobile devices, but it takes into account current and the history of past locations. It also gathers from  mobile devices other contextual information, such as weather forecast and time. 
 
 
-
-
-Hidasi et al. \cite{hidasi2016general} propose a General Factorization Framework for context-aware recommender systems. \textcolor{red}{Qué usa de contexto?}
-
+A General Factorization Framework for context-aware recommender systems is proposed in~\cite{hidasi2016general}, with the aim of constructing factorization matrices (not matter which and how many context factors are considered) for machine learning techniques. In \cite{sun2019building}, it is used a combination of contextual information like weather, transportation, or textual information, with geotagged pictures taken by the user for building the user model.
 
 
 %The work proposed in~\cite{rajaonarivo2019rec},
@@ -51,10 +51,8 @@ Hidasi et al. \cite{hidasi2016general} propose a General Factorization Framework
 
 %Kesorn et al. \cite{kesorn2017personalized} use the time of the day for achieving more suitable recommendations. LISTO
 
-The system proposed in~\cite{alonso2012ontology}, is the only one among the referenced works that considers context-dependent   preferences, as our proposal,  related to weather, day, transport, and special needs.
+The system proposed in~\cite{alonso2012ontology}, is the only one among the referenced works that considers context-dependent   preferences, as our proposal,  related to weather, day, transport, and special needs. It means that users' preferences for POI, are expressed with regards the context (e.g., {\it indoor places when is raining}, {\it art exhibitions at night}).
 
-
-Sun et al. \cite{sun2019building} combine contextual information like weather, transportation, or textual information, with geotagged pictures taken by the user for building the user model.
 
 %Logest et al. \cite{logesh2019exploring} \cite{logesh2018personalised} also consider user context like user location.  LISRO
 
@@ -64,67 +62,48 @@ Sun et al. \cite{sun2019building} combine contextual information like weather, t
 
 \subsection{Serendipity}
 
-An useful goal for a recommender system is to be serendipitous, which accordingly to Kotkov et al. \cite{kotkov2016survey} means that the recommended items must be relevant, novel and unexpected. A relevant item is an item that the user likes, consumes or is interested in; a novel item is an item that the user has never seen or heard about in their life; an unexpected item is an item that significantly differ from the profile of the user. The same work explains the differences between novelty and unexpectedness: "First, a user may find an item unexpected even if she/he is familiar with the item. Second, to surprise a user, unexpected items have to differ from the user profile more than novel items".
+A useful goal for a recommender system is to be serendipitous, which 
+%accordingly to Kotkov et al. \cite{kotkov2016survey} 
+means that the recommended items must be relevant, novel, and unexpected. A relevant item is an item that the user likes, consumes, or is interested in; a novel item is an item that users have never seen or heard about in their life; an unexpected item is an item that significantly differ from the profile of the user. Some quite good recent surveys emphasize the importance of such as feature for recommender systems in general~\cite{kotkov2016survey,chen2019serendipity} and in the tourism domain~\cite{tintarev2010off,menk2019recommendation}.
+
+%The same work explains the differences between novelty and unexpectedness: "First, a user may find an item unexpected even if she/he is familiar with the item. Second, to surprise a user, unexpected items have to differ from the user profile more than novel items".
+
+It starts to be a trend to recommend  POI. The model considered in~\cite{rajaonarivo2019rec}, considers previous activity of other users to recommend tours of POI, thus reducing overspecialization and increasing serendipity, however experiments with this feature were not made. Authors of~\cite{shen2016attraction} assert that the proposed system is able to recommend fresh and surprise POI, based on collective intelligence.
+ From the level of curiosity predicted from users' social networks, Curumim~\cite{menk2017curumim}  adapts the degree of surprise and unexpectedness of a recommended POI, tailored to users' curiosity values. 
 
 
-Rajaonarivo et al. \cite{rajaonarivo2019rec} model considers previous activity of other users to recommend tours of POIs, thus reducing overspecialization and increasing serendipity, however experiments with this feature were not made.
 
-\textcolor{red}{Se pueden agregar otros ? Pero se tendrían que agregar en las otras sbsecciones que corresponda también}
+
+
+
+%Rajaonarivo et al. \cite{rajaonarivo2019rec} model considers previous activity of other users to recommend tours of POI, thus reducing overspecialization and increasing serendipity, however experiments with this feature were not made.
 
 \subsection{Use of ontologies}
 
-======
+The huge amount of data that can be managed in recommender systems, related to users' information, users' preferences, context factors, POI, etc.,   demands the use of more complex knowledge. Even though, recommender system is an area that has been the focus of many studies, thus reaching a very good level of maturity, there is still a lack of standardization to represent such information. In this sense, it is evident the necessity of a well-defined and standard model for representing the knowledge managed by recommender systems. Semantic Web, in particularly the use of ontologies, seems to be a clear solution, from which we can take its organizational and relational capacity.
+In the context of tourism, ontology-based  recommender  system  is  an  emerging  trend~\cite{borras2014intelligent,yochum2020linked}.
 
-Ontology-based  recommender  system  is  an  emerging  trend  in recommender   system~\cite{borras2014intelligent,yochum2020linked}.   Ontology represents   the   concepts   of   a certaindomain   and   their interrelations. In   an   ontology-based   recommender   system, preferences  are  richer  and  more  detailed  than  the  standard keywords-based ones. Moreover, ontology interprets terms with other  terms  according  to  their  semantic  relations.  Also,  its hierarchical  structure  allows  for  an  analysis  of  preferences  at different abstraction levels. Ontology is used to store and exploit the personal preferences of a user and has powerful modeling and reasoning  capabilities.  In  addition,  it  permits  a  high  degree  of knowledge sharing and reuse.
-
-
-======
+Some systems only count on ontologies to represent tourism  POI~\cite{rajaonarivo2019rec,bahramian_abbaspour_claramunt_2017,garcia2009speta,arigi2018context}. Other works consider user profile ontologies, besides tourism ontologies, such in~\cite{ruotsalo2013smartmuseum}. In~\cite{alonso2012ontology}, an ontology to represent user preferences and context factors is proposed.
 
 
-\textcolor{red}{Agregar por qué ontología es buena en SR}
+
+%Rajaonarivo et al. \cite{rajaonarivo2019rec} export the data used to well known open data platforms before using it; 
+
+%Bahmarian et al. 
+%\cite{bahramian_abbaspour_claramunt_2017} based their proposal on spreading activation algorithms on the nodes of an e-tourism ontology.
 
 
-Rajaonarivo et al. \cite{rajaonarivo2019rec} export the data used to well known open data platforms before using it; Bahmarian et al. \cite{bahramian_abbaspour_claramunt_2017} based their proposal on spreading activation algorithms on the nodes of an e-tourism ontology.
+\subsection{Discussion}
 
-==============================
+\textcolor{red}{VERIFICAR lo de PULL and PUSH}
 
-RESUMIR DE \cite{bahramian_abbaspour_claramunt_2017}
+\textcolor{red}{LLenar la Tabla, con inf específica (algunas cosas de conteto estan comentadas}
 
+Table \ref{table:related-work} shows a comparative evaluation  of the referenced works, in terms of \textcolor{red}{PONER los nobres de las columnas}. 
 
-On  the other hand,  so  far  several  ontology-based  recommender systems  have  been  introduced. However,  these  researches  do  not take  into  account  contextual  situation  in the recommendation process. Moreover, they do not update the contextualized user’s profile based on his feedbacks.
+Rajaonarivo et al. \cite{rajaonarivo2019rec} is the only work that proposes a context-aware system using ontologies and approaching serendipity, however they did not experiment the serendipitous feature.
 
-====================================
-
-======NUEVOS ======
-
-
- \cite{ruotsalo2013smartmuseum} SMARTMUSEUM ==> The  SMARTMUSEUM  system  is  designed  to  en-hance on-site personalized access to digital cultural her-itage.  The main purpose of the system is to serve theinformation needs of mobile users who are interested incultural heritage.  The system recommends objects onthe basis of a user profile and context information, suchas the physical location and motivation of the user.  Ifthe user is interested in a particular object, the systemcan  retrieve  information  about  that  object  and  relatedcontent  from  the  Web.
- Implicit and explicit desde una GUI (desktop scenario)
- The context service maps contextual data to the con-cepts defined in the ontologies. We look at two types ofcontext information: information that users volunteer toinput – items that are hard to capture via sensors, such as the duration of a visit to a particular location, the user’smotivation for a visit, and ability to consume the content
- offered by the system – and features that can be capturedby the built-in sensors of mobile devices, such as GPSreceivers, accelerometers, and RFID readers, to identifyobjects or the user’s location. ==> ontology-based user profiles and POI ontologies.
- 
- 
-
-
-\cite{arigi2018context} context-aware, ontology based
-==> user  preferences  of  the  categories  of  tourism  and contextual information such as user locations, weather around tourist destinations and close time of   destination ; ontology as a representation of knowledge on the domain of tourism  category, the  user explicitly  states  an interest in a category of travel destination. There are four levels of user interest, those are not interested, less interested, interested enough and not interested
-
-Arigiet al. \cite{arigi2018context} proposed a context recom-mender based on the ontology system to represent knowledgein the tourism domain. The system recommended touristdestinations by using user preferences of the categories oftourism and contextual information, such as user locations,the weather of tourist destinations, and destination’s closing time.
-
-
-\cite{garcia2009speta} SPETA ==> which uses knowledge of the user’s current location, preferences,as well as a history of past locations, in order to provide the type of recommender servicesthat tourists expect from a real tour guide. SPETA is a tool created for exploiting the information exposed by user preferences, based on similarities with a currentuser’s social network profile, as well as the contextual information extracted from the user’s location, determined by theuser’s mobile. Therefore, exploiting the processing provided by a pervasive terminal.
-real time location, weather forecast, time, user preferences, friend’s recommendations andhistory
-
-The user profile or preferences are constructed in two ways. The first one requires explicit interaction of the user, determining what their interests are, what kind of places they prefer to visit, and the ratings given to attractions. Additionally, ahuge amount of information can be extracted from the social networks they belong to, such as favourite painters, writers, ormusic preferences. Usage of the system provides feedback to the system itself, in other words, user behavior is taken intoconsideration. For example, the type of museums that are always visited by the user or his preferences regarding parksand gardens to spend the evening, etc.The system uses the power of third party social networks to extract information about the user ==> e-tourism ontology (POI)
-
-
-\cite{alonso2012ontology}  The  system  is  capable  to offer personalized  suggestions to  citizens  and tourist including thosewith  special  needs. he  adaptation  is  concerned  with  several  issues typically  encountered  in  the  representation  of  user  profiles,such   as   cold-start   problem,   context-dependent   preferences representation,   content   filtering   and   user   feedback.   The approach   includes   a   Profile   Manager   for   predicting   user unknown   features   (or   preferences),   reducing   the   need   of querying the  user and expanding the  adaptation possibilities; a Preference Reasoner for handling context-dependent preferences; a Content Manager for creating flexible queries for retrieving and   integrating   the   content   of   heterogeneous information  sources,anda  Feedback  Manager  for interpreting user   feedback   to   refine   the   user   profile   to   progressively enhance the suggestions provided. Context: weather, day, transport, special needs. From explicit way takes only user preferences, it does not keep id information but stereotypes. Feedback implicit or explicit.
-Ontology for user preferences and context.
-
-
-=============================
-
-Table \ref{table:related-work} shows a summary of the survey. Rajaonarivo et al. \cite{rajaonarivo2019rec} is the only work that proposes a context-aware system using ontologies and approaching serendipity, however they did not experiment the serendipitous feature.
+\textcolor{red}{Hacer el análisis y decir que nuestra propuesta es diferente porque considera todos los aspectos considerados, incluyendo PUSH}
 
 
 \begin{table*}[h!]
