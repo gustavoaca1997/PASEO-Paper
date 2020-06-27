@@ -1,7 +1,12 @@
 \section{Study case: experiments and evaluation} \label{section:study-case}
-To evaluate our system we need some initial data to define the \textit{relevances} and some (real or simulated) users to test with.
+%To evaluate our system we need some initial data to define the \textit{relevances} and some (real or simulated) users to test with.
 
-The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items.
+To evaluate our system, we developed a prototype with Java, 
+Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore, and a MySQL database for storing additional information of the nodes and items. Some initial data were obtained from real users through questionnaires and we simulate several scenarios  and users to test with.
+
+%need some initial data to define the \textit{relevances} and some (real or simulated) users to test with.
+
+%The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items.
 
 \subsection{Ontology Classes}
 A subset of a modified version of the ontology DATATourisme (figure \ref{fig:ontology}) is used. The modification consists of specializing the original ontology class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to that category. The subset consists of the \textit{Point of interest} class but only its \textit{Place} subclass, considering only the following \textit{Place}'s subclasses: \textit{Cultural Site, Food establishment, Leisure Place, Natural Heritage, Sports} and \textit{Store}. 
