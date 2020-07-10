@@ -1,21 +1,26 @@
 \section{Study case: experiments and evaluation} \label{section:study-case}
 %To evaluate our system we need some initial data to define the \textit{relevances} and some (real or simulated) users to test with.
 
-To evaluate our system, we developed a prototype with Java, 
+To evaluate our system,  we developed a prototype with Java, 
 Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore, and a MySQL database for storing additional information of the nodes and items. Some initial data were obtained from real users through questionnaires and we simulate several scenarios  and users to test with.
 
+\textcolor{red}{Decir que en particular estamos evaluando el modulo de recomendacion y de contexto?, cuál modulo no está implementado? }
 %need some initial data to define the \textit{relevances} and some (real or simulated) users to test with.
 
 %The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items.
 
 \subsection{Ontology Classes}
-A subset of a modified version of the ontology DATATourisme (figure \ref{fig:ontology}) is used. The modification consists of specializing the original ontology class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to that category. The subset consists of the \textit{Point of interest} class but only its \textit{Place} subclass, considering only the following \textit{Place}'s subclasses: \textit{Cultural Site, Food establishment, Leisure Place, Natural Heritage, Sports} and \textit{Store}. 
+We consider a light version o DATATourisme ontology\footnote{http://info.datatourisme.gouv.fr/ontology/core/2.0/}, consisting of the \textit{Point of interest} class, its \textit{Place} subclass, from which we take: \textit{Cultural Site, Food Establishment, Leisure Place, Natural Heritage, Sports} and \textit{Store}.  We slightly modified the ontology DATATourisme to specialize the class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to each category. Figure \ref{fig:ontology} shows the subset of classes of DATATourisme ontology, considered  in the experiments. 
+
+%A subset of a modified version of the ontology DATATourisme (Figure \ref{fig:ontology}) is used. The modification consists of specializing the original ontology class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to that category. The subset consists of the \textit{Point of interest} class but only its \textit{Place} subclass, considering only the following \textit{Place}'s subclasses: \textit{Cultural Site, Food establishment, Leisure Place, Natural Heritage, Sports} and \textit{Store}. 
 
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{ontology.png}
-\caption{Subset of the modified version of the ontology DATATourisme (http://info.datatourisme.gouv.fr/ontology/core/2.0/)}
+\caption{Subset of the modified version of the ontology DATATourisme
+%(http://info.datatourisme.gouv.fr/ontology/core/2.0/)
+}
 \label{fig:ontology}
 \end{figure}
 
@@ -39,24 +44,64 @@ The high level classes that are directly linked to the context factors are:
     \item \textit{Store}
 \end{itemize}
 
-\subsection{Relevances} \label{section:relevances-survey}
-To define each $r_{c,x}$ for each node $c$ and context factor $x$, it was decided to gather real data provided by real people through a survey and then average them. The survey consisted of the question "Answer how much a 'context factor' influences your decision to go to a place/event of the specified type (these types are not exclusive)". Then, for each of the high level classes, people had to answer a real value between $0$ and $10$, where:
+%\subsection{Relevances}
+\subsection{From real users to simulated scenarios}
+\label{section:relevances-survey}
+
+In order to test several scenarios with different user's preferences, profiles, and behaviors,  we created synthetic scenarios, however based on data gathered from real people.
+We asked people to fill a google form with two parts: 
+
+\begin{enumerate}
+    \item To determine the relevance for a user that a {\it context} factor has to decide to go to a {\it place/event}. The list of context factors included \textcolor{red}{COLOCAR CUALES}; and the place/event were related to the high level classes listed in the previous section. The question was "how much  'context factor' influences your decision to go to a 'place/event' of the specified type (these types are not exclusive)"  \textcolor{red}{NO eniendo muy bien la pregunta. Discutir}
+    
+people should answer a real value between $0$ and $10$, where: 
 \begin{itemize}
     \item $0$ means that if the context factor is met, you would not go to the place / event.
     \item 5 means you don't care if the context is met or not.
     \item 10 means that if the context is met, you would go to the place / event.
 \end{itemize}
+\textcolor{red}{Podemos cambiar a valor entero?}
 
-Then the following formula is applied to each feature or column, hence average them and transforming them to be on range $[0,2]$:
+Then, Eq. (\ref{eq:avg}) is applied to each feature or column, hence average them and transforming them to be on range $[0,2]$.
+\begin{equation}
+\label{eq:avg}
+AVG(column)/5
+\end{equation}
+
+\textcolor{red}{Por qué entre 5? quienes son las columnas?}
+
+
+ \item To determine users' preferences to tourism categories (i.e., classes of the POI ontology). In this part of the questionnaires, people provided their preferences  of high level ontology classes mentioned before, and also the genre, country, profession, age, and (optional) social networks to have more information for further work. 
+ 
+ %The answer should be integers on range $[1, 10]$. Again, answers were more concentrated on the middle and highest options, but there were few low answers.
+ 
+\end{enumerate}
+    
+    Both for relevance and preferences, we got around 100 answers from people of different ages, professions, and countries.  
+    
+\textcolor{red}{Explicar que con esta información se generaron usuarios sintéticos en diferentes escenarios de contextos y comotamientos  }
+
+%To define each $r_{c,x}$ for each node $c$ and context factor $x$, it was decided to gather real data provided by real people through a survey and then average them. The survey consisted of the question "Answer how much a 'context factor' influences your decision to go to a place/event of the specified type (these types are not exclusive)". Then, for each of the high level classes, people had to answer a real value between $0$ and $10$, where:
+%\begin{itemize}
+ %   \item $0$ means that if the context factor is met, you would not go to the place / event.
+  %  \item 5 means you don't care if the context is met or not.
+   % \item 10 means that if the context is met, you would go to the place / event.
+%\end{itemize}
+
+%Then the following formula is applied to each feature or column, hence average them and transforming them to be on range $[0,2]$:
 $$AVG(column)/5$$
 
-The form had a total of 34 answers. Something worth to mention was that the answers were concentrated between the options $0$, $5$ and $10$, maybe because it is easier to think something between the thoughts "I would not", "I don't care" and "I would", than to think something that is in the middle of two of those thoughts.
+%The form had a total of 34 answers. Something worth to mention was that the answers were concentrated between the options $0$, $5$ and $10$, maybe because it is easier to think something between the thoughts "I would not", "I don't care" and "I would", than to think something that is in the middle of two of those thoughts.
 
-\subsection{Users data}
-As explained before, a user of the system have to give initial preferences to some ontology classes. It was decided to make a form where people could answer their preferences of the high level ontology classes mentioned before. The form had a total of 63 answers. The genre, country, profession, age and (optional) social networks were also asked to have more information for further work. The answer should be integers on range $[1, 10]$. Again, answers were more concentrated on the middle and highest options, but there were few low answers.
+%\subsection{Users data}
+%As explained before, a user of the system have to give initial preferences to some ontology classes. It was decided to make a form where people could answer their preferences of the high level ontology classes mentioned before. The form had a total of 63 answers. The genre, country, profession, age and (optional) social networks were also asked to have more information for further work. The answer should be integers on range $[1, 10]$. Again, answers were more concentrated on the middle and highest options, but there were few low answers.
+
+\textcolor{red}{In a future version of our system,  this information will be gathered ........}
+
 
 \subsubsection{Simulated scenarios}
-To evaluate the system, it was decided to test it with simulated scenarios (simulated contexts and simulated users). A set of centroids of a set of clusters were chosen as the set of simulated users. The \textit{K-Means} algorithm was used to get the clusters and the \textit{Elbow Method} (see figure \ref{fig:elbow}) was used to choose $4$ as the number of clusters.
+To evaluate the system, it was decided to test it with simulated scenarios (simulated contexts and simulated users). A set of centroids of a set of clusters were chosen as the set of simulated users \textcolor{red}{De cual parte del cuestionario?}. The \textit{K-Means} algorithm was used to get the clusters and the \textit{Elbow Method} (see Figure \ref{fig:elbow}) was used to choose $4$ as the number of clusters. \textcolor{red}{Se puede explicar por qué 4?}
+
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.45]{elbow.png}
@@ -64,9 +109,12 @@ To evaluate the system, it was decided to test it with simulated scenarios (simu
     \label{fig:elbow}
 \end{figure}
 
-The centroids of the found clusters can be seen on table \ref{table:centroids}. On figure \ref{fig:tourist_hist} we can see how are initial preferences distributed for each tourist.
+The centroids of four clusters represent our four synthetic tourists, $T_1, T_2, T_3, T_4$. Table \ref{table:centroids} shows the preferences for each tourist to each tourism category, according our light version of DATATourise ontology.  Figure \ref{fig:tourist_hist} shows how the initial preferences are distributed for each tourist.
+%On figure \ref{fig:tourist_hist} we can see how are initial preferences distributed for each tourist.
 \begin{table}[h!]
 \centering
+\caption{Centroids to be used as simulated users.}
+\label{table:centroids}
 \begin{tabular}{ |c|c|c|c|c| } 
     \hline
     Class & $T_1$ & $T_2$ & $T_3$ & $T_4$ \\
@@ -107,8 +155,6 @@ The centroids of the found clusters can be seen on table \ref{table:centroids}. 
     
     \hline
 \end{tabular}
-\caption{Centroids to be used as simulated users.}
-\label{table:centroids}
 \end{table}
 
 \begin{figure}[h]
@@ -118,8 +164,10 @@ The centroids of the found clusters can be seen on table \ref{table:centroids}. 
     \label{fig:tourist_hist} 
 \end{figure}
 
+\textcolor{red}{Y con las relevancias qué se hizo? }
+
 \subsection{Metrics} \label{section:metrics}
-For each centroid of the clusters mentioned previously, we simulate two visits to Niza, Lyon and Paris for each possible context using each possible value for each context factor. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit, this set is going to be called the \textit{recommendation}. Let $R$ be a recommendation for a specific user on a specific location and a specific context, we define the following recommendation metrics:
+For each centroid of the clusters mentioned previously, we simulate two visits to Niza, Lyon, and Paris for each possible context using each possible value for each context factor \textcolor{red}{Se podría poner esto en una tablita para verlo más fácilmente, quizás por $T_i$?}. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit, this set is going to be called the \textit{recommendation}. Let $R$ be a recommendation for a specific user on a specific location and a specific context, we define the following recommendation metrics:
 \begin{equation}
     pref_{R} = \frac{ \displaystyle \sum_{p \in R}{pref_p} }{| R |}
 \end{equation}
@@ -147,8 +195,10 @@ Now we can define the novelty of a recommendation as follows:
     nov_{u, R} = \frac{ \displaystyle \sum_{p \in R}{nov_{u, p}} }{| R |}
 \end{equation}
 
+\textcolor{red}{Me parece que todas estas métricas y el proceso de recomendación  se deben explicar en la propuesta, en el módulo de recomendaión (el nro de recomendaciones es un parametro de configuracion). Aquí entonces solo se hablaria de que se consideranron los siguientes parámtros : nro recomem= 5, maxdist=8km asumiendo que el medio de transporte es auto o bici? Mejor hablar de todo la configuración, donde colocas las configurcaiones}
+
 \subsection{Experiments} \label{section:experiments}
-We use different coefficients for the score (see section \ref{section:score}), and since we said $maxdist$ is $8$ for these experiments, we are ignoring it as argument. 
+We use different coefficients for the score (see Section \ref{section:score}), and since we said $maxdist$ is $8$ for these experiments, we are ignoring it as argument. 
 
 \subsubsection{First configuration} \label{section:experiment-1}
 First we consider $k_1 = \frac{1}{4} + \frac{1}{9}$ for preference, $k_2 = \frac{1}{4} + \frac{1}{9}$ for activation, $k_3 = \frac{1}{4}$ for aging and $k_4 = \frac{1}{4} - \frac{2}{9}$ for distance from user, resulting on equation \ref{eq:score-1} and giving more priority to preference and activation and very little priority to distance from user. With these parameters we start simulating each user and their visits.
@@ -158,6 +208,10 @@ First we consider $k_1 = \frac{1}{4} + \frac{1}{9}$ for preference, $k_2 = \frac
                                         &+ \frac{1}{4} \cdot \eta_p - \frac{1}{36} \cdot \frac{dist_{u,p}}{8}
     \end{split}
 \end{equation}
+
+
+\textcolor{red}{Hace falta una tablita que muestre los contextos y las preferencias de cada Ti , y quizás también el weather real y la configuración (por configuración).
+Y en las tablas de recommendaciones poner pi (el sitio) y Quizás para que no hayan tantas tablas se puede hacer solo una con todas las visitas por turista y mostrar los 4 turistas. Podemos habla para decidir cómo irían las tablas.}
 
 We are showing some sets of recommended items like table \ref{table:t1-1}, where each $p_i$ is a recommended place and $score_{p_i} \ge score_{p_j}$ for every $i < j$. Table \ref{table:t1-1} corresponds to $T_1$'s first visit to Niza, on a rainy workday in the morning, where $p_1$ is Train des Merveilles (from class \textit{TouristTrain}), $p_2$ is Cinéma de Plein Air (from class \textit{Cinema}), $p_3$ is Casino de Beaulieu (from class \textit{Casino}), $p_4$ is Cinéma de Beaulieu (from class \textit{Cinema}) and $p_5$ is Lyon-style petanque fields (from class \textit{BoulesPitch}). We can see that since each of the places' ontology classes are subclasses of \textit{LeisurePlace}, which $T_1$ loves, they have same preference and activation and since this is the first recommendation, all aging values are $1.0$. Therefore, the distance is the tiebreaker. Despite of a rainy morning, the system recommends a tourist train to $T_1$, just because it is a leisure place.
 \begin{table}[h!]
