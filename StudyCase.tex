@@ -1,11 +1,10 @@
 \section{Study case: experiments and evaluation} \label{section:study-case}
 %To evaluate our system we need some initial data to define the \textit{relevances} and some (real or simulated) users to test with.
 
-To evaluate our system,  we developed a prototype with Java, 
+To evaluate our system,  we developed a prototype\footnote{https://github.com/gustavoaca1997/datatourisme-recommender}, with Java, 
 Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore, and a MySQL database for storing additional information of the nodes and items. Some initial data were obtained from real users through questionnaires and we simulate several scenarios  and users to test with.
 
-\textcolor{red}{Decir que en particular estamos evaluando el modulo de recomendacion y de contexto?, cuál modulo no está implementado? }
-%need some initial data to define the \textit{relevances} and some (real or simulated) users to test with.
+In this section, we are particularly testing the User Interest Model Module, Recommendation Module and the Activation Propagation from the Context Module, while the Data Gathering Module and the context gathering (Location and Context Factors) are simulated.
 
 %The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items.
 
@@ -52,24 +51,19 @@ In order to test several scenarios with different user's preferences, profiles, 
 We asked people to fill a google form with two parts: 
 
 \begin{enumerate}
-    \item To determine the relevance for a user that a {\it context} factor has to decide to go to a {\it place/event}. The list of context factors included \textcolor{red}{COLOCAR CUALES}; and the place/event were related to the high level classes listed in the previous section. The question was "how much  'context factor' influences your decision to go to a 'place/event' of the specified type (these types are not exclusive)"  \textcolor{red}{NO eniendo muy bien la pregunta. Discutir}
-    
-people should answer a real value between $0$ and $10$, where: 
+    \item To determine the relevances for each context factor. The list of asked context factors included weather (with possible values {\tt rainy, cloudless, snowy}), time (with possible values {\tt wearly morning, morning, afternoon, night}) and day (with possible values {\tt weekday, weekend}). The list of asked types of POIs was the high level classes listed in the previous section. The question was "how much the context factor $c$ with value $v$ influences your decision to go to a 'place/event' of the type $t$ (these types are not exclusive)". People should answer an integer value between $0$ and $10$, where: 
 \begin{itemize}
     \item $0$ means that if the context factor is met, you would not go to the place / event.
     \item 5 means you don't care if the context is met or not.
     \item 10 means that if the context is met, you would go to the place / event.
 \end{itemize}
-\textcolor{red}{Podemos cambiar a valor entero?}
 
-Then, Eq. (\ref{eq:avg}) is applied to each feature or column, hence average them and transforming them to be on range $[0,2]$.
+Then, Eq. (\ref{eq:avg}) is applied to each context factor, hence average them and transforming them to be on range $[0,2]$ by dividing by $5$.
+
 \begin{equation}
-\label{eq:avg}
-AVG(column)/5
+    \label{eq:avg}
+    AVG(contextfactor)/5
 \end{equation}
-
-\textcolor{red}{Por qué entre 5? quienes son las columnas?}
-
 
  \item To determine users' preferences to tourism categories (i.e., classes of the POI ontology). In this part of the questionnaires, people provided their preferences  of high level ontology classes mentioned before, and also the genre, country, profession, age, and (optional) social networks to have more information for further work. 
  
@@ -77,9 +71,8 @@ AVG(column)/5
  
 \end{enumerate}
     
-    Both for relevance and preferences, we got around 100 answers from people of different ages, professions, and countries.  
+    Both for relevance and preferences, we got around 100 answers from people of different ages, professions, and countries.  With this information a set of synthetic touris is generated, with different behaviors for different context scenarios.
     
-\textcolor{red}{Explicar que con esta información se generaron usuarios sintéticos en diferentes escenarios de contextos y comotamientos  }
 
 %To define each $r_{c,x}$ for each node $c$ and context factor $x$, it was decided to gather real data provided by real people through a survey and then average them. The survey consisted of the question "Answer how much a 'context factor' influences your decision to go to a place/event of the specified type (these types are not exclusive)". Then, for each of the high level classes, people had to answer a real value between $0$ and $10$, where:
 %\begin{itemize}
@@ -89,18 +82,15 @@ AVG(column)/5
 %\end{itemize}
 
 %Then the following formula is applied to each feature or column, hence average them and transforming them to be on range $[0,2]$:
-$$AVG(column)/5$$
+% $$AVG(column)/5$$
 
 %The form had a total of 34 answers. Something worth to mention was that the answers were concentrated between the options $0$, $5$ and $10$, maybe because it is easier to think something between the thoughts "I would not", "I don't care" and "I would", than to think something that is in the middle of two of those thoughts.
 
 %\subsection{Users data}
 %As explained before, a user of the system have to give initial preferences to some ontology classes. It was decided to make a form where people could answer their preferences of the high level ontology classes mentioned before. The form had a total of 63 answers. The genre, country, profession, age and (optional) social networks were also asked to have more information for further work. The answer should be integers on range $[1, 10]$. Again, answers were more concentrated on the middle and highest options, but there were few low answers.
 
-\textcolor{red}{In a future version of our system,  this information will be gathered ........}
-
-
 \subsubsection{Simulated scenarios}
-To evaluate the system, it was decided to test it with simulated scenarios (simulated contexts and simulated users). A set of centroids of a set of clusters were chosen as the set of simulated users \textcolor{red}{De cual parte del cuestionario?}. The \textit{K-Means} algorithm was used to get the clusters and the \textit{Elbow Method} (see Figure \ref{fig:elbow}) was used to choose $4$ as the number of clusters. \textcolor{red}{Se puede explicar por qué 4?}
+To evaluate the system, it was decided to test it with simulated scenarios (simulated contexts and simulated users). A set of centroids of a set of clusters were chosen as the set of simulated users from the user preferences gathered before. The \textit{K-Means} algorithm was used to get the clusters and the \textit{Elbow Method} (see Figure \ref{fig:elbow}) was used to choose $4$ as the number of clusters, since increasing this number does not make improvements worth the cost using our small dataset. In future work, a larger dataset should be used.
 
 \begin{figure}[h]
     \centering
@@ -164,7 +154,66 @@ The centroids of four clusters represent our four synthetic tourists, $T_1, T_2,
     \label{fig:tourist_hist} 
 \end{figure}
 
-\textcolor{red}{Y con las relevancias qué se hizo? }
+For our experiments, the same relevances are shared between synthetic users, however future work should evaluate different relevances for each user tested. These relevances are shown on table \ref{table:relevances-experiment}.
+
+\begin{table*}[h!]
+\centering
+\caption{Centroids to be used as simulated users.}
+\label{table:relevances-experiment}
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c| } 
+    \hline
+    \textbf{Class} & \textbf{rainy} & \textbf{cloudless} & \textbf{snowy} & \textbf{workday} & \textbf{weekend} & \textbf{morning} & \textbf{afternoon} & \textbf{night} & \textbf{early morning} \\
+    \hline
+    \hline
+
+    Museum & 1.0 & 1.394 & 1.029 & 1.082 & 1.488 & 1.065 & 1.518 & 0.788 & 0.194 \\ \hline
+    
+    Interpretation Centre & 0.871 & 1.312 & 0.829 & 1.029 & 1.424 & 1.029  & 1.382 & 0.771 & 0.135 \\ \hline
+
+    Libreary & 1.271 & 1.388  & 1.188  & 1.312 &1.159 & 1.324 & 1.453 & 0.729  & 0.271 \\ \hline
+
+    Park and garden &
+    0.335 & 1.847  & 0.894 & 1.365 & 1.665 & 1.388  & 1.629 & 0.924 & 0.494  \\ \hline
+
+    Archeological Site &
+    0.476 & 1.488 & 0.671 & 0.782 & 1.471 & 1.235 & 1.424 & 0.682  & 0.335 \\ \hline
+
+    Religious Site &
+    0.8 & 1.018 & 0.841  & 0.641  & 1.106 & 1.018 & 0.971 & 0.529  & 0.1 \\ \hline
+
+    Remarkable building &
+    0.912 & 1.576  & 0.994  & 1.165 & 1.506 & 1.241  & 1.453 & 1.0056 & 0.324 \\ \hline
+    
+    City heritage &
+    0.665 & 1.629  & 0.947  & 1.088  & 1.618 & 1.329  & 1.565 & 1.271 & 0.5 \\ \hline
+    
+    Defense Site &
+    0.712 & 1.412 & 0.806 & 0.835  & 1.376  & 1.253 & 1.388  & 0.824 & 0.265 \\ \hline
+    
+    Remembrance Site &
+    0.588  & 1.318 & 0.812 & 0.935  & 1.306 & 1.129  & 1.294  & 0.6 & 0.324 \\ \hline
+    
+    Technical Heritage &
+    0.582  & 1.371 & 0.682  & 0.841  & 1.3 & 1.265 & 1.3 & 0.741  & 0.3 \\ \hline
+    
+    Food Stablishment &
+    1.488  & 1.624 & 1.494  & 1.635  & 1.759 & 1.353 & 1.671 & 1.676  & 0.688  \\ \hline
+    
+    Natural Heritage &
+    0.494  & 1.776 & 0.835  & 1.088  & 1.659 & 1.535  & 1.524 & 0.953 & 0.465 \\ \hline
+    
+    Leisure place &
+    1.088  & 1.541  & 1.006 & 1.118 & 1.588  & 1.024 & 1.506 & 1.418 & 0.588  \\ \hline
+    
+    Sports &
+    0.1 & 2.0 & 0.75 & 1.118 & 1.588  & 1.024 & 1.506 & 0.8 & 0.588  \\ \hline
+    
+    Store &
+    1.312 & 1.535  & 1.241  & 1.388  & 1.435  &1.0588  & 1.547  & 1.1647  & 0.3 \\ \hline
+
+
+\end{tabular}
+\end{table*}
 
 \subsection{Metrics} \label{section:metrics}
 For each centroid of the clusters mentioned previously, we simulate two visits to Niza, Lyon, and Paris for each possible context using each possible value for each context factor \textcolor{red}{Se podría poner esto en una tablita para verlo más fácilmente, quizás por $T_i$?}. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit, this set is going to be called the \textit{recommendation}. Let $R$ be a recommendation for a specific user on a specific location and a specific context, we define the following recommendation metrics:
@@ -194,8 +243,6 @@ Now we can define the novelty of a recommendation as follows:
 \begin{equation}
     nov_{u, R} = \frac{ \displaystyle \sum_{p \in R}{nov_{u, p}} }{| R |}
 \end{equation}
-
-\textcolor{red}{Me parece que todas estas métricas y el proceso de recomendación  se deben explicar en la propuesta, en el módulo de recomendaión (el nro de recomendaciones es un parametro de configuracion). Aquí entonces solo se hablaria de que se consideranron los siguientes parámtros : nro recomem= 5, maxdist=8km asumiendo que el medio de transporte es auto o bici? Mejor hablar de todo la configuración, donde colocas las configurcaiones}
 
 \subsection{Experiments} \label{section:experiments}
 We use different coefficients for the score (see Section \ref{section:score}), and since we said $maxdist$ is $8$ for these experiments, we are ignoring it as argument. 
@@ -312,7 +359,7 @@ After many visits, again at a rainy workday at afternoon, the system recommends 
     \label{table:t2-2}
 \end{table}
 
-However, there are cases where $k_3$ is not high enough to make more diverse the recommendations, as in the two visits of $T_2$ to Paris on sunny workdays at early morning (see tables \ref{table:t2-3} and \ref{table:t2-4}), where the second one is made after many visits. Both visits involve Garnier Opera (from class \textit{Palace}), Conciergerie (from class \textit{Palace}) and Le Manoir de Paris (from class \textit{InterpretationCentre}), as $p_2$, $p_3$ and $p_4$ for the first visit and $p_1$, $p_5$ and $p_2$ for the second visit, respectively.
+However, there are cases where $k_3$ is not high enough to make more diverse the recommendations, as in the two visits of $T_2$ to Paris on cloudless workdays at early morning (see tables \ref{table:t2-3} and \ref{table:t2-4}), where the second one is made after many visits. Both visits involve Garnier Opera (from class \textit{Palace}), Conciergerie (from class \textit{Palace}) and Le Manoir de Paris (from class \textit{InterpretationCentre}), as $p_2$, $p_3$ and $p_4$ for the first visit and $p_1$, $p_5$ and $p_2$ for the second visit, respectively.
 
 \begin{table}[h!]
     \centering
@@ -328,7 +375,7 @@ However, there are cases where $k_3$ is not high enough to make more diverse the
         
         \hline
     \end{tabular}
-    \caption{First visit of $T_2$ to Paris with first configuration on a sunny workday at early morning}
+    \caption{First visit of $T_2$ to Paris with first configuration on a cloudless workday at early morning}
     \label{table:t2-3}
 \end{table}
 
@@ -346,7 +393,7 @@ However, there are cases where $k_3$ is not high enough to make more diverse the
         
         \hline
     \end{tabular}
-    \caption{Second visit of $T_2$ to Paris with first configuration on a sunny workday at early morning}
+    \caption{Second visit of $T_2$ to Paris with first configuration on a cloudless workday at early morning}
     \label{table:t2-4}
 \end{table}
 
@@ -385,7 +432,7 @@ Now we consider $k_1 = \frac{1}{4}$ for preference, $k_2 = \frac{1}{4}$ for acti
     \end{split}
 \end{equation}
 
-For the first visit of $T_1$ to Niza in a sunny workday at afternoon, the $\eta_R$ is $0.84$ using the second configuration (see table \ref{table:2nd-t1-niza-1}), while it is $0.80$ using the first configuration (see table \ref{table:1st-t1-niza-1}). Even the $pref_R$ improve, from $0.765$ to $0.799$, but the $act_R$ goes from $4.44$ to $4.33$.
+For the first visit of $T_1$ to Niza in a cloudless workday at afternoon, the $\eta_R$ is $0.84$ using the second configuration (see table \ref{table:2nd-t1-niza-1}), while it is $0.80$ using the first configuration (see table \ref{table:1st-t1-niza-1}). Even the $pref_R$ improve, from $0.765$ to $0.799$, but the $act_R$ goes from $4.44$ to $4.33$.
 
 \begin{table}[h!]
     \centering
@@ -401,7 +448,7 @@ For the first visit of $T_1$ to Niza in a sunny workday at afternoon, the $\eta_
         
         \hline
     \end{tabular}
-    \caption{First visit of $T_1$ to Niza with first configuration on a sunny workday at afternoon}
+    \caption{First visit of $T_1$ to Niza with first configuration on a cloudless workday at afternoon}
     \label{table:1st-t1-niza-1}
 \end{table}
 
@@ -419,7 +466,7 @@ For the first visit of $T_1$ to Niza in a sunny workday at afternoon, the $\eta_
         
         \hline
     \end{tabular}
-    \caption{First visit of $T_1$ to Niza with second configuration on a sunny workday at afternoon}
+    \caption{First visit of $T_1$ to Niza with second configuration on a cloudless workday at afternoon}
     \label{table:2nd-t1-niza-1}
 \end{table}
 
