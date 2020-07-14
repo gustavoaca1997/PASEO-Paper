@@ -32,10 +32,9 @@ values between $0$ and $1$, for the higher classes of the POI ontology. To obtai
 
 \subsection{User Interest Model Module}
 Inspired on the work of Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we introduce the concept of \textbf{semantic network}: a tourism ontology extended with the user's preferences (see Figure \ref{fig:initial_pref}) and context factor links
-%, a concept we explain later 
-(see Figure \ref{fig:init_act}). Just like Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we take advantage of the hierarchical shape of the semantic network for propagating the preference of superclasses to subclasses. Alongside preferences, each node of the semantic network has a \textbf{confidence} related to the user, a 
-%real 
-value between $0$ and $1$ that defines how sure is the system that the computed preference is the real one. \textcolor{red}{SE PODRA explicar con un ejemplo eso de que tan seguro es la preferencia? Tambien decir que la confianza inicial siempre es uno y se disminuye en función de xxxx} For computing the preference ($pref_c$) and the confidence ($conf_c$) of each class $c$, we use Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), respectively; where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_p$ is the preference of the class $p$, $conf_p$ is the confidence of the class $p$, and $\alpha$ is the \textit{decrease rate} that will tell how much should decrease the \textit{confidence} at each level. 
+(see Figure \ref{fig:init_act}). Just like Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we take advantage of the hierarchical shape of the semantic network for propagating the preference of superclasses to subclasses. Alongside preferences, each node of the semantic network has a \textbf{confidence} related to the user, a value between $0$ and $1$ that defines how sure is the system that the computed preference is the real one, i.e. a weight that is near $1$ if the computed preference is probable to be the actual user's preference, and near $0$ if it is not. When a preference is explicitly given by the user, its confidence is $1$, but when it is inferred from its ancestors or other kind of analysis, its confidence should be less than $1$. 
+
+For computing the preference $pref_c$ and the confidence $conf_c$ of each class $c$, we use Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), respectively; where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_p$ is the preference of the class $p$, $conf_p$ is the confidence of the class $p$, and $\alpha$ is the \textit{decrease rate} that will tell how much should decrease the \textit{confidence} at each level. 
 
 
 \begin{equation} \label{eq:preference}
@@ -46,16 +45,10 @@ value between $0$ and $1$ that defines how sure is the system that the computed 
     conf_c = \frac{\displaystyle \sum_{p \in ancestors(c)} {conf_p}}{|ancestors(c)|} - \alpha
 \end{equation}
 
-%where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_c$ is the preference of the class $c$, $conf_c$ is the confidence of the class $c$ and $\alpha$ is the \textit{decrease rate} that will tell how much should decrease the \textit{confidence} at each level. 
+These calculations are applied to each node traversing from the higher classes, whose preferences are obtained from the Data Gathering Module, to the \textit{sinks}, while decreasing confidence values and therefore preference values. 
+This process is called \textbf{preference propagation}. 
 
-\textcolor{red}{Explicar un poquito las ecuaciones: la confianza va disminuyendo a medida que .... y por lo tanto también las  preferencias que se calculan en función de dicha confianza.... }
-These calculations
-%formulas 
-are 
-applied to each node traversing from the higher classes, whose preferences are obtained from the Data Gathering Module, to the leaves. 
-This process is called \textbf{preference propagation}. Figure~\ref{fig:pref_prop} shows the result of this process with the initial preferences and confidences shown in Figure~\ref{fig:initial_pref}.    
-%and figures \ref{fig:initial_pref} and 
-%\ref{fig:pref_prop} show an example.
+Figure~\ref{fig:initial_pref} shows an example of initial preferences gathered with values $0.85$, $0.5$ and $0.7$ for the initial ontology classes \textit{Cultural}, \textit{Store} and \textit{Sport}, respectively. The initial confidence for each preference is $1$, since they are gathered explicitly from the user. Then Figure~\ref{fig:pref_prop} shows the preference propagation with these values, applying Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), with $\alpha = 0.1$.
 
 \begin{figure}[h]
 \centering
@@ -63,14 +56,6 @@ This process is called \textbf{preference propagation}. Figure~\ref{fig:pref_pro
 \caption{Initial preferences for {\tt Cultural, Store}, and {\tt Sport} classes}
 \label{fig:initial_pref}
 \end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.45]{draws/initial_act.jpg}
-\caption{System receives {\tt sunny, night, weekend} as user context preferences}
-\label{fig:init_act}
-\end{figure}
-
 
 \begin{figure}[h]
 \centering
@@ -111,12 +96,12 @@ Figures \ref{fig:init_act}, \ref{fig:high_act} and \ref{fig:spread_act} show an 
 
 %These formulas are used for an \textbf{activation propagation} from the higher classes. Figures \ref{fig:init_act}, \ref{fig:high_act} and \ref{fig:spread_act} show an example.
 
-%\begin{figure}[h]
-%\centering
-%\includegraphics[scale=0.45]{draws/initial_act.jpg}
-%\caption{System receives (sunny, night, weekend) as user context}
-%\label{fig:init_act}
-%\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.45]{draws/initial_act.jpg}
+\caption{System receives {\tt sunny, night, weekend} as user context}
+\label{fig:init_act}
+\end{figure}
 
 
 \begin{figure}[h]
