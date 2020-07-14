@@ -26,7 +26,7 @@ Users' preferences and feedback are directly assigned by the users in the propos
 
 Other recommender systems extract users' information, mainly their preferences and interests, from available sources,
 without asking for explicit interaction.  The work presented in~\cite{kesorn2017personalized}, takes from Facebook basic information (e.g., name, age) and  check-in data (e.g., visited places)  to identify users' interests and preferences. 
-To automatically deduce users' preferences from their social networks, many techniques are used, such as  opinion mining~\cite{logesh2019exploring,logesh2018personalised}, analysis of implicit/explicit feedback~\cite{hidasi2016general}, and analyzing geotagged pictures~\cite{sun2019building}. 
+To automatically deduce users' preferences from their social networks, many techniques are used, such as opinion mining~\cite{logesh2019exploring,logesh2018personalised}, analysis of implicit/explicit feedback~\cite{hidasi2016general}, and analyzing geotagged pictures~\cite{sun2019building}. 
 Curumim~\cite{menk2017curumim} takes from users' social networks their travel history and level of education, and predicts their degree of curiosity. Most of these works follow the PULL approach.
 
 
@@ -95,15 +95,11 @@ Some systems only count on ontologies to represent tourism  POI~\cite{rajaonariv
 
 \subsection{Discussion}
 
-\textcolor{red}{VERIFICAR lo de PULL and PUSH}
-
-\textcolor{red}{LLenar la Tabla, con inf específica (algunas cosas de conteto estan comentadas}
-
-Table \ref{table:related-work} shows a comparative evaluation  of the referenced works, in terms of \textcolor{red}{PONER los nobres de las columnas}. 
+Table \ref{table:related-work} shows a comparative evaluation  of the referenced works, in terms of \textbf{category} of the system (model-based, hybrid, etc.), type of \textbf{user's information} gathered, \textbf{context} factors considered, \textbf{ontology} used and how they handle \textbf{serendipity}. 
 
 Rajaonarivo et al. \cite{rajaonarivo2019rec} is the only work that proposes a context-aware system using ontologies and approaching serendipity, however they did not experiment the serendipitous feature.
 
-\textcolor{red}{Hacer el análisis y decir que nuestra propuesta es diferente porque considera todos los aspectos considerados, incluyendo PUSH}
+Our work does evaluate the serendipity of our proposed system, which can support the PUSH paradigm by implicitly gathering users' preferences and context, and the PULL paradigm by explicit user interactions.
 
 
 \begin{table*}[h!]
@@ -112,70 +108,41 @@ Rajaonarivo et al. \cite{rajaonarivo2019rec} is the only work that proposes a co
     \label{table:related-work}
     \begin{tabular}{|c|c|c|c|c|c|} 
         \hline
-        \textbf{Work} & \textbf{Category} & \textbf{Users' information} & \textbf{Context}&\textbf{Ontology}&\textbf{Serendepity} \\\hline \hline 
-        & Model-based  & Basic& Heath & User/Tourism & Aging\\    \hline
-                &Hybrid &Basic/Preferences & Transportation& Tourism & Spoil \\    \hline
+        \textbf{Work} & \textbf{Category} & \textbf{Users' information} & \textbf{Context}&\textbf{Ontology}&\textbf{Serendepity} \\
+        \hline \hline 
+
+        \cite{rajaonarivo2019rec} & Hybrid & Basic, Preferences & Transportation, Location, Weather & Tourism & Collaborative \\ \hline
+
+        \cite{santos2019using} & Model-based & Health & & & \\ \hline
+
+        \cite{bahramian_abbaspour_claramunt_2017} & Hybrid & Preferences & Weather, Time, Day & Tourism, Context & \\ \hline
+
+        \cite{arigi2018context} & Model-based & Preferences & Transportation, Location, Weather & Tourism & \\ \hline
+
+        \cite{ruotsalo2013smartmuseum} & Model-based & Duration, Motivation, Ability & Location & Tourism, User & \\ \hline
+
+        \cite{shen2016attraction} & Model-based & Preferences, travel history & Location, Time & & Surprise \\ \hline
+
+        \cite{kesorn2017personalized} & Hybrid & Social, Check-in data & Transportation, Location, Weather & & \\ \hline
+
+        \cite{logesh2019exploring} & Hybrid & Social, Opinion mining & Transportation, Location, Weather &  & \\ \hline
+
+        \cite{logesh2018personalised} & Hybrid & Social, Opinion mining & Transportation, Location, Weather &  & \\ \hline
+
+        \cite{hidasi2016general} & Model-based & Social, Feedback  & General &  & \\ \hline
+
+        \cite{sun2019building} & Model-based & Social, Pictures & Transportation, Weather, Textual &  & \\ \hline
+
+        \cite{menk2017curumim} & Hybrid & Social, History, Education &  &  & Curiosity \\ \hline
+
+        \cite{garcia2009speta} & Hybrid & Preferences, Social & Location & Tourism & \\ \hline
+
+        \cite{alonso2012ontology} & Hybrid & Social, Preferences & Weather, Day, Transport, Special Needs & Tourism, Context & \\ \hline
+
     \end{tabular}
     
     \end{table*}
 
-
-\begin{table*}[h!]
-    \centering
-    \caption{Related work on recommender systems for e-tourism}
-    \label{table:related-work}
-    \begin{tabular}{ |>{\centering\arraybackslash}m{3cm}|>{\centering\arraybackslash}m{1cm}|>{\centering\arraybackslash}m{2.7cm}| } 
-        \hline
-        \textbf{Works} & \textbf{Type} & \textbf{Approaches} \\
-        \hline
-
-        \begin{itemize}
-            \item Rajaonarivo et al. \cite{rajaonarivo2019rec}
-        \end{itemize} &
-        
-            Hybrid filtering &
-
-            \begin{itemize}
-                \item Context-awareness
-                \item Use of ontologies
-                \item Serendipity
-            \end{itemize}
-        
-        \\ \hline
-
-        \begin{itemize}
-            \item Kesorn et al. \cite{kesorn2017personalized}
-            \item Logest et al. \cite{logesh2019exploring}
-            \item Logest et al. \cite{logesh2018personalised}
-        \end{itemize} &
-
-            Hybrid filtering &
-
-            \begin{itemize}
-                \item Context-awareness
-            \end{itemize}
-
-        \\ \hline
-
-        \begin{itemize}
-            \item Sun et al. \cite{sun2019building}
-            \item Santos et al. \cite{santos2019using}
-            \item Hidasi et al. \cite{hidasi2016general}
-        \end{itemize} &
-            
-            Model based &
-        
-            \begin{itemize}
-                \item Context-awareness
-            \end{itemize}
-
-        \\
-
-        \hline
-    \end{tabular}
-    \caption{Related work on recommender systems for e-tourism}
-    \label{table:related-work}
-    \end{table*}
 
 % \subsection{Usage of ontologies: Spreading Activation} \label{section:usage-spreading-activation}
 % Previous work \cite{bahramian_abbaspour_claramunt_2017} integrates the concepts of recommender systems with ontologies at building a context-aware tourism recommender system based on the \textit{spreading activation} algorithm. In its authors' own words: "In spreading activation method, a given concept is represented by a node and has an activation value. A relation among different concepts is represented by a link between nodes and has a weight value. To initialize the algorithm, one or several nodes of a network are activated and these activations spread to the relevant nodes. This process is iterated until a stopping condition (e.g., number of node processed) is reached". The activation value of the node \(v_i\) is computed as follows:
