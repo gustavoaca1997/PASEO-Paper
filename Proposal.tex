@@ -10,8 +10,8 @@ The general architecture of RECESO is shown in Figure \ref{fig:arquitecture}. It
     \item \textbf{Recommendation Module}: The system recommends a set of places to the user.
 \end{itemize}
 
-Regarding the ontology 
-
+Regarding the ontology  \textcolor{red}{????}
+      
 In the following sections, we describe in detail each module.
 
 
@@ -34,7 +34,16 @@ values between $0$ and $1$, for the higher classes of the POI ontology. To obtai
 Inspired on the work of Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we introduce the concept of \textbf{semantic network}: a tourism ontology extended with the user's preferences (see Figure \ref{fig:initial_pref}) and context factor links
 (see Figure \ref{fig:init_act}). Just like Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we take advantage of the hierarchical shape of the semantic network for propagating the preference of superclasses to subclasses. Alongside preferences, each node of the semantic network has a \textbf{confidence} related to the user, a value between $0$ and $1$ that defines how sure is the system that the computed preference is the real one, i.e. a weight that is near $1$ if the computed preference is probable to be the actual user's preference, and near $0$ if it is not. When a preference is explicitly given by the user, its confidence is $1$, but when it is inferred from its ancestors or other kind of analysis, its confidence should be less than $1$. 
 
-For computing the preference $pref_c$ and the confidence $conf_c$ of each class $c$, we use Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), respectively; where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_p$ is the preference of the class $p$, $conf_p$ is the confidence of the class $p$, and $\alpha$ is the \textit{decrease rate} that will tell how much should decrease the \textit{confidence} at each level. 
+\textcolor{red}{For each user, we compute } 
+%For computing 
+the preference $pref_c$ and the confidence $conf_c$ of each class $c$, \textcolor{red}{according to}
+%we use 
+Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), respectively; 
+where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_p$ is the user's preference of the class $p$, $conf_p$ is the confidence \textcolor{red}{about the user's preference for}
+%of the 
+class $p$, and $\alpha$ is the \textit{decrease rate} \textcolor{red}{indicating}
+%that will tell 
+how much should decrease the \textit{confidence} at each level. 
 
 
 \begin{equation} \label{eq:preference}
@@ -48,7 +57,9 @@ For computing the preference $pref_c$ and the confidence $conf_c$ of each class 
 These calculations are applied to each node traversing from the higher classes, whose preferences are obtained from the Data Gathering Module, to the \textit{sinks}, while decreasing confidence values and therefore preference values. 
 This process is called \textbf{preference propagation}. 
 
-Figure~\ref{fig:initial_pref} shows an example of initial preferences gathered with values $0.85$, $0.5$ and $0.7$ for the initial ontology classes \textit{Cultural}, \textit{Store} and \textit{Sport}, respectively. The initial confidence for each preference is $1$, since they are gathered explicitly from the user. Then Figure~\ref{fig:pref_prop} shows the preference propagation with these values, applying Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), with $\alpha = 0.1$.
+Figure~\ref{fig:initial_pref} shows an example of initial preferences gathered with values $0.85$, $0.5$ ,and $0.7$ for the 
+%initial 
+ontology classes \textit{Cultural}, \textit{Store}, and \textit{Sport}, respectively. The initial confidence for each preference is $1$, since they are gathered explicitly from the user. Then, Figure~\ref{fig:pref_prop} shows the preference propagation with these values, applying Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), with $\alpha = 0.1$.
 
 \begin{figure}[h]
 \centering
@@ -68,7 +79,7 @@ Figure~\ref{fig:initial_pref} shows an example of initial preferences gathered w
 We define the \textbf{activation} of a node of the semantic network (a POI) as the value that determines how feasible 
 is the user to visit a place that belongs to the category of  node's ontology class, according to the current user's context.
 The user's context is determined by the \textbf{context factors}, which are entities that describe the characteristics of the user’s context that could affect their decision to go to a specific place. The context factors could be time, day, weather, transportation, mood, etc. To make a recommendation, the system has the
-values for each context factor per user ($contextFactors$ set), obtained either explicit (provided by users) or implicit (deduced by historical behaviors, data mining, etc.).  For example, in Figure \ref{fig:init_act}, context obtained is a cloudless night on the weekend.
+values for each context factor per user ($contextFactors$ set), obtained either explicit (provided by users) or implicit (deduced by historical behaviors, data mining, etc.).  For example, in Figure \ref{fig:init_act}, context obtained is a \textit{cloudless night on the weekend}.
 
 Let's define $f_x$ the \textit{fulfillment} of a context factor $x$ that has the value $1$ if $x$ fulfills or $0$ otherwise. Let's also define $r_{c,x}$ as the \textit{relevance} of context factor $x$ for node $c$, which is a value in $[0, 2]$ that specifies how much the context factor can affect the user's decision to go to a POI in the category of the node's ontology class; a value of $1$ means indifference; a value near $2$ means the fulfillment increases the wish to go to the POI; a value near $0$ means the fulfillment decreases the wish to go the POI. Hence, we define the activation for a node whose class $c$ ($act_c$) is directly linked to the user's context factors ($contextFactors$), as shown in Eq. (\ref{eq:high_activation}), and the activation propagation for internal nodes is defined in Eq. (\ref{eq:activation}), calculated from the higher classes.
 
@@ -100,7 +111,7 @@ Figures \ref{fig:init_act}, \ref{fig:high_act} and \ref{fig:spread_act} show an 
     \item $f_x = 0$, $x \notin \{cloudless, night, weekend\}$
 \end{itemize}
 
-First, the system receives the context of the user, which in this example is a cloudless night on the weekend (Figure \ref{fig:init_act}). Then, using Eq. (\ref{eq:high_activation}), the activation values for \textit{Cultural}, \textit{Store} and \textit{Sport} are computed (Figure \ref{fig:high_act}). Finally, usin Eq. (\ref{eq:activation}), the activation values for \textit{Museum}, \textit{ArtGallery}, \textit{Souvenirs}, \textit{Stadium} and \textit{Golf} are computed (Figure \ref{fig:spread_act}).
+First, the system receives the context of the user, which in this example is a {\it cloudless night on the weekend} (Figure \ref{fig:init_act}). Then, using Eq. (\ref{eq:high_activation}), the activation values for \textit{Cultural}, \textit{Store}, and \textit{Sport} are computed (Figure \ref{fig:high_act}). Finally, using Eq. (\ref{eq:activation}), the activation values for \textit{Museum}, \textit{ArtGallery}, \textit{Souvenirs}, \textit{Stadium}, and \textit{Golf} are computed (Figure \ref{fig:spread_act}).
 
 \begin{figure}[h]
 \centering
@@ -130,7 +141,7 @@ Furthermore, this module receives the user's \textbf{location}, which will be us
 
 %We will first give two necessary definitions to compute the final score of an item and then we give the formula.
 
-Besides user's preferences related to POI and context factors, the system bases the recommendations on  an {\it aging-like} algorithm,  to ensure serendipity, on the distance of the POI to the user's location and its transportation medium, and on calculated scores of POI. In the following we explain these three functionalities.
+Besides user's preferences related to POI and context factors, the system bases the recommendations on  an {\it aging-like} algorithm,  to ensure serendipity, on the distance of the POI to the user's location and its transportation medium, and on calculated scores of POI. In the following, we explain these three functionalities.
 
 \subsubsection{\bf Aging System}
 
@@ -164,7 +175,7 @@ score_p =   \ &w_1 \cdot pref_c + w_2 \cdot act_c \\
 The system uses this score for returning the list of "top places", whose length could be configured.
 
 \subsection{User interface (Client)}
-This system could be interacted with mobile apps, web apps or any other suitable \textit{front-end}, which should be in charge of supporting PULL (user explicitly asks for a recommendation) or PUSH (\textit{front-end} gathers information to send to the system, which then returns the recommendation) paradigms.
+This system could be interacted with mobile apps, web apps, or any other suitable \textit{front-end}, which should be in charge of supporting PULL (user explicitly asks for a recommendation) or PUSH (\textit{front-end} gathers information to send to the system, which then returns the recommendation) paradigms.
 
 
 

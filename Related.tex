@@ -12,14 +12,14 @@
 The unleashed proliferation  of recommender systems for tourism domain, due to the current development of mobile Internet technology, has fostered a wide categorization of them. 
 Depending on the technique used to resolve recommendations, these systems are usually classified into two categories: memory-based and model-based~\cite{bobadilla2013recommender,ebrahim_2012}. \textbf{Memory-based} recommender systems support their  suggestions on similarities among users and their shared items, hence recommending similar items to the ones the user likes (i.e., \textit{content-based recommendation}) or recommending items liked by users that are similar to the user (i.e., \textit{collaborative filtering}). \textbf{Model-based} recommender systems try to guess how much a user will like an item that they did not consume before, usually through statistical techniques and machine-learning models. The recommender systems that use both memory-based and model-based approaches are called \textbf{Hybrid} recommender systems.
 
-In this section, we survey some relevant and recent studies in the tourism domain, classifying them according these three categories and considering aspects related to  how they manage users' preferences and interests, the context awareness, the use of ontologies, and the variability of recommendations. We compare the related work in terms of these criteria and highlight the difference with our proposal.    
+In this section, we survey some relevant and recent studies in the tourism domain, classifying them according to these three categories and considering aspects related to  how they manage users' preferences and interests, the context awareness, the use of ontologies, and the variability of recommendations. We compare the related work in terms of these criteria and highlight the difference with our proposal.    
 
 \subsection{User information}
 Obviously, all recommender systems take into account some information related to the user, such as identification aspects (sex, age, profession, etc.), interest and preferences, or social relations. This information can be obtained from explicit (e.g., questionnaires)~\cite{jannach2020interactive} or implicit (e.g., by analyzing feedbacks in user's social networks) media~\cite{lin2018hybrid}.  
 
 Some proposals are supported on users' interaction to obtain their data (i.e., following a PULL paradigm). In  %Rajaonarivo et al.
 ~\cite{rajaonarivo2019rec}, authors model the users' information considering their gender, age category (e.g., kid, adult, or elderly), and preferences, classified as thematic preferences (e.g., museum, theater) and historical preferences (e.g., 12th century), that have to be provided by them through a user interface.  In~\cite{santos2019using}, only health,  physical, and psychological conditions are required  with forms filled by users. 
-Users' preferences and feedback are directly assigned by the users in the proposal presented in~\cite{bahramian_abbaspour_claramunt_2017}. As in ~\cite{arigi2018context}, users' interest (i.e., not interested, less interested, interested enough, and not interested) on tourism categories are asked to them. SMARTMUSEUM~\cite{ruotsalo2013smartmuseum}, asks users about the desired duration of a visit to a particular location, the motivation for a visit, and ability to consume the content offered by the system. The system proposed in~\cite{shen2016attraction} requires photos uploaded by users, from which it extracts their travel history; it also asks users to rank  POI (their favorite and non-favorite attractions).
+Users' preferences and feedback are directly assigned by the users in the proposal presented in~\cite{bahramian_abbaspour_claramunt_2017}. As in ~\cite{arigi2018context}, users' interest (i.e., not interested, less interested, and interested enoughd) on tourism categories are asked to them. SMARTMUSEUM~\cite{ruotsalo2013smartmuseum}, asks users about the desired duration of a visit to a particular location, the motivation for a visit, and ability to consume the content offered by the system. The system proposed in~\cite{shen2016attraction} requires photos uploaded by users, from which it extracts their travel history; it also asks users to rank  POI (their favorite and non-favorite attractions).
  
 
 Other recommender systems extract users' information, mainly their preferences and interests, from available sources,
@@ -93,12 +93,13 @@ Some systems only count on ontologies to represent tourism  POI~\cite{rajaonariv
 
 \subsection{Discussion}
 
-Table \ref{table:related-work} shows a comparative evaluation  of the referenced works, in terms of \textbf{category} of the system (model-based, hybrid, etc.), type of \textbf{user's information} gathered, \textbf{context} factors considered, \textbf{ontology} used and how they handle \textbf{serendipity}. 
+Table \ref{table:related-work} shows a comparative evaluation  of the referenced works, in terms of \textbf{category} of the system (model-based, hybrid, etc.), type of \textbf{user's information} gathered, \textbf{context} factors considered, \textbf{ontology} used, and how they handle \textbf{serendipity}. 
 
 Rajaonarivo et al. \cite{rajaonarivo2019rec} is the only work that proposes a context-aware system using ontologies and approaching serendipity, however they did not experiment the serendipitous feature.
 
 Our work does evaluate the serendipity of our proposed system, which can support the PUSH paradigm by implicitly gathering users' preferences and context, and the PULL paradigm by explicit user interactions.
 
+\textcolor{red}{HAY QUE agregar RECESO a la tabla}
 
 \begin{table*}[h!]
     \centering
