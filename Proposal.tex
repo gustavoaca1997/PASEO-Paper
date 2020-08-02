@@ -34,17 +34,10 @@ values between $0$ and $1$, for the higher classes of the POI ontology. To obtai
 Inspired on the work of Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we introduce the concept of \textbf{semantic network}: a tourism ontology extended with the user's preferences (see Figure \ref{fig:initial_pref}) and context factor links
 (see Figure \ref{fig:init_act}). Just like Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we take advantage of the hierarchical shape of the semantic network for propagating the preference of superclasses to subclasses. Alongside preferences, each node of the semantic network has a \textbf{confidence} related to the user, a value between $0$ and $1$ that defines how sure is the system that the computed preference is the real one, i.e. a weight that is near $1$ if the computed preference is probable to be the actual user's preference, and near $0$ if it is not. When a preference is explicitly given by the user, its confidence is $1$, but when it is inferred from its ancestors or other kind of analysis, its confidence should be less than $1$. 
 
-\textcolor{red}{For each user, we compute } 
-%For computing 
-the preference $pref_c$ and the confidence $conf_c$ of each class $c$, \textcolor{red}{according to}
-%we use 
-Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), respectively; 
-where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_p$ is the user's preference of the class $p$, $conf_p$ is the confidence \textcolor{red}{about the user's preference for}
-%of the 
-class $p$, and $\alpha$ is the \textit{decrease rate} \textcolor{red}{indicating}
-%that will tell 
+For each user, we compute the preference $pref_c$ and the confidence $conf_c$ of each class $c$, according to Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), respectively; 
+where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_p$ is the user's preference of the class $p$, $conf_p$ is the confidence about the user's preference for
+class $p$, and $\alpha$ is the \textit{decrease rate} indicating
 how much should decrease the \textit{confidence} at each level. 
-
 
 \begin{equation} \label{eq:preference}
     pref_c = \frac{\displaystyle \sum_{p \in ancestors(c)}{conf_p pref_p}}
