@@ -2,18 +2,14 @@
 %To evaluate our system we need some initial data to define the \textit{relevances} and some (real or simulated) users to test with.
 
 To evaluate our system,  we developed a prototype\footnote{https://github.com/gustavoaca1997/datatourisme-recommender}, with Java, 
-Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore, and a MySQL database for storing additional information of the nodes and items. \textcolor{red}{To have initial data, we requested real users through questionnaires, whose information was used to  create simulated users and scenarios to test with.}
-%Some initial data were obtained from real users through questionnaires and we simulate several scenarios  and users to test with.
+Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore, and a MySQL database for storing additional information of the nodes and items. To have initial data, we requested real users through questionnaires, whose information was used to  create simulated users and scenarios to test with.
 
-%In this section, 
-\textcolor{red}{With this version of RECESO,} we are particularly testing the User Interest Model Module, the Recommendation Module, and the Activation Propagation \textcolor{red}{algorithm} from the Context Module, while the Data Gathering Module and the context gathering (Location and Context Factors) are simulated.
+With this version of RECESO, we are particularly testing the User Interest Model Module, the Recommendation Module, and the Activation Propagation algorithm from the Context Module, while the Data Gathering Module and the context gathering (Location and Context Factors) are simulated.
 
 %The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items.
 
 \subsection{Ontology Classes}
-We consider a light version o DATATourisme ontology\footnote{http://info.datatourisme.gouv.fr/ontology/core/2.0/}, consisting of the \textit{Point of interest} class, its \textit{Place} subclass, from which we take: \textit{Cultural Site, Food Establishment, Leisure Place, Natural Heritage, Sports,} and \textit{Store}.  We slightly modified the ontology DATATourisme to specialize the class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to each category. Figure \ref{fig:ontology} shows the subset of classes of DATATourisme ontology, considered  in the experiments. 
-
-%A subset of a modified version of the ontology DATATourisme (Figure \ref{fig:ontology}) is used. The modification consists of specializing the original ontology class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to that category. The subset consists of the \textit{Point of interest} class but only its \textit{Place} subclass, considering only the following \textit{Place}'s subclasses: \textit{Cultural Site, Food establishment, Leisure Place, Natural Heritage, Sports} and \textit{Store}. 
+We consider a light version o DATATourisme ontology\footnote{http://info.datatourisme.gouv.fr/ontology/core/2.0/}, consisting of the \textit{Point of interest} class, its \textit{Place} subclass, from which we take: \textit{Cultural Site, Food Establishment, Leisure Place, Natural Heritage, Sports,} and \textit{Store}.  We slightly modified the ontology DATATourisme to specialize the class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to each category. Figure \ref{fig:ontology} shows the subset of classes of DATATourisme ontology, considered  in the experiments.
 
 
 \begin{figure}[h]
@@ -53,25 +49,17 @@ In order to test several scenarios with different user's preferences, profiles, 
 We asked people to fill a google form with two parts: 
 
 \begin{enumerate}
-    \item To determine the relevances for each context factor. The list of asked context factors included weather (with possible values {\tt rainy, cloudless, snowy}), time (with possible values {\tt early morning, morning, afternoon, night}), and day (with possible values {\tt weekday, weekend}). The list of asked types of POIs was the high level classes listed in the previous section. The question was "how much the context factor $c$ with value $v$ influences your decision to go to a 'place/event' of the type $t$ (these types are not exclusive)". People should answer an integer value between $0$ and $10$, where: 
+    \item To determine the relevances for each context factor. The list of asked context factors included weather (with possible values {\tt rainy, cloudless, snowy}), time (with possible values {\tt early morning, morning, afternoon, night}), and day (with possible values {\tt weekday, weekend}). The list of asked types of POIs was the high level classes listed in the previous section. The question was "how much the context factor $c$ with value $v$ influences your decision to go to a 'place/event' of the type $t$ (these types are not exclusive)". People should answer an integer value between $0$ and $2$, where: 
 \begin{itemize}
     \item $0$ means that if the context factor is met, you would not go to the place/event.
-    \item 5 means you do not care if the context is met or not.
-    \item 10 means that if the context is met, you would go to the place/event.
+    \item 1 means you do not care if the context is met or not.
+    \item 2 means that if the context is met, you would go to the place/event.
 \end{itemize}
 
-Then, Eq. (\ref{eq:avg}) is applied to each context factor, hence average them and transforming them to be on range $[0,2]$ by dividing by $5$. \textcolor{red}{Este promedio sería por context factor por clase? Hay que aclararlo.} 
+Then, for each pair of ontology class and context factor value (for example \textit{Museum} with \textit{rainy}), the average relevance is computed and stored as the relevance for the experiments.
 
-\textcolor{red}{CREo que podemos decir que los valores eran 0 1 o 2 en la encuesta y no tenemos que decir que se dividió entre 5, ni poner la fórmula del promedio. Tan sólo decir que se promedió. }
 
-\begin{equation}
-    \label{eq:avg}
-    AVG(contextfactor)/5
-\end{equation}
-
- \item To determine users' preferences to tourism categories (i.e., classes of the POI ontology). In this part of the questionnaires, people provided their preferences  of high level ontology classes mentioned before, and also the genre, country, profession, age, and (optional) social networks to have more information for further work. 
- 
- %The answer should be integers on range $[1, 10]$. Again, answers were more concentrated on the middle and highest options, but there were few low answers.
+ \item To determine users' preferences to tourism categories (i.e., classes of the POI ontology). In this part of the questionnaires, people provided their preferences  of high level ontology classes mentioned before, and also the genre, country, profession, age, and (optional) social networks to have more information for further work.
  
 \end{enumerate}
     
@@ -79,24 +67,11 @@ Then, Eq. (\ref{eq:avg}) is applied to each context factor, hence average them a
     We got around 100 answers from people of different ages, professions, and countries.  With this information a set of synthetic tourists is generated, with different behaviors for different context scenarios.
     
 
-%To define each $r_{c,x}$ for each node $c$ and context factor $x$, it was decided to gather real data provided by real people through a survey and then average them. The survey consisted of the question "Answer how much a 'context factor' influences your decision to go to a place/event of the specified type (these types are not exclusive)". Then, for each of the high level classes, people had to answer a real value between $0$ and $10$, where:
-%\begin{itemize}
- %   \item $0$ means that if the context factor is met, you would not go to the place / event.
-  %  \item 5 means you don't care if the context is met or not.
-   % \item 10 means that if the context is met, you would go to the place / event.
-%\end{itemize}
-
-%Then the following formula is applied to each feature or column, hence average them and transforming them to be on range $[0,2]$:
-% $$AVG(column)/5$$
-
-%The form had a total of 34 answers. Something worth to mention was that the answers were concentrated between the options $0$, $5$ and $10$, maybe because it is easier to think something between the thoughts "I would not", "I don't care" and "I would", than to think something that is in the middle of two of those thoughts.
-
-%\subsection{Users data}
-%As explained before, a user of the system have to give initial preferences to some ontology classes. It was decided to make a form where people could answer their preferences of the high level ontology classes mentioned before. The form had a total of 63 answers. The genre, country, profession, age and (optional) social networks were also asked to have more information for further work. The answer should be integers on range $[1, 10]$. Again, answers were more concentrated on the middle and highest options, but there were few low answers.
 
 \subsubsection{Simulated scenarios}
 To evaluate the system, it was decided to test it with simulated scenarios (simulated contexts and simulated users). A set of centroids of a set of clusters were chosen as the set of simulated users from the user preferences gathered before. The \textit{K-Means} algorithm was used to get the clusters and \textcolor{red}{the \textit{Elbow Method} was used to generate four clusters , since increasing this number does not make improvements worth the cost using our small dataset (see Figure \ref{fig:elbow}). In future work, a larger dataset should be used.}
-%the \textit{Elbow Method} (see Figure \ref{fig:elbow}) was used to choose $4$ as the number of clusters, since increasing this number does not make improvements worth the cost using our small dataset. In future work, a larger dataset should be used.
+
+\textcolor{green}{YO CREO QUE QUEDA MEJOR ASÍ: the \textit{Elbow Method} (see Figure \ref{fig:elbow}) was used to choose $4$ as the number of clusters, since increasing this number does not make improvements worth the cost using our small dataset. In future work, a larger dataset should be used.}
 
 \begin{figure}[h]
     \centering
@@ -105,8 +80,8 @@ To evaluate the system, it was decided to test it with simulated scenarios (simu
     \label{fig:elbow}
 \end{figure}
 
-The centroids of the four clusters represent our four synthetic tourists, $T_1, T_2, T_3, T_4$. Table \ref{table:centroids} shows the preferences for each tourist to each tourism category, according our light version of DATATourise ontology.  Figure \ref{fig:tourist_hist} shows how the initial preferences are distributed for each tourist \textcolor{red}{NO entiendo la Fig 9, qué es el eje x y el y?}.
-%On figure \ref{fig:tourist_hist} we can see how are initial preferences distributed for each tourist.
+The centroids of the four clusters represent our four synthetic tourists, $T_1, T_2, T_3, T_4$. Table \ref{table:centroids} shows the preferences for each tourist to each tourism category, according our light version of DATATourise ontology.  Figure \ref{fig:tourist_hist} shows for each tourist how the preferences are distributed, where we can see that $T_3$ is the one with a more varied set of preferences, including the lowest values between all preferences.
+
 \begin{table}[h!]
 \centering
 \caption{Simulated tourists' preferences}
@@ -224,73 +199,64 @@ For our experiments, the same relevances are shared between synthetic users, how
 \end{tabular}
 \end{table*}
 
+For each tourist $T_i$, we simulate two visits to Niza, Lyon, and Paris for each possible combination of context factors values (Figure \ref{fig:experiments}), resulting in a total of $48$ visits by each $T_i$ to each place, which gives a total of $144$ visits by each $T_i$. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit; this set is going to be called the \textit{recommendation set}. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{draws/experiments.jpg}
+\caption{Simulated visits}
+\label{fig:experiments}
+\end{figure}
+
 \subsection{Metrics} \label{section:metrics}
 
-For each \textcolor{red}{tourist $T_i$,}
-%centroid of the clusters mentioned previously, 
-we simulate two visits to Niza, Lyon, and Paris for each possible context using each possible value for each context factor \textcolor{blue}{Se podría poner esto en una tablita para verlo más fácilmente, quizás por $T_i$?}\textcolor{red}{O ilustrar con un Ti, las combinaciones y las visitas. DISCUTIR}. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit; this set is going to be called the \textit{recommendation}. Let $R$ be a recommendation \textcolor{red}{R no sería the \textit{recommendation} set ?} for a specific user on a specific location \textcolor{red}{(i.e., Niza, Lyon, or Paris) (???)} and a specific context \textcolor{red}{qué es un contexto específico: una combinación de factores?}, we define \textcolor{red}{some metrics to evaluate how "good" is a \textit{recommendation} $R$, as follows:}
+Let $R$ be a recommendation set for a specific user on a specific location and a specific context (combination of context factors values), we define some metrics to evaluate how "good" is a \textit{recommendation} $R$, as follows:
 %the following recommendation metrics:
 
 \begin{itemize}
-    \item Average of preference \textcolor{red}{(Eq. (XXX))}, which denotes how near to the user's preferences are the recommended POI.
-    \begin{equation}
-    pref_{R} = \frac{ \displaystyle \sum_{p \in R}{pref_p} }{| R |}
-\end{equation}
+    \item Average preference of $R$ (Eq. (\ref{eq:pref_r})), which denotes how near to the user's preferences are the recommended POIs.
+    \begin{equation} \label{eq:pref_r}
+        pref_{R} = \frac{ \displaystyle \sum_{p \in R}{pref_p} }{| R |}
+    \end{equation}
 
-\item \textcolor{red}{y así explicar cada métrica con su fórmula. Otra cosa, todas las métricas deberían tener $u$ o ninguna, pues se sobre entiende que estas métricas son por usuario.}
+    \item Average activation of $R$ (Eq. (\ref{eq:act_r})), which denotes how relevant to the user are the current context factors values to the recommended POIs.
+    \begin{equation} \label{eq:act_r}
+        act_{R} = \frac{ \displaystyle \sum_{p \in R}{act_p} }{| R |}
+    \end{equation}
+
+    \item Average aging of $R$ (Eq. (\ref{eq:eta_r})), which denotes how "aged" to the user are the recommended POIs.
+    \begin{equation} \label{eq:eta_r}
+        \eta_{R} = \frac{ \displaystyle \sum_{p \in R}{\eta_p} }{| R |}
+    \end{equation}
+
+    \item Average distance of $R$ (Eq. (\ref{eq:dist_r})), which denotes how distant are the recommended POIs from the user.
+    \begin{equation} \label{eq:dist_r}
+        dist_{R} = \frac{ \displaystyle \sum_{p \in R}{dist_{p}} }{| R |}
+    \end{equation}
+
+    \item Average novelty of $R$ (Eq. (\ref{eq:nov_r})), which denotes how novel are the recommended POIs to the user. It uses Eq. (\ref{eq:novelty}), based on the work of Kotkov et al. \cite{kotkov2016survey}, where $p$ is a recommended place, $rec$ is the set of already recommended places to the user, $c_p$ is the ontology class to which $p$ belongs, and $dist$ computes the distance in the ontology (using \textit{Breadth First Search}) of two ontology classes.
+    \begin{equation} \label{eq:novelty}
+        nov_{p} = \  \underaccent{q \in rec}{min} \  ( dist( c_p, c_q ) )
+    \end{equation}
+    \begin{equation} \label{eq:nov_r}
+        nov_{R} = \frac{ \displaystyle \sum_{p \in R}{nov_{p}} }{| R |}
+    \end{equation}
 \end{itemize}
-
-
-
-\begin{equation}
-    act_{R} = \frac{ \displaystyle \sum_{p \in R}{act_p} }{| R |}
-\end{equation}
-
-\begin{equation}
-    \eta_{R} = \frac{ \displaystyle \sum_{p \in R}{\eta_p} }{| R |}
-\end{equation}
-
-\begin{equation}
-    dist_{u, R} = \frac{ \displaystyle \sum_{p \in R}{dist_{u, p}} }{| R |}
-\end{equation}
-
-To compute novelty \cite{kotkov2016survey} we use the following metric:
-\begin{equation} \label{eq:novelty}
-    nov_{u, p} = \  \underaccent{q \in rec(u)}{min} \  ( dist( c_p, c_q ) )
-\end{equation}
-where $p$ is a recommended place, $u$ the user to which $p$ was recommended, $rec(u)$ is the set of already recommended places to $u$, $c_p$ is the ontology class to which $p$ belongs, and $dist$ computes the distance in the ontology (using \textit{Breadth First Search}) of two ontology classes. 
-
-Finally, the system returns the average of each recommendation metric. \textcolor{red}{Pero ya todas las métricas son promedios, luego con qué promedia?}
-
-
-\textcolor{red}{esto de novelty, no debería ir antes de ese "Finally," del párrafo anterior?}
-Now we can define the novelty of a recommendation as follows:
-\begin{equation}
-    nov_{u, R} = \frac{ \displaystyle \sum_{p \in R}{nov_{u, p}} }{| R |}
-\end{equation}
-
 
 \subsection{Experiments} \label{section:experiments}
 
-\textcolor{red}{To calculate the score for each POI $p$, we need some user-defined parameters, that represent maximum distance ($maxdist$) from the user to the PIO and the weighs ($w_i$) for each term in Eq. (\ref{eq:score})   (see Section \ref{section:score}). We designed two scenarios with different values of these configuration parameters, as we explain in the following.}  
-
-%We use different coefficients for the score (see Section \ref{section:score})  
-%, and since we said $maxdist$ is $8$ for these experiments, we are ignoring it as argument. 
+To calculate the score for each POI $p$, we need some user-defined parameters, that represent maximum distance ($maxdist$) from the user to the PIO and the weighs ($w_i$) for each term in Eq. (\ref{eq:score})   (see Section \ref{section:score}). We designed two scenarios with different values of these configuration parameters, as we explain in the following.
 
 \subsubsection{First configuration} 
 \label{section:experiment-1}
-We consider $maxdist =8 Km$, $w_1 = \frac{1}{4} + \frac{1}{9}$ for preference, $w_2 = \frac{1}{4} + \frac{1}{9}$ for activation, $w_3 = \frac{1}{4}$ for aging, and $w_4 = \frac{1}{4} - \frac{2}{9}$ for distance from user, resulting on 
-%equation 
-Eq. (\ref{eq:score-1}). \textcolor{red}{In this configuration, we give}
-%and giving 
+We consider $maxdist =8 Km$, $w_1 = 0.3611$ for preference, $w_2 = 0.3611$ for activation, $w_3 = 0.25$ for aging, and $w_4 = 0.0278$ for distance from user, resulting on 
+Eq. (\ref{eq:score-1}). In this configuration, we give
 more priority to preference and activation and very little priority to distance from user. With these parameters we start simulating each user and their visits.
-
-\textcolor{red}{Por qué los $w_i$ son así?, no podemos decir simplemente, 0.35 , 0.35, 0.25 y 0.05 ?}
 
 \begin{equation} \label{eq:score-1}
     \begin{split}
-        score_p = \ &\frac{13}{36} \cdot pref_c + \frac{13}{36} \cdot act_c \\
-                                        &+ \frac{1}{4} \cdot \eta_p - \frac{1}{36} \cdot \frac{dist_{u,p}}{8}
+        score_p = \ &0.3611 \cdot pref_c + 0.3611 \cdot act_c \\
+                                        &+ 0.25 \cdot \eta_p - 0.0278 \cdot \frac{dist_{u,p}}{8}
     \end{split}
 \end{equation}
 
@@ -569,3 +535,10 @@ Table \ref{table:config-2} shows the average of the recommendation metrics for e
     \label{table:config-2}
 \end{table}
 
+\subsubsection{Discussion}
+
+For measuring novelty we use the Eq. (\ref{eq:novelty}) based on Kotkov et al. \cite{kotkov2016survey}, since when novelty increases, so does serendipity. That equation was proposed with the hypotheses that if a user already knows places from class $c$, then it is probable the user already knows other places from class $c$. With that hypotheses, our system gives poor novelty: when a place belonging to the ontology class $c$ is recommended, next recommendations with places from $c$ will have lower novelty. However, considering average aging as a good metric for the level of variability, both experiments on section \ref{section:experiments} give high average aging, which means a lot of "young" or not frequently recommended places are returned to the user, which could imply an increment on system serendipity. Future work should try more advanced ways for measuring serendipity.
+
+Of course, experiment \ref{section:experiment-2} is focused on increasing average aging by giving a higher value to $k_3$ on Eq. (\ref{eq:score}), but the increment of aging is paid with a decrement on activation. Nonetheless, two simulated tourists have an increment for their preferences, because on first configuration the system is trapped between very activated POIs but not very relevant, but the heavier aging of the second configuration increases variability, hence lets the system recommend other POIs despite of lowering the activation. 
+
+Nevertheless, a deployed version of this system should let the users choose each $w_i$ of Eq. (\ref{eq:score}), that way choosing if they want recommendations mainly relevant than contextually activated or varied, or even recommendations with the nearest places ignoring any other attribute, or any other possible configuration.
