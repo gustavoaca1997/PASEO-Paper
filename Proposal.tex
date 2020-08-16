@@ -22,7 +22,7 @@ In the following sections, we describe in detail each module.
 \label{fig:arquitecture}
 \end{figure}
 
-\subsection{Data Gathering Module}
+\subsection{Data Gathering Module (User Interface Client}
 Initially, the system receives or calculates
 %should receive 
 initial \textbf{preferences}, as 
@@ -30,13 +30,19 @@ initial \textbf{preferences}, as
 values between $0$ and $1$, for the higher classes of the POI ontology. To obtain these values, the user could explicitly set them by interacting with the system or they could be implicitly determined using data mining, social network analysis, geo-data, similar profile users, friends preferences, etc. During the lifetime of the system, users' preferences are updated, according their behaviors. 
 %the user can feed new updated preferences to the system.
 
+\textcolor{red}{
+This module represents the client of the system and can be implemented as a mobile apps, web apps, or any other suitable \textit{front-end}, which should be in charge of supporting PULL (user explicitly interacts with the system to specify her/his data (e.g., personal information, preferences, context) or to ask for a recommendation) or PUSH (\textit{front-end} gathers information to send to the system, which then returns the recommendation) paradigms.}
+
+
 \subsection{User Interest Model Module}
 Inspired on the work of Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we introduce the concept of \textbf{semantic network}: a tourism ontology extended with the user's preferences (see Figure \ref{fig:initial_pref}) and context factor links
-(see Figure \ref{fig:init_act}). Just like Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we take advantage of the hierarchical shape of the semantic network for propagating the preference of superclasses to subclasses. Alongside preferences, each node of the semantic network has a \textbf{confidence} related to the user, a value between $0$ and $1$ that defines how sure is the system that the computed preference is the real one, i.e. a weight that is near $1$ if the computed preference is probable to be the actual user's preference, and near $0$ if it is not. When a preference is explicitly given by the user, its confidence is $1$, but when it is inferred from its ancestors or other kind of analysis, its confidence should be less than $1$. 
+(see Figure \ref{fig:init_act}). Just like Bahramian et al. \cite{bahramian_abbaspour_claramunt_2017}, we take advantage of the hierarchical shape of the semantic network for propagating the preference of superclasses to subclasses. Alongside preferences, each node of the semantic network has a \textbf{confidence} related to the user, a value between $0$ and $1$ that defines how sure is the system that the computed preference is the real one, i.e., a 
+%weight that is 
+a value near $1$ if the computed preference is probable to be the actual user's preference, and near $0$ if it is not. When a preference is explicitly given by the user, its confidence is $1$, but when it is inferred from its ancestors or other kind of analysis, its confidence should be less than $1$. 
 
-For each user, we compute the preference $pref_c$ and the confidence $conf_c$ of each class $c$, according to Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), respectively; 
+For each user, we compute the preference (dented as $pref_c$) and the confidence (denoted as $conf_c$) of each class $c$, according to Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), respectively; 
 where $ancestors(c)$ is the set of ancestors of the ontology class $c$, $pref_p$ is the user's preference of the class $p$, $conf_p$ is the confidence about the user's preference for
-class $p$, and $\alpha$ is the \textit{decrease rate} indicating
+class $p$, and $\alpha$ is  the \textit{decrease rate} parameter, indicating
 how much should decrease the \textit{confidence} at each level. 
 
 \begin{equation} \label{eq:preference}
@@ -50,7 +56,7 @@ how much should decrease the \textit{confidence} at each level.
 These calculations are applied to each node traversing from the higher classes, whose preferences are obtained from the Data Gathering Module, to the \textit{sinks}, while decreasing confidence values and therefore preference values. 
 This process is called \textbf{preference propagation}. 
 
-Figure~\ref{fig:initial_pref} shows an example of initial preferences gathered with values $0.85$, $0.5$ ,and $0.7$ for the 
+Figure~\ref{fig:initial_pref} shows an example of initial preferences gathered with values $0.85$, $0.5$, and $0.7$ for the 
 %initial 
 ontology classes \textit{Cultural}, \textit{Store}, and \textit{Sport}, respectively. The initial confidence for each preference is $1$, since they are gathered explicitly from the user. Then, Figure~\ref{fig:pref_prop} shows the preference propagation with these values, applying Eq. (\ref{eq:preference}) and Eq. (\ref{eq:confidence}), with $\alpha = 0.1$.
 
@@ -70,11 +76,27 @@ ontology classes \textit{Cultural}, \textit{Store}, and \textit{Sport}, respecti
 
 \subsection{Context Module}
 We define the \textbf{activation} of a node of the semantic network (a POI) as the value that determines how feasible 
-is the user to visit a place that belongs to the category of  node's ontology class, according to the current user's context.
-The user's context is determined by the \textbf{context factors}, which are entities that describe the characteristics of the user’s context that could affect their decision to go to a specific place. The context factors could be time, day, weather, transportation, mood, etc. To make a recommendation, the system has the
-values for each context factor per user ($contextFactors$ set), obtained either explicit (provided by users) or implicit (deduced by historical behaviors, data mining, etc.).  For example, in Figure \ref{fig:init_act} the context values obtained are \textit{cloudless, night} and \textit{weekend}.
+is the user to visit a place that belongs to the category of  an 
+%node's 
+ontology class, according to the current user's context.
+The user's context is determined by the \textbf{context factors}, 
+%which %are entities that 
+%describe the characteristics of the user’s context 
+that could affect her/his  decision to go to a specific place. The context factors could be time, day, weather, transportation, mood, etc. To make a recommendation, the system has the
+%values for each 
+context factors per user ($contextFactors$ set), obtained either explicit (provided by users) or implicit (deduced by historical behaviors, data mining, etc.).  For example, in Figure \ref{fig:init_act} the context of the user is
+%values obtained are 
+\textit{cloudless, night}, and \textit{weekend}.
 
-Let's define $f_x$ the \textit{fulfillment} of a context factor value $x$, where $f_x = 1$ if $x$ fulfills or $f_x = 0$ otherwise. Let's also define $r_{c,x}$ as the \textit{relevance} of $x$ for the node $c$, which is a value in $[0, 2]$ that specifies how much the context factor value can affect the user's decision to go to a POI in $c$'s ontology class; a value of $1$ means indifference; a value near $2$ means the fulfillment increases the wish to go to the POI; a value near $0$ means the fulfillment decreases the wish to go the POI. Hence, we define $act_c$ as the activation for a node $c$ which is directly linked to the user's context factors values ($contextFactors$), as shown in Eq. (\ref{eq:high_activation}), and the activation for internal nodes is defined in Eq. (\ref{eq:activation}), calculated using the higher classes.
+Let's define $f_x$ the \textit{fulfillment} of a context factor 
+%value 
+$x$, where $f_x = 1$ if $x$ fulfills or $f_x = 0$ otherwise. Let's also define $r_{c,x}$ as the \textit{relevance} of $x$ for the class $c$, which is a value in $[0, 2]$ that specifies how much the context factor %value 
+can affect the user's decision to go to a POI in $c$ (POI ontology class); a value of $1$ means indifference; a value near $2$ means the fulfillment increases the wish to go to the POI; a value near $0$ means the fulfillment decreases the wish to go the POI. Hence, we define $act_c$ as the activation for a class $c$ which is directly linked to the user's context factors 
+%values 
+($contextFactors$), as shown in Eq. (\ref{eq:high_activation}), and the activation for subclasses of $c$
+%internal nodes 
+is defined in Eq. (\ref{eq:activation}).
+%, calculated using the higher classes.
 
 
 \begin{equation} \label{eq:high_activation}
@@ -88,7 +110,8 @@ Let's define $f_x$ the \textit{fulfillment} of a context factor value $x$, where
 \end{equation}.
 
 %These formulas are used for an \textbf{Activation propagation} from the higher classes. 
-Figures \ref{fig:init_act}, \ref{fig:high_act} and \ref{fig:spread_act} show an example, where:
+%Figure \ref{fig:init_act}, Figure \ref{fig:high_act}, and Figure \ref{fig:spread_act} 
+\textcolor{red}{In the following, we show an example, where explicit or implicit obtained \textit{relevance} are}:
 
 \begin{itemize}
     \item $r_{Cultural, cloudless} = 1$
@@ -109,7 +132,7 @@ First, the system receives the context of the user, which in this example is a {
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.45]{draws/initial_act.jpg}
-\caption{System receives {\tt sunny, night, weekend} as user context}
+\caption{System receives {\tt cloudless, night, weekend} as user context}
 \label{fig:init_act}
 \end{figure}
 
@@ -167,8 +190,8 @@ score_p =   \ &w_1 \cdot pref_c + w_2 \cdot act_c \\
 
 The system uses this score for returning the list of "top places", whose length could be configured.
 
-\subsection{User interface (Client)}
-This system could be interacted with mobile apps, web apps, or any other suitable \textit{front-end}, which should be in charge of supporting PULL (user explicitly asks for a recommendation) or PUSH (\textit{front-end} gathers information to send to the system, which then returns the recommendation) paradigms.
+%\subsection{User interface (Client)}
+%This system could be interacted with mobile apps, web apps, or any other suitable \textit{front-end}, which should be in charge of supporting PULL (user explicitly asks for a recommendation) or PUSH (\textit{front-end} gathers information to send to the system, which then returns the recommendation) paradigms.
 
 
 
