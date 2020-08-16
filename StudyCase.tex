@@ -2,14 +2,16 @@
 %To evaluate our system we need some initial data to define the \textit{relevances} and some (real or simulated) users to test with.
 
 To evaluate our system,  we developed a prototype\footnote{https://github.com/gustavoaca1997/datatourisme-recommender}, with Java, 
-Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore, and a MySQL database for storing additional information of the nodes and items. To have initial data, we requested real users through questionnaires, whose information was used to  create simulated users and scenarios to test with.
+Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore, and a MySQL database for storing additional information.
+%of the nodes and items. 
+To have initial data, we requested real users through questionnaires, whose information was used to  create simulated users and scenarios to test with.
 
 With this version of RECESO, we are particularly testing the User Interest Model Module, the Recommendation Module, and the Activation Propagation algorithm from the Context Module, while the Data Gathering Module and the context gathering (Location and Context Factors) are simulated.
 
 %The prototype system was built with Java. We used a Fuseki server as the triplestore, Apache Jena for traversing the ontology and connecting to the triplestore and a MySQL database for storing additional information of the nodes and items.
 
 \subsection{Ontology Classes}
-We consider a light version o DATATourisme ontology\footnote{http://info.datatourisme.gouv.fr/ontology/core/2.0/}, consisting of the \textit{Point of interest} class, its \textit{Place} subclass, from which we take: \textit{Cultural Site, Food Establishment, Leisure Place, Natural Heritage, Sports,} and \textit{Store}.  We slightly modified the ontology DATATourisme to specialize the class \textit{Sports and Leisure Place} into \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to each category. Figure \ref{fig:ontology} shows the subset of classes of DATATourisme ontology, considered  in the experiments.
+We consider a light version o DATATourisme ontology\footnote{http://info.datatourisme.gouv.fr/ontology/core/2.0/}, consisting of the \textit{Point of interest} class, its \textit{Place} subclass, from which we take: \textit{Cultural Site, Food Establishment, Leisure Place, Natural Heritage, Sports,} and \textit{Store}.  We slightly modified the DATATourisme ontology to specialize the class \textit{Sports and Leisure Place} into separated  \textit{Sports} class and \textit{Leisure Place} class, hence making less ambiguous what kind of places should belong to each category. Figure \ref{fig:ontology} shows the subset of classes of DATATourisme ontology, considered  in the experiments.
 
 
 \begin{figure}[h]
@@ -49,14 +51,24 @@ In order to test several scenarios with different user's preferences, profiles, 
 We asked people to fill a google form with two parts: 
 
 \begin{enumerate}
-    \item To determine the relevances for each context factor value. The list of asked context factors included weather (with possible values {\tt rainy, cloudless, snowy}), time (with possible values {\tt early morning, morning, afternoon, night}), and day (with possible values {\tt weekday, weekend}). The list of asked types of POIs was the high level classes listed in the previous section. The question was "how much the context factor $c$ with value $v$ influences your decision to go to a 'place/event' of the type $t$ (these types are not exclusive)". People should answer an integer value between $0$ and $2$, where: 
+    \item To determine the relevances for each context factor value. The list of asked context factors included weather (with possible values {\tt rainy, cloudless, snowy}), time (with possible values {\tt early morning, morning, afternoon, night}), and day (with possible values {\tt weekday, weekend}). The list of asked types of POIs was the high level classes listed in the previous section. The question was     "how much the context factor $x$ influences your decision to go to a 'place/event' of the type $c$ (these types are not exclusive)". People should answer an integer value between $0$ and $2$, where: 
+%    "how much the context factor $c$ with value $v$ influences your decision to go to a 'place/event' of the type $t$ (these types are not exclusive)". People should answer an integer value between $0$ and $2$, where: 
 \begin{itemize}
-    \item $0$ means that if the context factor value is met, you would not go to the place/event.
-    \item 1 means you do not care if the context is met or not.
-    \item 2 means that if the context is met, you would go to the place/event.
+    \item $0$ means that if the context factor 
+    %value 
+    is met, the user
+    %you 
+    would not go to the place/event.
+    \item 1 means the user does
+    %you do 
+    not care if the context factor is met or not.
+    \item 2 means that if the context factor is met, 
+    %you 
+    the user would go to the place/event.
 \end{itemize}
 
-Then, for each pair of ontology class and context factor value (for example \textit{Museum} with \textit{rainy}), the average relevance is computed and stored as the relevance for the experiments.
+Then, for each pair of ontology class, $c$, and context factor, $x$, %value 
+(for example \textit{Museum} with \textit{rainy}), the average relevance is computed and stored as the relevance for the experiments.
 
 
  \item To determine users' preferences to tourism categories (i.e., classes of the POI ontology). In this part of the questionnaires, people provided their preferences  of high level ontology classes mentioned before, and also the genre, country, profession, age, and (optional) social networks to have more information for further work.
@@ -69,9 +81,12 @@ Then, for each pair of ontology class and context factor value (for example \tex
 
 
 \subsubsection{Simulated scenarios}
-To evaluate the system, it was decided to test it with simulated scenarios (simulated contexts and simulated users). A set of centroids of a set of clusters were chosen as the set of simulated users from the user preferences gathered before. The \textit{K-Means} algorithm was used to get the clusters and \textcolor{red}{the \textit{Elbow Method} was used to generate four clusters , since increasing this number does not make improvements worth the cost using our small dataset (see Figure \ref{fig:elbow}). In future work, a larger dataset should be used.}
+To evaluate the system, it was decided to test it with simulated scenarios (simulated contexts and simulated users).  
+\textcolor{red}{The data gathered with questionnaires were grouped into four cluster, with the \textit{Elbow Method} (increasing the number of clusters  does not make improvements worth the cost using our small dataset (see Figure \ref{fig:elbow})).}
 
-\textcolor{green}{YO CREO QUE QUEDA MEJOR ASÍ: the \textit{Elbow Method} (see Figure \ref{fig:elbow}) was used to choose $4$ as the number of clusters, since increasing this number does not make improvements worth the cost using our small dataset. In future work, a larger dataset should be used.}
+%A set of centroids of a set of clusters were chosen as the set of simulated users from the user preferences gathered before. The \textit{K-Means} algorithm was used to get the clusters and \textcolor{red}{the \textit{Elbow Method} was used to generate four clusters , since increasing this number does not make improvements worth the cost using our small dataset (see Figure \ref{fig:elbow}). In future work, a larger dataset should be used.}
+
+%\textcolor{green}{YO CREO QUE QUEDA MEJOR ASÍ: the \textit{Elbow Method} (see Figure \ref{fig:elbow}) was used to choose $4$ as the number of clusters, since increasing this number does not make improvements worth the cost using our small dataset. In future work, a larger dataset should be used.}
 
 \begin{figure}[h]
     \centering
@@ -80,7 +95,7 @@ To evaluate the system, it was decided to test it with simulated scenarios (simu
     \label{fig:elbow}
 \end{figure}
 
-The centroids of the four clusters represent our four synthetic tourists, $T_1, T_2, T_3, T_4$. Table \ref{table:centroids} shows the preferences for each tourist to each tourism category, according our light version of DATATourise ontology.  Figure \ref{fig:tourist_hist} shows for each tourist how the preferences are distributed, where we can see that $T_3$ is the one with a more varied set of preferences, including the lowest values between all preferences.
+The centroids of the four clusters represent our four simulated tourists, $T_1, T_2, T_3, T_4$. Table \ref{table:centroids} shows the preferences for each tourist to each tourism category, according our light version of DATATourise ontology.  Figure \ref{fig:tourist_hist} shows for each tourist how the preferences are distributed, where we can see that $T_3$ is the one with a more varied set of preferences, including the lowest values between all preferences.
 
 \begin{table}[h!]
 \centering
@@ -136,7 +151,9 @@ The centroids of the four clusters represent our four synthetic tourists, $T_1, 
     \label{fig:tourist_hist} 
 \end{figure}
 
-For our experiments, the same relevances are shared between synthetic users, however future work should evaluate different relevances for each user tested. These relevances are shown on Table \ref{table:relevances-experiment}.
+For our experiments, all tourists have the same relevance values, as we show in 
+%are shared among synthetic users, however future work should evaluate different relevances for each user tested. These relevances are shown on 
+Table~\ref{table:relevances-experiment}.
 
 \begin{table*}[h!]
 \centering
@@ -199,7 +216,14 @@ For our experiments, the same relevances are shared between synthetic users, how
 \end{tabular}
 \end{table*}
 
-For each tourist $T_i$, we simulate two visits to Niza, Lyon, and Paris for each possible combination of context factors values (Figure \ref{fig:experiments}), resulting in a total of $48$ visits by each $T_i$ to each place, which gives a total of $144$ visits by each $T_i$. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit; this set is going to be called the \textit{recommendation set}. 
+\textcolor{red}{For each tourist $T_i$, we simulate visits to Paris, Niza, and Lyon. For each combination of context factors ($24$ combinations),  each $T_i$ goes twice to each site; thus $48$ visits for each place (see Figure \ref{fig:experiments}).
+%values 
+%(Figure \ref{fig:experiments}), resulting in a total of $48$ visits by each $T_i$ to each place, which gives a total of $144$ visits by each $T_i$. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit; this set is going to be called the \textit{recommendation set}. 
+}
+
+%For each tourist $T_i$, we simulate two visits to Paris, Niza, and Lyon for each possible combination of context factors 
+%values 
+%(Figure \ref{fig:experiments}), resulting in a total of $48$ visits by each $T_i$ to each place, which gives a total of $144$ visits by each $T_i$. The system returns a set of not more than $5$ recommended places inside a radius of $8$ kilometers for each visit; this set is going to be called the \textit{recommendation set}. 
 
 \begin{figure}[h]
 \centering
@@ -210,7 +234,9 @@ For each tourist $T_i$, we simulate two visits to Niza, Lyon, and Paris for each
 
 \subsection{Metrics} \label{section:metrics}
 
-Let $R$ be a recommendation set for a specific user on a specific location and a specific context (combination of context factors values), we define some metrics to evaluate how "good" is a \textit{recommendation} $R$, as follows:
+Let $R$ be a recommendation set for a specific user on a specific location and a specific context (combination of context factors),
+%values), 
+we define some metrics to evaluate how "good" is a \textit{recommendation} $R$, as follows:
 %the following recommendation metrics:
 
 \begin{itemize}
@@ -219,7 +245,8 @@ Let $R$ be a recommendation set for a specific user on a specific location and a
         pref_{R} = \frac{ \displaystyle \sum_{p \in R}{pref_p} }{| R |}
     \end{equation}
 
-    \item Average activation of $R$ (Eq. (\ref{eq:act_r})), which denotes how relevant to the user are the current context factors values to the recommended POIs.
+    \item Average activation of $R$ (Eq. (\ref{eq:act_r})), which denotes how relevant to the user are the current context factors %values 
+    to the recommended POIs.
     \begin{equation} \label{eq:act_r}
         act_{R} = \frac{ \displaystyle \sum_{p \in R}{act_p} }{| R |}
     \end{equation}
@@ -234,7 +261,9 @@ Let $R$ be a recommendation set for a specific user on a specific location and a
         dist_{R} = \frac{ \displaystyle \sum_{p \in R}{dist_{p}} }{| R |}
     \end{equation}
 
-    \item Average novelty of $R$ (Eq. (\ref{eq:nov_r})), which denotes how novel are the recommended POIs to the user. It uses Eq. (\ref{eq:novelty}), based on the work of Kotkov et al. \cite{kotkov2016survey}, where $p$ is a recommended place, $rec$ is the set of already recommended places to the user, $c_p$ is the ontology class to which $p$ belongs, and $dist$ computes the distance in the ontology (using \textit{Breadth First Search}) of two ontology classes.
+    \item Average novelty of $R$ (Eq. (\ref{eq:nov_r})), which denotes how novel are the recommended POIs to the user. In Eq. (\ref{eq:nov_r}), $nov_{p}$ is calculated by Eq. (\ref{eq:novelty}), which is based on the work of Kotkov et al.~\cite{kotkov2016survey}, where $p$ is a recommended place, $rec$ is the set of already recommended places to the user, $c_p$ is the ontology class to which $p$ belongs, and $dist$ computes the distance of two classes in the ontology (using \textit{Breadth First Search}).
+
+    %It uses Eq. (\ref{eq:novelty}), based on the work of Kotkov et al. \cite{kotkov2016survey}, where $p$ is a recommended place, $rec$ is the set of already recommended places to the user, $c_p$ is the ontology class to which $p$ belongs, and $dist$ computes the distance in the ontology (using \textit{Breadth First Search}) of two ontology classes.
     \begin{equation} \label{eq:novelty}
         nov_{p} = \  \underaccent{q \in rec}{min} \  ( dist( c_p, c_q ) )
     \end{equation}
@@ -245,7 +274,7 @@ Let $R$ be a recommendation set for a specific user on a specific location and a
 
 \subsection{Experiments} \label{section:experiments}
 
-To calculate the score for each POI $p$, we need some user-defined parameters, that represent maximum distance ($maxdist$) from the user to the PIO and the weighs ($w_i$) for each term in Eq. (\ref{eq:score})   (see Section \ref{section:score}). We designed two scenarios with different values of these configuration parameters, as we explain in the following.
+To calculate the score for each POI $p$, we need some user-defined parameters, that represent maximum distance ($maxdist$) from the user to the POI and the weighs ($w_i$) for each term in Eq. (\ref{eq:score})   (see Section \ref{section:score}). We designed two scenarios with different values of these configuration parameters, as we explain in the following.
 
 \subsubsection{First configuration} 
 \label{section:experiment-1}
@@ -261,14 +290,24 @@ more priority to preference and activation and very little priority to distance 
 \end{equation}
 
 
-\textcolor{blue}{Hace falta una tablita que muestre los contextos y las preferencias de cada Ti , y quizás también el weather real y la configuración (por configuración).
-Y en las tablas de recommendaciones poner pi (el sitio) y Quizás para que no hayan tantas tablas se puede hacer solo una con todas las visitas por turista y mostrar los 4 turistas. Podemos habla para decidir cómo irían las tablas.}
+%\textcolor{blue}{Hace falta una tablita que muestre los contextos y las preferencias de cada Ti , y quizás también el weather real y la configuración (por configuración).
+%Y en las tablas de recommendaciones poner pi (el sitio) y Quizás para que no hayan tantas tablas se puede hacer solo una con todas las visitas por turista y mostrar los 4 turistas. Podemos habla para decidir cómo irían las tablas.}
 
-\textcolor{red}{Tenemos que buscar una manera de mostrar los resultados que sea más fácil de entender}
+%\textcolor{red}{Tenemos que buscar una manera de mostrar los resultados que sea más fácil de entender}
 
-We are showing some sets of recommended items like Table \ref{table:t1-1}, where each $p_i$ is a recommended place and $score_{p_i} \ge score_{p_j}$ for every $i < j$. Table \ref{table:t1-1} corresponds to $T_1$'s first visit to Niza, on a rainy workday in the morning, where $p_1$ is Train des Merveilles (from class \textit{TouristTrain}), $p_2$ is Cinéma de Plein Air (from class \textit{Cinema}), $p_3$ is Casino de Beaulieu (from class \textit{Casino}), $p_4$ is Cinéma de Beaulieu (from class \textit{Cinema}) and $p_5$ is Lyon-style petanque fields (from class \textit{BoulesPitch}). We can see that since each of the places' ontology classes are subclasses of \textit{LeisurePlace}, which $T_1$ loves, they have same preference and activation and since this is the first recommendation, all aging values are $1.0$. Therefore, the distance is the tiebreaker. Despite of a rainy morning, the system recommends a tourist train to $T_1$, just because it is a leisure place.
+For space limitations, we are showing only some sets of recommended items like Table \ref{table:t1-1}, where each $p_i$ is a recommended place and $score_{p_i} \ge score_{p_j}$ for every $i < j$. Table \ref{table:t1-1} corresponds to $T_1$'s first visit to Niza, on a {\it rainy workday in the morning}, where $p_1$ is Train des Merveilles (from class \textit{TouristTrain}), $p_2$ is Cinéma de Plein Air (from class \textit{Cinema}), $p_3$ is Casino de Beaulieu (from class \textit{Casino}), $p_4$ is Cinéma de Beaulieu (from class \textit{Cinema}), and $p_5$ is Lyon-style Petanque Fields (from class \textit{BoulesPitch}). We can see that since all places
+%each of the places' %ontology classes 
+are instances
+%subclasses 
+of \textit{LeisurePlace} class, which $T_1$ loves, they have same preference and activation; also, because
+%and since 
+this is the first recommendation, all aging values are $1.0$. Therefore, the distance is the tiebreaker. Despite of a {\it rainy morning} context, the system recommends a {\it Tourist Train}, 
+%to $T_1$, 
+just because it is a leisure place.
 \begin{table}[h!]
     \centering
+        \caption{First visit of $T_1$ to Niza with first configuration and context = (rainy, morning, workday)}
+    \label{table:t1-1}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -281,15 +320,15 @@ We are showing some sets of recommended items like Table \ref{table:t1-1}, where
         
         \hline
     \end{tabular}
-    \caption{First visit of $T_1$ to Niza with first configuration}
-    \label{table:t1-1}
 \end{table}
 
 
-At the second visit to Lyon (see table \ref{table:t1-3}), on a rainy workday in the morning, only $p_1$ is not a leisure place but an interpretation center, a kind of place $T_1$ does not like as much as leisure places. However, the activation of \textit{InterpretationCenter} is higher enough to make $score_{p_1}$ greater than $score_{p_2}$. Despite of $p_1$ being very far away from $T_1$'s location, the little magnitude of $k_4$ makes it little important to the final score. Something odd on the recommended set is that $p_3$ and $p_4$ are the same place, Le Sucre, but reported as belonging to two different ontology classes: \textit{NightClub} and \textit{Theatre}, respectively.
+At the second visit to Lyon (see Table \ref{table:t1-3}) \textcolor{red}{Por que no mostrar la 2da visita a Niza?}, on a {\it rainy workday in the morning}, only $p_1$ is not a Leisure Place but an Interpretation Center, a kind of place $T_1$ does not like as much as leisure places. However, the activation of \textit{InterpretationCenter} is higher enough to make $score_{p_1}$ greater than $score_{p_2}$. Despite of $p_1$ being very far away from $T_1$'s location, the little magnitude of $w_4$ makes it little important to the final score. Something odd on the recommended set is that $p_3$ and $p_4$ are the same place, Le Sucre, but reported as belonging to two different ontology classes: \textit{NightClub} and \textit{Theatre}, respectively.
 
 \begin{table}[h!]
     \centering
+        \caption{Second visit of $T_1$ to Lyon with first configuration and context = (rainy, morning, workday)}
+    \label{table:t1-3}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -302,14 +341,15 @@ At the second visit to Lyon (see table \ref{table:t1-3}), on a rainy workday in 
         
         \hline
     \end{tabular}
-    \caption{Second visit of $T_1$ to Lyon with first configuration}
-    \label{table:t1-3}
 \end{table}
 
-At the fourth visit to Niza, on a rainy workday in the early morning, the system recommends table \ref{table:t1-2} to $T_1$, where $p_1$ is Cinéma de Plein Air (from class \textit{Cinema}), $p_2$ is Ferronnerie d'art JC Rodriguez (from class \textit{CraftsmanShop}), $p_3$ is Atelier Hesperida (from class \textit{CraftsmanShop}), $p_4$ is Horlogerie Foltête	(from class \textit{CraftsmanShop}) and $p_5$ is Galerie Bizet (from class \textit{CraftsmanShop}). Since $T_1$ loves leisure places more than stores, the predicted preference for Cinéma de Plein Air is greater than the other ones on this visit. However, we can see that $\eta_{p_1}$ lowers down $score_{p_1}$ to a value not so different from $score_{p_2}$. Cinéma de Plein Air does not appear again before a snowy workday afternoon, due to its aging and the $T_1$'s context.
+
+At the fourth of  visit  $T_1$ to Niza, on a {\it rainy workday in the early morning}, the system recommends what is shown in Table~\ref{table:t1-2}, where $p_1$ is Cinéma de Plein Air (from class \textit{Cinema}), $p_2$ is Ferronnerie d'art JC Rodriguez (from class \textit{CraftsmanShop}), $p_3$ is Atelier Hesperida (from class \textit{CraftsmanShop}), $p_4$ is Horlogerie Foltête	(from class \textit{CraftsmanShop}), and $p_5$ is Galerie Bizet (from class \textit{CraftsmanShop}). Since $T_1$ loves leisure places more than stores, the predicted preference for Cinéma de Plein Air is greater than the other ones on this visit. However, we can see that $\eta_{p_1}$ lowers down $score_{p_1}$ to a value not so different from $score_{p_2}$. \textcolor{red}{Cinéma de Plein Air does not appear again in recommendations before a {\it snowy workday afternoon}, due to its aging and the $T_1$'s context. ME CUESTA interpretar esto}
 
 \begin{table}[h!]
     \centering
+    \caption{Fourth visit of $T_1$ to Niza with first configuration and context = (rainy, early morning, workday)}
+    \label{table:t1-2}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -319,17 +359,16 @@ At the fourth visit to Niza, on a rainy workday in the early morning, the system
         $\eta_p$    & 0.6 & 1.0 & 1.0 & 1.0 & 1.0 \\
         $dist_{u,p}$ & 3.99 & 5.21 & 5.25 & 5.72 & 5.737 \\
         $score_p$    & 1.9906 & 1.9886 & 1.9884 & 1.98684 & 1.98678 \\
-        
         \hline
     \end{tabular}
-    \caption{Fourth visit of $T_1$ to Niza with first configuration}
-    \label{table:t1-2}
 \end{table}
 
-While the system recommends same places to $T_1$ and $T_2$ for their first visits to Niza, Lyon and Paris, at rainy workdays at afternoon, the sets start to diverge after the second visits. The system recommends to $T_1$ a set of leisure places and one interpretation center for the second visit to Lyon, but recommends a set with two archeological sites, one interpretation center and two remarkable buildings to $T_2$, in that order (see table \ref{table:t2-1}). The more diverse initial preferences of $T_2$ and the aging system are responsible for this.
+While the system recommends same places to $T_1$ and $T_2$ for their first visits to Niza, Lyon, and Paris, at {\it  rainy workdays at afternoon}, the sets start to diverge after the second visits. The system recommends to $T_1$ a set of Leisure Places and one Interpretation Center for the second visit to Lyon, but recommends a set with two Archeological Sites, one Interpretation Center and two Remarkable Buildings to $T_2$, in that order (see Table \ref{table:t2-1}). The more diverse initial preferences of $T_2$ and the aging system are responsible for this.
 
 \begin{table}[h!]
     \centering
+        \caption{Second visit of $T_2$ to Lyon with first configuration and context = (rainy, afternoon, workday)}
+    \label{table:t2-1}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -342,13 +381,16 @@ While the system recommends same places to $T_1$ and $T_2$ for their first visit
         
         \hline
     \end{tabular}
-    \caption{Second visit of $T_2$ to Lyon with first configuration}
-    \label{table:t2-1}
 \end{table}
 
-After many visits, again at a rainy workday at afternoon, the system recommends a completely different set of places to $T_2$ when visiting Lyon again. It recommends a theater, an art gallery, a craftsman shop and two other art galleries, in that order (see table \ref{table:t2-2}). The system aging is responsible for this variety of recommendations.
+After many visits, again at a {\it  rainy workday at afternoon}, the system recommends a completely different set of places to $T_2$ when visiting Lyon.
+%again. 
+It recommends a Theater, an Art Gallery, a Craftsman Shop and two other Art Galleries, in that order (see Table~\ref{table:t2-2}). The system aging is responsible for this variety of recommendations.
+
 \begin{table}[h!]
     \centering
+    \caption{A visit of $T_2$ to Lyon with first configuration after many visits and context = ( rainy, afternoon, workday)}
+    \label{table:t2-2}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -361,14 +403,16 @@ After many visits, again at a rainy workday at afternoon, the system recommends 
         
         \hline
     \end{tabular}
-    \caption{A visit of $T_2$ to Lyon with first configuration after many visits}
-    \label{table:t2-2}
 \end{table}
 
-However, there are cases where $k_3$ is not high enough to make more diverse the recommendations, as in the two visits of $T_2$ to Paris on cloudless workdays at early morning (see tables \ref{table:t2-3} and \ref{table:t2-4}), where the second one is made after many visits. Both visits involve Garnier Opera (from class \textit{Palace}), Conciergerie (from class \textit{Palace}) and Le Manoir de Paris (from class \textit{InterpretationCentre}), as $p_2$, $p_3$ and $p_4$ for the first visit and $p_1$, $p_5$ and $p_2$ for the second visit, respectively.
+\textcolor{red}{However, there are cases where $w_3$ XXX COMO QUE HAY CASOS?  $w_3$ no es fijo en esta configuración? XXXX is not high enough to make more diverse the recommendations, as in the two visits of $T_2$ to Paris on {\it  cloudless workdays at early morning}, as showing in Table~\ref{table:t2-3} and Table~\ref{table:t2-4}, where the second one represents the recommendations made after many visits. }
+%However, there are cases where $k_3$ is not high enough to make more diverse the recommendations, as in the two visits of $T_2$ to Paris on cloudless workdays at early morning (see tables \ref{table:t2-3} and \ref{table:t2-4}), where the second one is made after many visits. 
+Both visits involve Garnier Opera (from class \textit{Palace}), Conciergerie (from class \textit{Palace}), and Le Manoir de Paris (from class \textit{InterpretationCentre}), as $p_2$, $p_3$, and $p_4$ for the first visit and $p_1$, $p_5$, and $p_2$ for the second visit, respectively.
 
 \begin{table}[h!]
     \centering
+        \caption{First visit of $T_2$ to Paris with first configuration and context = (cloudless, early morning, workday)}
+    \label{table:t2-3}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -381,12 +425,12 @@ However, there are cases where $k_3$ is not high enough to make more diverse the
         
         \hline
     \end{tabular}
-    \caption{First visit of $T_2$ to Paris with first configuration on a cloudless workday at early morning}
-    \label{table:t2-3}
 \end{table}
 
 \begin{table}[h!]
     \centering
+        \caption{Second visit of $T_2$ to Paris with first configuration and context = (cloudless,  early morning, workday)}
+    \label{table:t2-4}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -399,13 +443,16 @@ However, there are cases where $k_3$ is not high enough to make more diverse the
         
         \hline
     \end{tabular}
-    \caption{Second visit of $T_2$ to Paris with first configuration on a cloudless workday at early morning}
-    \label{table:t2-4}
 \end{table}
 
-Table \ref{table:config-1} shows the average of the recommendation metrics for each tourist using first configuration. Averages of $pref_R$ of $T_1$'s and $T_2$'s visits are the highest ones, being greater than $0.8$ and hence closer to $1.0$, the maximum possible value. Next is $T_4$'s, being greater than $0.7$, which is still a good average preference. $T_3$'s average $pref_R$ is lower, but we can blame the amount of low initial preferences of $T_3$, as we can see on figure \ref{fig:tourist_hist}.
+Table \ref{table:config-1} shows the average of the recommendation metrics for each tourist using the first configuration. Averages of $pref_R$ of $T_1$'s and $T_2$'s visits are the highest ones, being greater than $0.8$.
+%and hence closer to $1.0$, the maximum possible value. 
+Next is $T_4$'s visits, being greater than $0.7$, which is still a good average preference. $T_3$'s average $pref_R$ is lower, but we can blame the amount of low initial preferences of $T_3$, as we can see on Figure~\ref{fig:tourist_hist}.
+
 \begin{table}[h!]
     \centering
+        \caption{Averages of recommendations metrics with first configuration}
+    \label{table:config-1}
     \begin{tabular}{ |c|c|c|c|c| } 
         \hline
         avg & $T_1$ & $T_2$ & $T_3$ & $T_4$ \\
@@ -419,18 +466,18 @@ Table \ref{table:config-1} shows the average of the recommendation metrics for e
        
         \hline
     \end{tabular}
-    \caption{Averages of recommendations metrics with first configuration}
-    \label{table:config-1}
 \end{table}
 
-The average $act_R$ of each tourist is greater than $4.0$. Theoretically, the maximum possible value is $6.0$, but since the relevance values obtained by the survey (see section \ref{section:relevances-survey}) do not reach their maximum possible value, which is $2.0$, it is impossible for these experiments.
+\textcolor{red}{The average $act_R$ of each tourist is greater than $4.0$. Theoretically, the maximum possible value is $6.0$, but since the relevance values obtained by the survey (see Section \ref{section:relevances-survey}) do not reach their maximum possible value, which is $2.0$, it is impossible for these experiments. ESTA FRASE ESTA muy confusa, no se entiende}
 
 Average $\eta_R$ is very near $0.7$, hence the amount of "young" recommended places is high. Theoretically, the maximum possible value is $1.0$, but that would be possible if each recommendation involves POIs never recommended before. 
 
-Despite of recommending places with distance from user near $8.0$ km, the average $dist_{u,R}$ for each tourist is acceptable: greater than $4.0$ km and less than $5.0$ km. The novelties measured as we proposed on section \ref{section:metrics} have bad performance on four tourists.
+Despite of recommending places with distance from user near $8.0$ km, the average $dist_{u,R}$ for each tourist is acceptable: greater than $4.0$ km and less than $5.0$ km. The novelties measured as we proposed on Section \ref{section:metrics} have bad performance on four tourists. \textcolor{red}{Y ESTO SE DEBE A QUé? Es un drawback? cómo se podría mejorar?}
 
 \subsubsection{Second configuration} \label{section:experiment-2}
-Now we consider $k_1 = \frac{1}{4}$ for preference, $k_2 = \frac{1}{4}$ for activation, $k_3 = \frac{1}{4} + \frac{2}{9}$ for aging and $k_4 = \frac{1}{4} - \frac{2}{9}$ for distance from user, resulting on equation \ref{eq:score-2} and giving now more priority to aging.
+Now we consider $w_1 = \frac{1}{4}$ for preference, $w_2 = \frac{1}{4}$ for activation, $w_3 = \frac{1}{4} + \frac{2}{9}$ for aging and $w_4 = \frac{1}{4} - \frac{2}{9}$ for distance from user, resulting on equation \ref{eq:score-2} and giving now more priority to aging. \textcolor{red}{ponerlos igual que conf 1}
+
+
 \begin{equation} \label{eq:score-2}
     \begin{split}
         score_p = \ &\frac{1}{4} \cdot pref_c + \frac{1}{4} \cdot act_c \\
@@ -438,10 +485,15 @@ Now we consider $k_1 = \frac{1}{4}$ for preference, $k_2 = \frac{1}{4}$ for acti
     \end{split}
 \end{equation}
 
-For the first visit of $T_1$ to Niza in a cloudless workday at afternoon, the $\eta_R$ is $0.84$ using the second configuration (see table \ref{table:2nd-t1-niza-1}), while it is $0.80$ using the first configuration (see table \ref{table:1st-t1-niza-1}). Even the $pref_R$ improve, from $0.765$ to $0.799$, but the $act_R$ goes from $4.44$ to $4.33$.
+For the first visit of $T_1$ to Niza in a {\it cloudless workday at afternoon}, the $\eta_R$ is $0.84$
+%using the second configuration 
+(see Table \ref{table:2nd-t1-niza-1}), while it is $0.80$ using the first configuration (see Table \ref{table:1st-t1-niza-1}). \textcolor{red}{The $pref_R$ improves, from $0.765$ to $0.799$, and the $act_R$ goes from $4.44$ to $4.33$.}
+%Even the $pref_R$ improve, from $0.765$ to $0.799$, but the $act_R$ goes from $4.44$ to $4.33$.
 
 \begin{table}[h!]
     \centering
+        \caption{First visit of $T_1$ to Niza with first configuration and context = (cloudless, afternoon, workday}
+    \label{table:1st-t1-niza-1}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -454,12 +506,12 @@ For the first visit of $T_1$ to Niza in a cloudless workday at afternoon, the $\
         
         \hline
     \end{tabular}
-    \caption{First visit of $T_1$ to Niza with first configuration on a cloudless workday at afternoon}
-    \label{table:1st-t1-niza-1}
 \end{table}
 
 \begin{table}[h!]
     \centering
+        \caption{First visit of $T_1$ to Niza with second configuration and context = (cloudless,  afternoon, workday}
+    \label{table:2nd-t1-niza-1}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -472,14 +524,14 @@ For the first visit of $T_1$ to Niza in a cloudless workday at afternoon, the $\
         
         \hline
     \end{tabular}
-    \caption{First visit of $T_1$ to Niza with second configuration on a cloudless workday at afternoon}
-    \label{table:2nd-t1-niza-1}
 \end{table}
 
-For the second visit of $T_4$ to Paris on a snowy weekend at early morning, the $\eta_R$ is $0.774$ using second configuration (see table \ref{table:1st-t4-Paris-2}), while it is $0.691$ using first configuration (see table \ref{table:2nd-t4-Paris-2}). The $pref_R$ and the $act_R$ decrease from $0.727$ to $0.699$ and from $4.332$ to $4.041$, respectively.
+For the second visit of $T_4$ to Paris on a {\it snowy weekend at early morning}, the $\eta_R$ is $0.774$ using second configuration (see Table \ref{table:1st-t4-Paris-2}), while it is $0.691$ using first configuration (see Table \ref{table:2nd-t4-Paris-2}). The $pref_R$ and the $act_R$ decrease from $0.727$ to $0.699$ and from $4.332$ to $4.041$, respectively. \textcolor{red}{Y eso que significa?}
 
 \begin{table}[h!]
     \centering
+        \caption{Second visit of $T_4$ to Paris with first configuration and context = (snowy, early morning, weekend)}
+    \label{table:1st-t4-Paris-2}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -492,12 +544,12 @@ For the second visit of $T_4$ to Paris on a snowy weekend at early morning, the 
         
         \hline
     \end{tabular}
-    \caption{Second visit of $T_4$ to Paris with first configuration on a snowy weekend at early morning}
-    \label{table:1st-t4-Paris-2}
 \end{table}
 
 \begin{table}[h!]
     \centering
+        \caption{Second visit of $T_4$ to Paris with second configuration and context = (snowy,  early morning, weekend)}
+    \label{table:2nd-t4-Paris-2}
     \begin{tabular}{ |c|c|c|c|c|c| } 
         \hline
         Field   & $p_1$ & $p_2$ & $p_3$ & $p_4$ & $p_5$ \\
@@ -510,14 +562,14 @@ For the second visit of $T_4$ to Paris on a snowy weekend at early morning, the 
         
         \hline
     \end{tabular}
-    \caption{Second visit of $T_4$ to Paris with second configuration on a snowy weekend at early morning}
-    \label{table:2nd-t4-Paris-2}
 \end{table}
 
-Table \ref{table:config-2} shows the average of the recommendation metrics for each tourist using second configuration. Again, $T_1$'s and $T_2$'s $avg(pref_R)$ are the highest ones, followed by $T_4$'s, while $T_3$'s is the lowest. We can notice that only $T_1$'s and $T_2$'s $avg(pref_R)$ increase a little from the ones with first configuration, but the other two decrease. Again, all $avg(act_R)$ are above $4.0$, but each one decreases from the first configuration version. As expected, all $avg(\eta_R)$ increase because the second configuration gives more weight to aging.
+Table \ref{table:config-2} shows the average of the recommendation metrics for each tourist using the second configuration. Again, $T_1$'s and $T_2$'s $avg(pref_R)$ are the highest ones, followed by $T_4$'s, while $T_3$'s is the lowest. We can notice that only $T_1$'s and $T_2$'s $avg(pref_R)$ increase a little from the ones with first configuration, but the other two decrease. Again, all $avg(act_R)$ are above $4.0$, but each one decreases from the first configuration version. As expected, all $avg(\eta_R)$ increase because the second configuration gives more weight to aging.
 
 \begin{table}[h!]
     \centering
+    \caption{Averages of recommendations metrics with second configuration}
+    \label{table:config-2}
     \begin{tabular}{ |c|c|c|c|c| } 
         \hline
         avg & $T_1$ & $T_2$ & $T_3$ & $T_4$ \\
@@ -531,14 +583,18 @@ Table \ref{table:config-2} shows the average of the recommendation metrics for e
        
         \hline
     \end{tabular}
-    \caption{Averages of recommendations metrics with second configuration}
-    \label{table:config-2}
 \end{table}
 
 \subsubsection{Discussion}
 
-For measuring novelty we use the Eq. (\ref{eq:novelty}) based on Kotkov et al. \cite{kotkov2016survey}, since when novelty increases, so does serendipity. That equation was proposed with the hypotheses that if a user already knows places from class $c$, then it is probable the user already knows other places from class $c$. With that hypotheses, our system gives poor novelty: when a place belonging to the ontology class $c$ is recommended, next recommendations with places from $c$ will have lower novelty. However, considering average aging as a good metric for the level of variability, both experiments on section \ref{section:experiments} give high average aging, which means a lot of "young" or not frequently recommended places are returned to the user, which could imply an increment on system serendipity. Future work should try more advanced ways for measuring serendipity.
+For measuring novelty we use the Eq. (\ref{eq:novelty}) based on Kotkov et al.~\cite{kotkov2016survey}, since when novelty increases, so does serendipity. That equation was proposed with the hypotheses that if a user already knows places from class $c$, then it is probable the user already knows other places from class $c$. With that hypotheses, our system gives poor novelty: when a place belonging to the ontology class $c$ is recommended, next recommendations with places from $c$ will have lower novelty. However, considering average aging as a good metric for the level of variability, both set of experiments
+%on Section~\ref{section:experiments} 
+give high average aging, which means a lot of "young" or not frequently recommended places are returned to the user, which could imply an increment on system serendipity. Future work should try more advanced ways for measuring serendipity.
 
-Of course, experiment \ref{section:experiment-2} is focused on increasing average aging by giving a higher value to $k_3$ on Eq. (\ref{eq:score}), but the increment of aging is paid with a decrement on activation. Nonetheless, two simulated tourists have an increment for their preferences, because on first configuration the system is trapped between very activated POIs but not very relevant, but the heavier aging of the second configuration increases variability, hence lets the system recommend other POIs despite of lowering the activation. 
+Of course, experiments ith the second configuration 
+%\ref{section:experiment-2} is 
+are focused on increasing average aging by giving a higher value to $w_3$ on Eq. (\ref{eq:score}), but the increment of aging is paid with a decrease
+%decrement 
+on activation. Nonetheless, two simulated tourists have an increment for their preferences, because on first configuration the system is trapped between very activated POIs but not very relevant, but the heavier aging of the second configuration increases variability, hence lets the system recommend other POIs despite of lowering the activation. 
 
 Nevertheless, a deployed version of this system should let the users choose each $w_i$ of Eq. (\ref{eq:score}), that way choosing if they want recommendations mainly relevant than contextually activated or varied, or even recommendations with the nearest places ignoring any other attribute, or any other possible configuration.
