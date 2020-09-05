@@ -323,7 +323,7 @@ just because it is a leisure place.
 \end{table}
 
 
-At the second visit to Lyon (see Table \ref{table:t1-3}) \textcolor{red}{Por que no mostrar la 2da visita a Niza?}, on a {\it rainy workday in the morning}, only $p_1$ is not a Leisure Place but an Interpretation Center, a kind of place $T_1$ does not like as much as leisure places. However, the activation of \textit{InterpretationCenter} is higher enough to make $score_{p_1}$ greater than $score_{p_2}$. Despite of $p_1$ being very far away from $T_1$'s location, the little magnitude of $w_4$ makes it little important to the final score. Something odd on the recommended set is that $p_3$ and $p_4$ are the same place, Le Sucre, but reported as belonging to two different ontology classes: \textit{NightClub} and \textit{Theatre}, respectively.
+At the second visit to Lyon (see Table \ref{table:t1-3}), on a {\it rainy workday in the morning}, only $p_1$ is not a Leisure Place but an Interpretation Center, a kind of place $T_1$ does not like as much as leisure places. However, the activation of \textit{InterpretationCenter} is higher enough to make $score_{p_1}$ greater than $score_{p_2}$. Despite of $p_1$ being very far away from $T_1$'s location, the little magnitude of $w_4$ makes it little important to the final score. Something odd on the recommended set is that $p_3$ and $p_4$ are the same place, Le Sucre, but reported as belonging to two different ontology classes: \textit{NightClub} and \textit{Theatre}, respectively.
 
 \begin{table}[h!]
     \centering
@@ -344,7 +344,8 @@ At the second visit to Lyon (see Table \ref{table:t1-3}) \textcolor{red}{Por que
 \end{table}
 
 
-At the fourth of  visit  $T_1$ to Niza, on a {\it rainy workday in the early morning}, the system recommends what is shown in Table~\ref{table:t1-2}, where $p_1$ is Cinéma de Plein Air (from class \textit{Cinema}), $p_2$ is Ferronnerie d'art JC Rodriguez (from class \textit{CraftsmanShop}), $p_3$ is Atelier Hesperida (from class \textit{CraftsmanShop}), $p_4$ is Horlogerie Foltête	(from class \textit{CraftsmanShop}), and $p_5$ is Galerie Bizet (from class \textit{CraftsmanShop}). Since $T_1$ loves leisure places more than stores, the predicted preference for Cinéma de Plein Air is greater than the other ones on this visit. However, we can see that $\eta_{p_1}$ lowers down $score_{p_1}$ to a value not so different from $score_{p_2}$. \textcolor{red}{Cinéma de Plein Air does not appear again in recommendations before a {\it snowy workday afternoon}, due to its aging and the $T_1$'s context. ME CUESTA interpretar esto}
+At the fourth of  visit  $T_1$ to Niza, on a {\it rainy workday in the early morning}, the system recommends what is shown in Table~\ref{table:t1-2}, where $p_1$ is Cinéma de Plein Air (from class \textit{Cinema}), $p_2$ is Ferronnerie d'art JC Rodriguez (from class \textit{CraftsmanShop}), $p_3$ is Atelier Hesperida (from class \textit{CraftsmanShop}), $p_4$ is Horlogerie Foltête	(from class \textit{CraftsmanShop}), and $p_5$ is Galerie Bizet (from class \textit{CraftsmanShop}). Since $T_1$ loves leisure places more than stores, the predicted preference for Cinéma de Plein Air is greater than the other ones on this visit. However, we can see that $\eta_{p_1}$ lowers down $score_{p_1}$ to a value not so different from $score_{p_2}$. 
+The recommendations to $T_1$ returned after this one do not have Cinéma de Plein Air in the recommended POIs until the context {\it snowy workday afternoon} is reached in the loop, because of the aging of Cinéma de Plein Air and its low activations.
 
 \begin{table}[h!]
     \centering
@@ -405,7 +406,7 @@ It recommends a Theater, an Art Gallery, a Craftsman Shop and two other Art Gall
     \end{tabular}
 \end{table}
 
-\textcolor{red}{However, there are cases where $w_3$ XXX COMO QUE HAY CASOS?  $w_3$ no es fijo en esta configuración? XXXX is not high enough to make more diverse the recommendations, as in the two visits of $T_2$ to Paris on {\it  cloudless workdays at early morning}, as showing in Table~\ref{table:t2-3} and Table~\ref{table:t2-4}, where the second one represents the recommendations made after many visits. }
+With a low value of $w_3$, which represents aging's weight, there are cases where the recommendations are not very diverse, as is the case of the two visits of $T_2$ to Paris on {\it cloudless workdays at early morning}, shown in Table~\ref{table:t2-3} and Table~\ref{table:t2-4}, where the second one represents the recommendations made after many visits.
 %However, there are cases where $k_3$ is not high enough to make more diverse the recommendations, as in the two visits of $T_2$ to Paris on cloudless workdays at early morning (see tables \ref{table:t2-3} and \ref{table:t2-4}), where the second one is made after many visits. 
 Both visits involve Garnier Opera (from class \textit{Palace}), Conciergerie (from class \textit{Palace}), and Le Manoir de Paris (from class \textit{InterpretationCentre}), as $p_2$, $p_3$, and $p_4$ for the first visit and $p_1$, $p_5$, and $p_2$ for the second visit, respectively.
 
@@ -468,26 +469,26 @@ Next is $T_4$'s visits, being greater than $0.7$, which is still a good average 
     \end{tabular}
 \end{table}
 
-\textcolor{red}{The average $act_R$ of each tourist is greater than $4.0$. Theoretically, the maximum possible value is $6.0$, but since the relevance values obtained by the survey (see Section \ref{section:relevances-survey}) do not reach their maximum possible value, which is $2.0$, it is impossible for these experiments. ESTA FRASE ESTA muy confusa, no se entiende}
+The average $act_R$ of each tourist is greater than $4.0$. Theoretically, the maximum possible value of $act_R$ is $6.0$, but since it depends of the activation value $act_c$ of the recommended ontology classes (see Eq. \ref{eq:act_r}), which depends of  the relevances $r_{c, x}$ of the user (see Eq. \ref{eq:activation}), which do not reach their maximum possible value $2.0$ in the survey (see Section \ref{section:relevances-survey}), it is impossible for these experiments to reach the maximum $act_R$. Therefore, we can say that an average $act_R$ of $4.0$ is good enough.
 
 Average $\eta_R$ is very near $0.7$, hence the amount of "young" recommended places is high. Theoretically, the maximum possible value is $1.0$, but that would be possible if each recommendation involves POIs never recommended before. 
 
-Despite of recommending places with distance from user near $8.0$ km, the average $dist_{u,R}$ for each tourist is acceptable: greater than $4.0$ km and less than $5.0$ km. The novelties measured as we proposed on Section \ref{section:metrics} have bad performance on four tourists. \textcolor{red}{Y ESTO SE DEBE A QUé? Es un drawback? cómo se podría mejorar?}
+Despite of recommending places with distance from user near $8.0$ km, the average $dist_{u,R}$ for each tourist is acceptable: greater than $4.0$ km and less than $5.0$ km. The novelties measured as we proposed on Section \ref{section:metrics} have bad performance on four tourists.
 
 \subsubsection{Second configuration} \label{section:experiment-2}
-Now we consider $w_1 = \frac{1}{4}$ for preference, $w_2 = \frac{1}{4}$ for activation, $w_3 = \frac{1}{4} + \frac{2}{9}$ for aging and $w_4 = \frac{1}{4} - \frac{2}{9}$ for distance from user, resulting on equation \ref{eq:score-2} and giving now more priority to aging. \textcolor{red}{ponerlos igual que conf 1}
+Now we consider $w_1 = 0.25$ for preference, $w_2 = 0.25$ for activation, $w_3 = 0.472$ for aging and $w_4 = 0.0278$ for distance from user, resulting on equation \ref{eq:score-2} and giving now more priority to aging.
 
 
 \begin{equation} \label{eq:score-2}
     \begin{split}
-        score_p = \ &\frac{1}{4} \cdot pref_c + \frac{1}{4} \cdot act_c \\
-                                        &+ \frac{17}{36} \cdot \eta_p - \frac{1}{36} \cdot \frac{dist_{u,p}}{8}
+        score_p = \ & 0.25 \cdot pref_c + 0.25 \cdot act_c \\
+                                        &+ 0.472 \cdot \eta_p - 0.0278 \cdot \frac{dist_{u,p}}{8}
     \end{split}
 \end{equation}
 
 For the first visit of $T_1$ to Niza in a {\it cloudless workday at afternoon}, the $\eta_R$ is $0.84$
 %using the second configuration 
-(see Table \ref{table:2nd-t1-niza-1}), while it is $0.80$ using the first configuration (see Table \ref{table:1st-t1-niza-1}). \textcolor{red}{The $pref_R$ improves, from $0.765$ to $0.799$, and the $act_R$ goes from $4.44$ to $4.33$.}
+(see Table \ref{table:2nd-t1-niza-1}), while it is $0.80$ using the first configuration (see Table \ref{table:1st-t1-niza-1}). The $pref_R$ improves, from $0.765$ to $0.799$, and the $act_R$ goes from $4.44$ to $4.33$.
 %Even the $pref_R$ improve, from $0.765$ to $0.799$, but the $act_R$ goes from $4.44$ to $4.33$.
 
 \begin{table}[h!]
@@ -526,7 +527,7 @@ For the first visit of $T_1$ to Niza in a {\it cloudless workday at afternoon}, 
     \end{tabular}
 \end{table}
 
-For the second visit of $T_4$ to Paris on a {\it snowy weekend at early morning}, the $\eta_R$ is $0.774$ using second configuration (see Table \ref{table:1st-t4-Paris-2}), while it is $0.691$ using first configuration (see Table \ref{table:2nd-t4-Paris-2}). The $pref_R$ and the $act_R$ decrease from $0.727$ to $0.699$ and from $4.332$ to $4.041$, respectively. \textcolor{red}{Y eso que significa?}
+For the second visit of $T_4$ to Paris on a {\it snowy weekend at early morning}, the $\eta_R$ is $0.6$ using second configuration (see Table \ref{table:2nd-t4-Paris-2}), while it is $0.32$ using first configuration (see Table \ref{table:1st-t4-Paris-2}). This makes sense since we give more weight to aging in the second configuration. The other metrics of $R$ are very similar for both visits.
 
 \begin{table}[h!]
     \centering
