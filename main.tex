@@ -1,100 +1,173 @@
-%\documentclass{article}
-\documentclass[conference]{IEEEtran}
-\IEEEoverridecommandlockouts
-% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
-\usepackage{cite}
-\usepackage{amssymb,amsfonts}
-\usepackage{algorithmic}
-\usepackage{textcomp}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{xcolor}
+\documentclass[sigconf]{acmart}
+
+\usepackage{booktabs} % For formal tables
 \usepackage{accents}
-\usepackage{array}
-\usepackage{balance}
-\usepackage{enumitem}
-\setlist[itemize]{leftmargin=4.99mm}
-%\usepackage[
-%backend=biber,
-%style=apa,
-%citestyle=apa
-%]{biblatex}
 
-%\addbibresource{bibliography.bib} %Imports bibliography file
+
+% Copyright
+%\setcopyright{none}
+\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+
+% DOI
+\acmDOI{xx.xxx/xxx_x}
+
+% ISBN
+\acmISBN{978-1-4503-8104-8/21/03}
+
+%Conference
+\acmConference[SAC'21]{ACM SAC Conference}{March 22-March 26, 2021}{Gwangju, South Korea}
+\acmYear{2021}
+\copyrightyear{2021}
+
+
+\acmArticle{4}
+\acmPrice{15.00}
+
+% These commands are optional
+%\acmBooktitle{Transactions of the ACM Woodstock conference}
+%\editor{Jennifer B. Sartor}
+%\editor{Theo D'Hondt}
+%\editor{Wolfgang De Meuter}
+
+
 \begin{document}
+\title{Serendipity Oriented and Ontology-based Recommender System for E-tourism}
+%\title{RECESO: Recommender System for E-tourism with Serendipity and Ontology-based}
+%\titlenote{Produces the permission block, and
+ % copyright information}
+%\subtitle{Extended Abstract}
+%\subtitlenote{The full version of the author's guide is available as
+ % \texttt{acmart.pdf} document}
+ 
 
-%\title{User-centric and Context-aware  Recommender System for e-Tourism}
+%\author{Gustavo Castellanos}
+%\orcid{1234-5678-9012}
+%\affiliation{%
+%  \institution{Universidad Simón Bolívar}
+%  \city{Caracas} 
+%  \state{Venezuela} 
+ % \postcode{1080-A}
+%}
+%\email{14-10192@usb.ve}
 
-%\title{User-centric and Context-aware  Recommender System for e-Tourism}
-\title{
-%ReCeSO o ReCREO: User-centric and Context-aware  Recommender System for e-Tourism:
-RECESO: Recommender System for E-tourism with Serendipity and Ontology-based }
+%\author{Yudith Cardinale}
+%\affiliation{%
+%  \institution{Universidad Simón Bolívar, Caracas, Venezuela}
+%  \institution{Universidad Católica San Pablo, Arequipa, Perú}
+%  \city{Caracas} 
+%  \state{Venezuela} 
+ % \postcode{1080-A}
+%}
+%\email{ycardinale@usb.ve}
 
-\author{\IEEEauthorblockN{Gustavo Castellanos}
-\IEEEauthorblockA{\textit{Computer Science Department} \\
-\textit{Universidad Simón Bolívar}\\
-Caracas, Venezuela \\
-14-10192@usb.ve}
-\and
-\IEEEauthorblockN{Yudith Cardinale}
-\IEEEauthorblockA{\textit{Computer Science Department} \\
-\textit{Universidad Simón Bolívar}\\
-Caracas, Venezuela \\
-ycardinale@usb.ve}
-\and
-\IEEEauthorblockN{Philippe Roose}
-\IEEEauthorblockA{\textit{Université de Pau et des Pays de l’Adour} \\
-\textit{LIUPPA -- T2I64600}\\
-Anglet, France \\
-philippe.roose@iutbayonne.univ-pau.fr}
-%\and
-%\IEEEauthorblockN{Yudith Cardinale}
-%\IEEEauthorblockA{\textit{Computer Science Department} \\
-%\textit{Universidad Simón Bolívar}\\
-%Caracas, Venezuela \\
-%ycardinale@usb.ve}
-%\and
-%\IEEEauthorblockN{Marc Dalmau}
-%\IEEEauthorblockA{\textit{Université de Pau et des Pays de l’Adour} \\
-%\textit{LIUPPA -- T2I64600}\\
-%Anglet, France \\
-%dalmau@iutbayonne.univ-pau.fr}
-%\and
-%\IEEEauthorblockN{Nadine Couture}
-%\IEEEauthorblockA{\textit{ESTIA Technopole Izarbel} \\
-%\textit{64210}\\
-%Bidart, France \\
-%n.couture@estia.fr}
-%\and
-%\IEEEauthorblockN{Dominique Masson}
-%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-%\textit{name of organization (of Aff.)}\\
-%City, Country \\
-%email address or ORCID}
-}
+%\author{Philippe Roose}
+%\affiliation{%
+ % \institution{Université de Pau et des Pays de l’Adour}}
+ % \streetaddress{LIUPPA -- T2I64600}
+ % \city{Anglet} 
+ % \country{France}}
+% \email{philippe.roose@iutbayonne.univ-pau.fr}
 
 
-%\author{Gustavo Castellanos and Yudith Cardinale and Philippe Roose }
-%\date{November 2019}
+% The default list of authors is too long for headers}
+%\renewcommand{\shortauthors}{G. Castellanos, Y. Cardinale, P. Roose.}
 
-
-\maketitle
 
 \begin{abstract}
-Often travelers try to manually collect enough information for planing to go to a destination or when being at this destination, but this task may be overwhelming due to the big amount of options (including local apps download). Usually, tourists depend on places' reviews to make the choice, but this implies prior knowledge of the existence of the places. These reviews are often requested on tourism sites and applications, most of which follow the PULL paradigm, i.e., the user has to explicitly search for suggestions/recommendations through interaction with the application's graphical user interface. On the other hand, a
+Frequently, travelers try to 
+%manually 
+collect 
+%enough 
+information for planing a trip
+%to go to a destination 
+or when being at 
+%this 
+the destination.
+%, but 
+This task may be overwhelming due to the big amount of available information sources
+%options 
+(including local apps download). Usually, tourists depend on places' reviews to make the choice, but this implies prior knowledge of the 
+%existence of the 
+touristic places. These reviews are often requested on tourism sites and applications, most of which follow the PULL paradigm, i.e., the user has to explicitly search for suggestions
+%/recommendations 
+through interaction with the application. 
+%'s graphical user interface. 
+In contrast,
+%On the other hand, 
+a
 PUSH approach, in which the application proactively triggers a recommendation process when
-necessary -- for example, when the user is close to a point of interest  (POI), when lunch time is approaching, or
-when weather conditions change -- seems to be a more reasonable solution. 
+necessary -- e.g.,
+%%for example, 
+%when 
+the user is close to a point of interest  
+%(POI) 
+or  
+when lunch time is approaching --
+%, or
+%when weather conditions change -- 
+seems to be a more reasonable solution. 
 %Having said that, 
 In this context, 
 %in this work 
-we propose a user-centric hybrid recommender system, using an ontology-based algorithm for content-based and context-aware recommendations, with a focus on decreasing predictable output under same situations, i.e., increasing serendipity based on a {\it aging-like} approach. To demonstrate its suitability and performance, we test it in different simulated scenarios using different weights or priorities for the predicted preferences, context activation, aging, and distances of the recommended places. Results show how the spreading activation and the proposed aging system give relevant and varied recommendations for the users, while taking into account their context, and how the system could be configured to focus more on either relevant, varied, context-activated, or near places.
+we propose RECESO, a user-centric 
+%hybrid 
+recommender system that supports both PULL and PUSH approaches. We propose
+%using 
+an ontology-based spreading activation algorithm for %content-based and 
+context-aware recommendations, with a focus on 
+decreasing predictable outputs 
+%under same situations, i.e., 
+and increasing serendipity  based on an {\it aging-like} approach. To demonstrate its suitability and performance, we test it in different simulated scenarios, varying users' profiles and preferences and  context parameters.
+%using different 
+%weights or priorities for the predicted preferences, context activation, aging, and distances of the recommended places. 
+Results show how the spreading activation and the proposed aging system provide
+%give 
+relevant and varied recommendations, according to users' preferences,
+%for the users, 
+while taking into account their context. We show
+%, and 
+how the system 
+%could be 
+is configured to focus more on either relevant, varied, context-activated, or near places.
 \end{abstract}
-\begin{IEEEkeywords}
-tourism, recommender systems, context awareness
-\end{IEEEkeywords}
 
+%
+% The code below should be generated by the tool at
+% http://dl.acm.org/ccs.cfm
+% Please copy and paste the code instead of the example below. 
+%
+
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10002951.10003227.10003233.10003449</concept_id>
+<concept_desc>Information systems~Reputation systems</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003120</concept_id>
+<concept_desc>Human-centered computing</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Information systems~Reputation systems}
+\ccsdesc[500]{Human-centered computing}
+
+
+\keywords{Tourism, Recommender Systems, Context Awareness, Ontology, User-centric}
+
+
+\maketitle
 
 \input{Introduction}
 \input{Related}
@@ -102,12 +175,9 @@ tourism, recommender systems, context awareness
 \input{StudyCase}
 \input{Conclu}
 
-
-%\medskip
- 
- \bibliographystyle{unsrt}
- \balance
-\bibliography{bibliography}
-%\printbibliography
+\vspace{-0.2cm}
+\bibliographystyle{ACM-Reference-Format}
+\balance
+\bibliography{bibliography} 
 
 \end{document}

@@ -1,3 +1,4 @@
+\vspace{-0.2cm}
 \section{Related Work} \label{section:related-work}
 
 % \textcolor{red}{Clasificar los sistemas de recomedación de acuerdo a: User-centric (manual, automatic); context-aware; ontology-based; used methods (ML, DL, heurísticas, modelos, etc.)\\
@@ -10,12 +11,22 @@
 %\subsection{Recommender Systems} %\label{section:recommender-systems}
 
 The unleashed proliferation  of recommender systems for tourism domain, due to the current development of mobile Internet technology, has fostered a wide categorization of them. 
-Depending on the technique used to resolve recommendations, these systems are usually classified into two categories: memory-based and model-based~\cite{bobadilla2013recommender,ebrahim_2012}. \textbf{Memory-based} recommender systems support their  suggestions on similarities among users and their shared items, hence recommending similar items to the ones the user likes (i.e., \textit{content-based recommendation}) or recommending items liked by users that are similar to the user (i.e., \textit{collaborative filtering}). \textbf{Model-based} recommender systems try to guess how much a user will like an item that they did not consume before, usually through statistical techniques and machine-learning models. The recommender systems that use both memory-based and model-based approaches are called \textbf{Hybrid} recommender systems.
+Depending on the technique used to 
+%resolve 
+make recommendations, these systems are %usually 
+classified into two categories: memory-based and model-based~\cite{bobadilla2013recommender,ebrahim_2012}. \textbf{Memory-based} recommender systems support their  suggestions on similarities among users and their shared items, hence recommending similar items to the ones the user likes (i.e., \textit{content-based recommendation}) or recommending items liked by users that are similar to the user (i.e., \textit{collaborative filtering}). \textbf{Model-based} recommender systems try to guess how much a user will like an item that they did not consume before, usually through statistical techniques and machine-learning models. Recommender systems that combine both 
+%memory-based and model-based 
+approaches are called \textbf{Hybrid} recommender systems.
 
-In this section, we survey some relevant and recent studies in the tourism domain, classifying them according to these three categories and considering aspects related to  how they manage users' preferences and interests, the context awareness, the use of ontologies, and the variability of recommendations. We compare the related work in terms of these criteria and highlight the difference with our proposal.    
+%In this section, 
+We survey some relevant and recent studies in the tourism domain, classifying them according to these three categories and considering aspects related to  how they manage users' preferences and interests, the context awareness, the use of ontologies, and the variability of recommendations. We compare %the related work 
+them in terms of these criteria and highlight the difference with our proposal.    
 
+\vspace{-0.3cm}
 \subsection{User information}
-Obviously, all recommender systems take into account some information related to the user, such as identification aspects (sex, age, profession, etc.), interest and preferences, or social relations. This information can be obtained from explicit (e.g., questionnaires)~\cite{jannach2020interactive} or implicit (e.g., by analyzing feedbacks in user's social networks) media~\cite{lin2018hybrid}.  
+%Obviously, 
+All recommender systems take into account some information related to the user, such as identification aspects (sex, age, profession, etc.), interest and preferences, or social relations. This information can be explicitly (e.g., questionnaires)~\cite{jannach2020interactive} or implicitly (e.g., by analyzing feedbacks in user's social networks)~\cite{lin2018hybrid} obtained.  
+%This information can be obtained from explicit (e.g., questionnaires)~\cite{jannach2020interactive} or implicit (e.g., by analyzing feedbacks in user's social networks) media~\cite{lin2018hybrid}.  
 
 Some proposals are supported on users' interaction to obtain their data (i.e., following a PULL paradigm). In  %Rajaonarivo et al.
 ~\cite{rajaonarivo2019rec}, authors model the users' information considering their gender, age category (e.g., kid, adult, or elderly), and preferences, classified as thematic preferences (e.g., museum, theater) and historical preferences (e.g., 12th century), that have to be provided by them through a user interface.  In~\cite{santos2019using}, only health,  physical, and psychological conditions are required  with forms filled by users. 
@@ -30,16 +41,16 @@ Curumim~\cite{menk2017curumim} takes from users' social networks their travel hi
 
 Many other proposals combine both explicit and implicit users' information gathering, also under the PULL paradigm. SPETA~\cite{garcia2009speta},  supports  its recommendation on the interest and rating  of tourism places that users explicitly provide, and on preferences deduced by analyzing their behavior on social networks. The system presented in~\cite{alonso2012ontology}, takes into account special needs and  context-dependent preferences on tourism sites, directly  provided by users, as well as explicit/implicit feedback on their social networks. 
 
+\vspace{-0.4cm}
 \subsection{Context-awareness}
-In order to improve suggestions, the trend is to consider context aspects that describe a specif situation in a determined moment for a user, including transportation media, weather, time, or even health conditions. 
-
-Many works use context-modeling approaches that mainly consider means of transportation, travel time,  location, or weather~\cite{rajaonarivo2019rec}\cite{bahramian_abbaspour_claramunt_2017}\cite{arigi2018context}\cite{kesorn2017personalized}\cite{logesh2019exploring} \cite{logesh2018personalised}.
+In order to improve suggestions, the trend is to consider context aspects that describe a specif situation in a determined moment for a user, including transportation media, weather, time, or even health conditions. Many works use context-modeling approaches that mainly consider means of transportation, travel time,  location, or weather~\cite{rajaonarivo2019rec,bahramian_abbaspour_claramunt_2017,arigi2018context,kesorn2017personalized,logesh2019exploring,logesh2018personalised}.
 
 
 SMARTMUSEUM~\cite{ruotsalo2013smartmuseum} only considers users' location as contextual information captured by the built-in sensors of mobile devices, such as GPS, accelerometers, and RFID readers. The system proposed in~\cite{shen2016attraction} collects automatically the users' current location (city, latitude, and longitude) and current time, thus recommendations are influenced by the geo-distance to POI. SPETA~\cite{garcia2009speta} also considers users' location extracted from users' mobile devices, but it takes into account current and the history of past locations. It also gathers from  mobile devices other contextual information, such as weather forecast and time. 
 
 
-A General Factorization Framework for context-aware recommender systems is proposed in~\cite{hidasi2016general}, with the aim of constructing factorization matrices (not matter which and how many context factors are considered) for machine learning techniques. In \cite{sun2019building}, it is used a combination of contextual information like weather, transportation, or textual information, with geotagged pictures taken by the user for building the user model.
+A General Factorization Framework for context-aware recommender systems is proposed in~\cite{hidasi2016general}, with the aim of constructing factorization matrices (not matter which and how many context factors are considered) for machine learning techniques. In~\cite{sun2019building}, it is used a combination of contextual information like weather, transportation, or textual information, with geotagged pictures taken by the user for building the user model.
+The system proposed in~\cite{alonso2012ontology}, is the only one among the referenced works that considers context-dependent   preferences, as our proposal,  related to weather, day, transport, and special needs. It means that users' preferences for POI, are expressed with regards the context (e.g., {\it indoor places when is raining}, {\it art exhibitions at night}).
 
 
 %The work proposed in~\cite{rajaonarivo2019rec},
@@ -49,7 +60,7 @@ A General Factorization Framework for context-aware recommender systems is propo
 
 %Kesorn et al. \cite{kesorn2017personalized} use the time of the day for achieving more suitable recommendations. LISTO
 
-The system proposed in~\cite{alonso2012ontology}, is the only one among the referenced works that considers context-dependent   preferences, as our proposal,  related to weather, day, transport, and special needs. It means that users' preferences for POI, are expressed with regards the context (e.g., {\it indoor places when is raining}, {\it art exhibitions at night}).
+%The system proposed in~\cite{alonso2012ontology}, is the only one among the referenced works that considers context-dependent   preferences, as our proposal,  related to weather, day, transport, and special needs. It means that users' preferences for POI, are expressed with regards the context (e.g., {\it indoor places when is raining}, {\it art exhibitions at night}).
 
 
 %Logest et al. \cite{logesh2019exploring} \cite{logesh2018personalised} also consider user context like user location.  LISRO
@@ -57,12 +68,17 @@ The system proposed in~\cite{alonso2012ontology}, is the only one among the refe
 
 %Bahmarian et al. \cite{bahramian_abbaspour_claramunt_2017} consider weather, time, and day. LISTO
 
-
+\vspace{-0.2cm}
 \subsection{Serendipity}
 
 A useful goal for a recommender system is to be serendipitous, which 
 %accordingly to Kotkov et al. \cite{kotkov2016survey} 
-means that the recommended items must be relevant, novel, and unexpected. A relevant item is an item that the user likes, consumes, or is interested in; a novel item is an item that users have never seen or heard about in their life; an unexpected item is an item that significantly differ from the profile of the user. Some quite good recent surveys emphasize the importance of such as feature for recommender systems in general~\cite{kotkov2016survey,chen2019serendipity} and in the tourism domain~\cite{tintarev2010off,menk2019recommendation}.
+means that the recommended items must be relevant, novel, and unexpected. A relevant item is an item that the user likes, consumes, or is interested in; a novel item is one
+%an item 
+that users have never seen or heard about in their life; an unexpected item 
+is 
+%an item that 
+significantly different from the profile of the user. Some quite good recent surveys emphasize the importance of such as feature for recommender systems in general~\cite{kotkov2016survey,chen2019serendipity} and in the tourism domain~\cite{tintarev2010off,menk2019recommendation}.
 
 %The same work explains the differences between novelty and unexpectedness: "First, a user may find an item unexpected even if she/he is familiar with the item. Second, to surprise a user, unexpected items have to differ from the user profile more than novel items".
 
@@ -75,7 +91,7 @@ It starts to be a trend to recommend  POI. The model considered in~\cite{rajaona
 
 
 %Rajaonarivo et al. \cite{rajaonarivo2019rec} model considers previous activity of other users to recommend tours of POI, thus reducing overspecialization and increasing serendipity, however experiments with this feature were not made.
-
+\vspace{-0.2cm}
 \subsection{Use of ontologies}
 
 The huge amount of data that can be managed in recommender systems, related to users' information, users' preferences, context factors, POI, etc.,   demands the use of more complex knowledge. Even though, recommender system is an area that has been the focus of many studies, thus reaching a very good level of maturity, there is still a lack of standardization to represent such information. In this sense, it is evident the necessity of a well-defined and standard model for representing the knowledge managed by recommender systems. Semantic Web, in particularly the use of ontologies, seems to be a clear solution, from which we can take its organizational and relational capacity.
@@ -90,7 +106,7 @@ Some systems only count on ontologies to represent tourism  POI~\cite{rajaonariv
 %Bahmarian et al. 
 %\cite{bahramian_abbaspour_claramunt_2017} based their proposal on spreading activation algorithms on the nodes of an e-tourism ontology.
 
-
+\vspace{-0.2cm}
 \subsection{Discussion}
 
 Table \ref{table:related-work} shows a comparative evaluation  of the referenced works, in terms of \textbf{category} of the system (model-based, hybrid, etc.), type of \textbf{user's information} gathered, \textbf{context} factors considered, \textbf{ontology} used, and how they handle \textbf{serendipity}. 
@@ -100,9 +116,11 @@ Rajaonarivo et al. \cite{rajaonarivo2019rec} is the only work that proposes a co
 %Our work does evaluate the serendipity of our proposed system, which can support the PUSH paradigm by implicitly gathering users' preferences and context, and the PULL paradigm by explicit user interactions.
 
 \begin{table*}[h!]
+\footnotesize{
     \centering
     \caption{Related work on recommender systems for e-tourism}
     \label{table:related-work}
+    \vspace{-0.3cm}
     \begin{tabular}{|c|c|c|c|c|c|} 
         \hline
         \textbf{Work} & \textbf{Category} & \textbf{Users' information} & \textbf{Context}&\textbf{Ontology}&\textbf{Serendipity} \\
@@ -141,7 +159,8 @@ Rajaonarivo et al. \cite{rajaonarivo2019rec} is the only work that proposes a co
 
         \hline
     \end{tabular}
-    
+    \vspace{-0.3cm}
+    }
     \end{table*}
 
 
